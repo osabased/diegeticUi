@@ -1,0 +1,83 @@
+schema_version: 3
+
+resource: "LemonSignal"
+slug: "data-oriented-house-lemonsignal"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "In-process typed signals and event dispatch for client, server, and shared feature modules"
+  scope: "."
+  authority: "roblox-resource-acquisition"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user explicitly directed adoption of the canonical Data-Oriented-House/LemonSignal resource."
+
+canonical_url: "https://github.com/Data-Oriented-House/LemonSignal"
+package_id: "data-oriented-house/lemonsignal"
+
+verification:
+  status: verified
+  validated_at: "2026-09-16"
+  version_or_commit: "2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-16"
+  installed_identity: "data-oriented-house/lemonsignal"
+  installed_version_or_commit: "2.0.0 / 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
+  detection_method: "wally.toml, generated wally.lock, installed package manifest and redirect, tag resolution, and normalized source comparison"
+  parent_state_sources:
+    - "wally.toml and generated wally.lock (data-oriented-house/lemonsignal@2.0.0)"
+    - "Data-Oriented-House/LemonSignal tag v2.0.0 at commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
+  result: "Wally resolved and installed the requested direct dependency as data-oriented-house/lemonsignal@2.0.0. The installed source matches the canonical v2.0.0 tag after line-ending normalization."
+
+capability: "Provides dependency-free pure-Luau signals with Connect, Once, Wait, Fire, DisconnectAll, Destroy, RBXScriptSignal wrapping, and reconnectable connections."
+devforum_url: ""
+selection_reason: "Direct user adoption of the canonical LemonSignal repository as the project's standard local signal/event primitive."
+alternatives_considered: []
+
+resource_proof:
+  executed: true
+  passed: true
+  target_version_or_commit: "2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
+  environment: "Live Roblox Studio server play session in the project place, using a temporary SSA server feature against the exact Wally-installed ReplicatedStorage.Packages.LemonSignal module; the feature was removed after the proof and Studio was returned to Edit mode."
+  result: "The proof printed LEMONSIGNAL_PROOF_PASS with 20 checks covering require/import, Connect and asynchronous Fire delivery, Disconnect and Reconnect, Once, Wait, RBXScriptSignal wrapping and backing-connection cleanup, reuse after Destroy, DisconnectAll, repeated Fire, and Janitor cleanup with the explicit Disconnect method."
+  unavailable_claims: []
+
+generated_skill: "roblox-lemonsignal"
+skill_validation:
+  structural_passed: true
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: "Same-agent contract audit against the generated-skill testing protocol; independent delegation was not authorized. Resource runtime behavior was separately verified in the live Roblox Studio server session."
+  result: "Structural validation passed. The contract audit covered positive and negative activation, clean Wally setup, source-grounded happy path and integration, failure diagnosis, provenance, security, and operational reconciliation. Independent behavioral verification of child-skill use remains unexecuted."
+  catalog_routing_status: unavailable
+  catalog_fingerprint: "sha256:b149fa8b588d7ca6a1b3e37d536711a2383595099348309751e5410e31d02cd9"
+  catalog_environment: "Codex repository-skill catalog with generated children roblox-janitor, roblox-lemonsignal, and roblox-scribe; repository, user, admin, and system activation metadata were inspected for plausible routing competitors."
+  catalog_result: "Static catalog validation passed with three generated children, no plausible routing competitors, and no overlap cluster. Independent multi-skill routing validation was unavailable because fresh-agent delegation was not authorized."
+
+host_adoptions:
+  - host: "Codex"
+    scope: repo
+    location: ".agents/skills/roblox-lemonsignal"
+    status: installed
+    checked_at: "2026-09-16"
+    result: "The validated artifact was promoted into the repository skill discovery path with no duplicate staging copy, name collision, or matching disable entry. Explicit activation has not run in a fresh Codex task, so operational status is not claimed."
+    evidence:
+      installed: present
+      registered: not-applicable
+      discoverable: "yes"
+      enabled: "yes"
+      explicit_activation: not-run
+
+limitations:
+  - "Signal callbacks are scheduled asynchronously with task.spawn in Roblox; callers must not depend on synchronous handler completion or ordering."
+  - "Destroy disconnects listeners and a wrapped RBXScriptSignal connection but intentionally leaves the signal reusable."
+  - "Janitor must own LemonSignal connection objects with the explicit Disconnect cleanup method because the connection table has no Destroy method."
+  - "Pinned to 2.0.0; upgrades require an intentional resource refresh."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""

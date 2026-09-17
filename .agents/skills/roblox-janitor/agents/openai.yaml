@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox Janitor"
+  short_description: "Implement reliable Roblox lifecycle cleanup"
+  default_prompt: "Use $roblox-janitor to add lifecycle cleanup to this Roblox feature."

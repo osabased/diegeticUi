@@ -1,0 +1,11 @@
+# Project place file
+/diegeticUi.rbxlx
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+
+sourcemap.json
+
+# Installed Wally packages (restored from wally.toml/wally.lock)
+/Packages/

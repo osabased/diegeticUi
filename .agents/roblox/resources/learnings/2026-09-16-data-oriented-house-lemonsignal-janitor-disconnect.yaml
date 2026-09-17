@@ -1,0 +1,16 @@
+schema_version: 1
+kind: integration-gotcha
+scope: resource
+
+slug: "data-oriented-house-lemonsignal"
+canonical_url: "https://github.com/Data-Oriented-House/LemonSignal"
+package_id: "data-oriented-house/lemonsignal"
+
+observed: "2026-09-16"
+statement: "A LemonSignal connection must be registered with Janitor using the explicit cleanup method, as in janitor:Add(connection, \"Disconnect\"). Without that method, Janitor treats the connection table as a generic object and looks for a nonexistent Destroy method."
+evidence: "A live Roblox Studio server proof using LemonSignal 2.0.0 and Janitor 1.18.3 first emitted Janitor's missing-Destroy warning, then passed after the connection was added with the explicit Disconnect cleanup method."
+
+version_context: "LemonSignal 2.0.0 at commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2 with Janitor 1.18.3"
+reconsider_when: ""
+task_context: "Adoption and reusable child-skill promotion for LemonSignal in diegeticUi."
+related_entry: ""

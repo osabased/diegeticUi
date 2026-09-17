@@ -1,0 +1,69 @@
+schema_version: 3
+
+resource: "ActualFire-Games Module Loader"
+slug: "actualfire-module-loader"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "Canonical SSA lifecycle discovery and startup"
+  scope: "."
+  authority: "structure-roblox-projects (Canonical SSA)"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user requested canonical SSA setup, whose structural contract fixes this canonical dependency and pin."
+
+canonical_url: "https://github.com/ActualFire-Games/module-loader"
+package_id: "crusherfire/module-loader"
+
+verification:
+  status: unavailable
+  validated_at: "2026-09-16"
+  version_or_commit: "3.0.4 / b427a3e03fe9368a26e344b5e37f7466fe2ca878"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-16"
+  installed_identity: "crusherfire/module-loader"
+  installed_version_or_commit: "3.0.4 / b427a3e03fe9368a26e344b5e37f7466fe2ca878"
+  detection_method: "wally.lock plus normalized source comparison against the pinned upstream commit"
+  parent_state_sources:
+    - "structure-roblox-projects canonical SSA contract (v3.0.4 / b427a3e03fe9368a26e344b5e37f7466fe2ca878)"
+    - "wally.lock and installed package manifest/source"
+  result: "The installed Wally package is 3.0.4; its normalized src/init.luau matches the pinned commit. The v3.0.4 release asset SHA-256 also matches 79ebdaa4e8291402d565e5318775c2208e554ccb36770db20be5978f15b30521."
+
+capability: "Discovers lifecycle-root ModuleScripts and runs load, Init, and Start phases on server and client."
+devforum_url: ""
+selection_reason: "Fixed positive target supplied by canonical SSA infrastructure for this requested project setup."
+alternatives_considered: []
+
+resource_proof:
+  executed: false
+  passed: false
+  target_version_or_commit: ""
+  environment: "Static project and upstream-source verification only; Roblox Studio runtime was not available."
+  result: "Package identity, version, source, mapping, and release digest were checked statically."
+  unavailable_claims:
+    - "End-to-end server/client load, Init, and Start execution in Roblox Studio"
+
+generated_skill: ""
+skill_validation:
+  structural_passed: false
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: ""
+  result: ""
+  catalog_routing_status: unverified
+  catalog_fingerprint: ""
+  catalog_environment: ""
+  catalog_result: ""
+
+host_adoptions: []
+
+limitations:
+  - "Runtime lifecycle behavior remains unverified because Roblox Studio execution was unavailable."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""

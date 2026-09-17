@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "ericplane-scribe"
+canonical_url: "https://github.com/ericplane/Scribe"
+package_id: "ericplane/scribe"
+
+observed: "2026-09-16"
+statement: "Scribe 2.3.0 accessor methods such as Get, Set, Add, and Observe are closure-style dot calls. Colon syntax passes the accessor table as an unintended first argument; the generated roblox-scribe examples were repaired to use dot syntax."
+evidence: "A live Studio mock-mode proof failed at data.Coins:Set(7) with 'expected number, got table'; canonical 2.3.0 source examples use Data.Coins.Set/Get/Observe, and the corrected proof passed server WaitForData plus client observations of values 7 and 13."
+version_context: "2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795"
+reconsider_when: ""
+task_context: "Post-adoption live Roblox Studio validation of the generated roblox-scribe child skill."
+related_entry: ""

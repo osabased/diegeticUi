@@ -1,0 +1,3 @@
+interface:
+  display_name: "Roblox Scribe"
+  short_description: "Build typed replicated player data with Scribe"

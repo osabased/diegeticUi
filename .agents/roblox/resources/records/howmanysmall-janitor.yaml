@@ -1,0 +1,83 @@
+schema_version: 3
+
+resource: "Janitor"
+slug: "howmanysmall-janitor"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "Lifecycle cleanup and resource ownership for client, server, and shared feature modules"
+  scope: "."
+  authority: "roblox-resource-acquisition"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user explicitly directed adoption of the canonical Janitor package after comparing it with Scythe."
+
+canonical_url: "https://github.com/howmanysmall/Janitor"
+package_id: "howmanysmall/janitor"
+
+verification:
+  status: verified
+  validated_at: "2026-09-16"
+  version_or_commit: "1.18.3"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-16"
+  installed_identity: "howmanysmall/janitor"
+  installed_version_or_commit: "1.18.3"
+  detection_method: "wally.toml, generated wally.lock, installed package manifest, and package redirect module"
+  parent_state_sources:
+    - "wally.toml and generated wally.lock (howmanysmall/janitor@1.18.3)"
+    - "installed Packages/_Index/howmanysmall_janitor@1.18.3/janitor/wally.toml and Packages/Janitor.lua redirect"
+  result: "Wally resolved the requested direct dependency to howmanysmall/janitor@1.18.3 and installed its canonical package redirect under ReplicatedStorage.Packages.Janitor."
+
+capability: "Owns Roblox connections, instances, callbacks, promises, threads, and objects so feature teardown can clean them together or remove indexed resources selectively."
+devforum_url: ""
+selection_reason: "Direct user adoption after an explicit Janitor-versus-Scythe evaluation; Janitor provides the stronger project fit for feature lifecycle cleanup, custom cleanup methods, and selective removal."
+alternatives_considered:
+  - "synttx/scythe@1.2.2"
+
+resource_proof:
+  executed: true
+  passed: true
+  target_version_or_commit: "1.18.3"
+  environment: "Isolated Roblox Studio benchmark place using the exact Wally package howmanysmall/janitor@1.18.3."
+  result: "Require/import, function cleanup, object destruction, repeated add/cleanup cycles, indexed selective removal, and a custom Cancel cleanup method executed successfully."
+  unavailable_claims: []
+
+generated_skill: "roblox-janitor"
+skill_validation:
+  structural_passed: true
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: "Same-agent contract audit against the generated-skill testing protocol; independent delegation was not authorized."
+  result: "Structural validation passed. The contract audit covered positive and negative activation, clean Wally setup, source-grounded happy path and integration, failure diagnosis, provenance, security, and operational reconciliation; it found and corrected one non-generic GuiObject property in the example. Independent behavioral verification remains unexecuted."
+  catalog_routing_status: unavailable
+  catalog_fingerprint: "sha256:b149fa8b588d7ca6a1b3e37d536711a2383595099348309751e5410e31d02cd9"
+  catalog_environment: "Codex repository-skill catalog with generated children roblox-janitor, roblox-lemonsignal, and roblox-scribe; repository, user, admin, and system activation metadata were inspected for plausible routing competitors."
+  catalog_result: "Static catalog validation passed with three generated children, no plausible routing competitors, and no overlap cluster. Independent multi-skill routing validation was unavailable because fresh-agent delegation was not authorized."
+
+host_adoptions:
+  - host: "Codex"
+    scope: repo
+    location: ".agents/skills/roblox-janitor"
+    status: installed
+    checked_at: "2026-09-16"
+    result: "The validated artifact was moved into the repository skill discovery path with no duplicate staging copy, name collision, or matching disable entry. Explicit activation has not run in a fresh Codex task, so operational status is not claimed."
+    evidence:
+      installed: present
+      registered: not-applicable
+      discoverable: "yes"
+      enabled: "yes"
+      explicit_activation: not-run
+
+limitations:
+  - "Pinned to 1.18.3; upgrades require an intentional resource refresh."
+  - "Janitor cleanup does not isolate throwing cleanup callbacks; cleanup callbacks should not raise errors."
+  - "The package brings howmanysmall/typed-promise and evaera/promise as transitive dependencies."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""

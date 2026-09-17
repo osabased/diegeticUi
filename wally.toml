@@ -1,0 +1,14 @@
+[package]
+name = "lowle/diegetic-ui"
+description = "A Roblox experience using canonical Single Script Architecture."
+version = "0.1.0"
+license = "MIT"
+authors = ["Lowle"]
+realm = "shared"
+registry = "https://github.com/UpliftGames/wally-index"
+
+[dependencies]
+ModuleLoader = "crusherfire/module-loader@3.0.4"
+Janitor = "howmanysmall/janitor@1.18.3"
+LemonSignal = "data-oriented-house/lemonsignal@2.0.0"
+Scribe = "ericplane/scribe@2.3.0"

@@ -1,0 +1,84 @@
+schema_version: 3
+
+resource: "Scribe"
+slug: "ericplane-scribe"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "Persistent, typed, automatically replicated player data and server-authoritative data workflows"
+  scope: "."
+  authority: "roblox-resource-acquisition"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user explicitly directed adoption of the canonical ericplane/Scribe resource."
+
+canonical_url: "https://github.com/ericplane/Scribe"
+package_id: "ericplane/scribe"
+
+verification:
+  status: verified
+  validated_at: "2026-09-16"
+  version_or_commit: "2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-16"
+  installed_identity: "ericplane/scribe"
+  installed_version_or_commit: "2.3.0 / e3309e9debdce2d3571406c48ded89f728404795"
+  detection_method: "wally.toml, generated wally.lock, installed redirect and Version.luau, canonical tag resolution, and normalized installed-source comparison"
+  parent_state_sources:
+    - "wally.toml and generated wally.lock (ericplane/scribe@2.3.0)"
+    - "ericplane/Scribe tag v2.3.0 at commit e3309e9debdce2d3571406c48ded89f728404795"
+  result: "Wally resolved and installed the requested direct dependency as ericplane/scribe@2.3.0. The installed package source matches the canonical v2.3.0 tag after line-ending normalization."
+
+capability: "Provides a typed player-data schema with ProfileStore-backed persistence, server-authoritative accessors and commands, automatic owner/client replication, observation, migrations, offline updates, and Roblox service integrations."
+devforum_url: ""
+selection_reason: "Direct user adoption of the canonical Scribe repository as the project's standard persistent replicated player-data layer."
+alternatives_considered: []
+
+resource_proof:
+  executed: true
+  passed: true
+  target_version_or_commit: "2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795"
+  environment: "Canonical v2.3.0 source clone with its headless Roblox shim/simulation suite, executed through installed Lune 0.10.4 after changing only the task-owned clone's declared Lune tool version from 0.10.5; installed Wally source was normalized and compared with the tag. A live Roblox Studio Play session then exercised the exact Wally-installed package from temporary server/client scripts with Mode = Mock."
+  result: "The upstream suite completed with 2481 passed, 0 failed, and 10 skipped in 69.59 seconds, and the Wally-installed source matched the tag. In Studio, server WaitForData succeeded, the client observed the initial server value 7 and authoritative update 13, and both runtimes printed SCRIBE_LIVE_PROOF_PASS; the temporary scripts were removed."
+  unavailable_claims: []
+
+generated_skill: "roblox-scribe"
+skill_validation:
+  structural_passed: true
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: "Same-agent source and contract audit plus a live Roblox Studio mock-mode integration against the generated-skill testing protocol; independent delegation was not authorized. Upstream runtime behavior was separately exercised by the canonical headless suite."
+  result: "A live proof caught and repaired colon-call examples that incorrectly passed the accessor table as a value; the corrected dot-call guidance then drove a passing server/client replication proof. Structural validation and the same-agent contract audit cover positive and negative activation, clean Wally setup, failure diagnosis, provenance, security, and operational reconciliation. Independent behavioral verification of child-skill use remains unexecuted."
+  catalog_routing_status: unavailable
+  catalog_fingerprint: "sha256:b149fa8b588d7ca6a1b3e37d536711a2383595099348309751e5410e31d02cd9"
+  catalog_environment: "Codex repository-skill catalog with generated children roblox-janitor, roblox-lemonsignal, and roblox-scribe; repository, user, admin, and system activation metadata were inspected for plausible routing competitors."
+  catalog_result: "Static catalog validation passed with three generated children, no plausible routing competitors, and no overlap cluster. Independent multi-skill routing validation was unavailable because fresh-agent delegation was not authorized."
+
+host_adoptions:
+  - host: "Codex"
+    scope: repo
+    location: ".agents/skills/roblox-scribe"
+    status: installed
+    checked_at: "2026-09-16"
+    result: "The validated artifact was promoted into the repository skill discovery path with no duplicate staging copy, name collision, or matching disable entry. Explicit activation has not run in a fresh Codex task, so operational status is not claimed."
+    evidence:
+      installed: present
+      registered: not-applicable
+      discoverable: "yes"
+      enabled: "yes"
+      explicit_activation: not-run
+
+limitations:
+  - "The live Roblox Studio proof used Mode = Mock; DataStore persistence, MarketplaceService, ordered-store, and cross-server service behavior remain unexercised."
+  - "The upstream suite ran on available Lune 0.10.4 rather than the repository-declared 0.10.5; all source tests still completed with zero failures."
+  - "Typed accessor inference requires the new Luau type solver."
+  - "The client must require the shared bundle for handshake and replication startup."
+  - "Pinned to 2.3.0; upgrades require an intentional resource refresh."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""
