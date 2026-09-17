@@ -1,0 +1,15 @@
+{
+  "package": "astra-focus-pilot",
+  "version": "1.2.0",
+  "files": {
+    ".agents/skills/sol-led-workflow/SKILL.md": "b161c35745b4cd8515511bc42bf9b998c782c676c71fd50393ad8559fcf005bb",
+    ".agents/skills/sol-led-workflow/agents/openai.yaml": "d0612e2de54108cce8fa7e1e33811faa0054ba0e1ae93716457833b430fb2979",
+    ".agents/skills/sol-led-workflow/references/RUNTIME.md": "01ef299f7664a09f67df4a65e3f76860a1fe27c0fea446134f12887c37c826f4",
+    ".agents/skills/sol-led-workflow/references/HANDOFFS.md": "8c521780059ec11177ed7abcbfcd43c6277c2120ceef28bc29a9ac740c805e51",
+    ".codex/agents/slw_astra_decision.toml": "c6124a6f32116ad2cc2b8366037d92ffb1b80237c7db1dbae2239fbf3bcdf3f6",
+    ".codex/agents/slw_luna_evidence.toml": "715553a9f4221aa03733588c604c94e8f53968db69f3bc30364ee774671a9a18",
+    ".codex/agents/slw_sol_implementation.toml": "e36ebe6b3e4c58c9be1a1aedc2507ead1bc1d2de67584d44953610dc542c62c4",
+    ".codex/agents/slw_sol_analysis.toml": "285b35dbacea85cab0767dc6e11922e70f59603e25195790959dd355539f9217",
+    ".codex/agents/slw_sol_review.toml": "a8ebd06ba7483615753f46db730de76b2e4e8c9b5a1e8bd6f8e70671f56ddc7a"
+  }
+}

@@ -1,0 +1,83 @@
+schema_version: 3
+
+resource: "Blink"
+slug: "1axen-blink"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "Typed generated client/server networking and remote protocol definitions"
+  scope: "."
+  authority: "roblox-resource-acquisition"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user explicitly directed adoption of the canonical 1Axen/blink resource and requested the latest release including prereleases."
+
+canonical_url: "https://github.com/1Axen/blink"
+package_id: "1Axen/blink@1.0.0-pre.8"
+
+verification:
+  status: verified
+  validated_at: "2026-09-17"
+  version_or_commit: "1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-17"
+  installed_identity: "1Axen/blink"
+  installed_version_or_commit: "1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+  detection_method: "rokit.toml exact pin, Rokit installed-tool inventory, Blink CLI version output, generated module headers, canonical tag resolution, and source inspection"
+  parent_state_sources:
+    - "rokit.toml (1Axen/blink@1.0.0-pre.8)"
+    - "1Axen/blink tag v1.0.0-pre.8 at commit 324caf3aec16c209d9d31e335e321783fb89256f"
+  result: "Rokit selected Blink 1.0.0-pre.8, the CLI and generated headers report that exact prerelease, and the canonical release tag resolves to the reviewed commit."
+
+capability: "Defines typed Roblox client/server events and functions in an IDL and generates compact realm-specific Luau serializers and networking modules."
+devforum_url: ""
+selection_reason: "Direct user adoption of the canonical repository's latest available release including prereleases; v1.0.0-pre.8 was newer than stable v0.18.8 on 2026-09-17."
+alternatives_considered: []
+
+resource_proof:
+  executed: true
+  passed: true
+  target_version_or_commit: "1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+  environment: "Exact generated release-profile modules were installed temporarily into a live Roblox Studio play session. An ordinary server Script and client LocalScript required the matching generated modules; the temporary Studio instances were removed and Studio returned to Edit mode. The repository's canonical verifier separately regenerated, analyzed, tested, and built the Rojo project."
+  result: "Studio printed BLINK_SERVER_VERIFY_PASS and BLINK_CLIENT_VERIFY_PASS with no console errors. The server module created the expected RemoteEvent and UnreliableRemoteEvent, the client module loaded the matching pair, and `lute run scripts/verify.luau` completed with [verify] PASS."
+  unavailable_claims: []
+
+generated_skill: "roblox-blink"
+skill_validation:
+  structural_passed: true
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: "Same-agent contract audit against the generated-skill testing protocol; independent delegation was not authorized. Resource runtime behavior was separately verified in a live Roblox Studio client/server play session."
+  result: "Structural validation passed. The contract audit covered activation boundaries, exact Rokit setup, prerelease CLI and IDL differences, realm placement, lifecycle cleanup, failure diagnosis, security, provenance, and operational reconciliation. Independent behavioral verification of child-skill use remains unexecuted."
+  catalog_routing_status: unavailable
+  catalog_fingerprint: "sha256:b269bd9d2447dc5460ee2e2fe6f2a307174ee9c8ad9d354f5879c9a2dd5f6e69"
+  catalog_environment: "Codex repository-skill catalog with generated children roblox-blink, roblox-janitor, roblox-lemonsignal, and roblox-scribe, plus roblox-resource-acquisition and structure-roblox-projects as routing competitors."
+  catalog_result: "Static catalog validation passed with four generated children, two routing competitors, and no overlap cluster. Independent multi-skill routing validation was unavailable because fresh-agent delegation was not authorized."
+
+host_adoptions:
+  - host: "Codex"
+    scope: repo
+    location: ".agents/skills/roblox-blink"
+    status: installed
+    checked_at: "2026-09-17"
+    result: "The validated artifact was installed in the repository skill discovery path with no name collision or disable entry. Explicit activation has not run in a fresh Codex task, so operational status is not claimed."
+    evidence:
+      installed: present
+      registered: not-applicable
+      discoverable: "yes"
+      enabled: "yes"
+      explicit_activation: not-run
+
+limitations:
+  - "1.0.0-pre.8 is a prerelease whose CLI, IDL, generated API, and output syntax may change before stable 1.0.0."
+  - "Every compile randomizes paired remote names and numeric event IDs; the project generation wrapper records schema and exact-output fingerprints, while the verifier checks that stamp and restores files after a compile smoke test."
+  - "The prerelease generator emits newer Luau syntax and non-StyLua formatting, so generated files are excluded narrowly from Selene and StyLua and instead covered by exact codegen comparison, Rojo build, and Studio runtime proof."
+  - "Blink wire-shape validation does not replace server-side authorization, ownership, semantic validation, or rate limiting."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox Blink"
+  short_description: "Build typed Roblox client-server protocols"
+  default_prompt: "Use $roblox-blink to define and generate this Roblox networking protocol."

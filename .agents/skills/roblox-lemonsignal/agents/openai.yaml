@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox LemonSignal"
+  short_description: "Build typed local Roblox events with LemonSignal"
+  default_prompt: "Use $roblox-lemonsignal to implement a typed local event flow for this Roblox feature."

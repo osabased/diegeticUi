@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sol-led Workflow"
+  short_description: "Route models; preserve the active workflow"
+  default_prompt: "Use $sol-led-workflow for this task or alongside the active skill. Preserve its procedure, approvals, required checks, output, and stopping point; reserve Astra for consequential solutions and framing."
+policy:
+  allow_implicit_invocation: true

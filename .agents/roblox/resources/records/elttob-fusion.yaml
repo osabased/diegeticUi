@@ -1,0 +1,72 @@
+schema_version: 3
+
+resource: "Fusion"
+slug: "elttob-fusion"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "Reactive UI rendering, local presentation state, and UI animation"
+  scope: "src/client/UI"
+  authority: "roblox-resource-acquisition"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user explicitly required Fusion 0.3 for this UI-development setup."
+
+canonical_url: "https://github.com/dphfox/Fusion"
+package_id: "elttob/fusion"
+
+verification:
+  status: unavailable
+  validated_at: "2026-09-17"
+  version_or_commit: "0.3.0"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-17"
+  installed_identity: "elttob/fusion"
+  installed_version_or_commit: "0.3.0"
+  detection_method: "wally.toml, generated wally.lock, installed package manifest, package redirect, strict analysis, and disposable Rojo build"
+  parent_state_sources:
+    - "wally.toml and generated wally.lock (elttob/fusion@0.3.0)"
+    - "installed Packages/_Index/elttob_fusion@0.3.0/fusion/wally.toml and Packages/Fusion.lua redirect"
+    - "Fusion 0.3 scope, component, and Spring documentation"
+  result: "Wally resolved and installed elttob/fusion@0.3.0. The scoped StatusCard component type-checks under strict Luau and is included in a successful disposable place build."
+
+capability: "Builds reactive Roblox interfaces with scoped state, computed values, instances, and spring/tween animation."
+devforum_url: ""
+selection_reason: "Fixed dependency and version supplied by the user for the requested UI-development foundation."
+alternatives_considered: []
+
+resource_proof:
+  executed: false
+  passed: false
+  target_version_or_commit: ""
+  environment: "Static project verification only; Roblox Studio runtime was not available."
+  result: "The exact package resolved, its 0.3 APIs type-checked in the component and story, and the project built successfully."
+  unavailable_claims:
+    - "StatusCard mount, hover transition, and spring behavior in Roblox Studio"
+    - "Scope cleanup during live UI unmount and story reload"
+
+generated_skill: ""
+skill_validation:
+  structural_passed: false
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: ""
+  result: ""
+  catalog_routing_status: not-applicable
+  catalog_fingerprint: ""
+  catalog_environment: ""
+  catalog_result: ""
+
+host_adoptions: []
+
+limitations:
+  - "Pinned to Fusion 0.3.0; code must use the 0.3 scoped API rather than examples written for older Fusion releases."
+  - "Interactive behavior still requires a Roblox Studio playtest."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""

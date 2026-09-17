@@ -31,6 +31,22 @@ For more help, check out [the Rojo documentation](https://rojo.space/docs).
 
 Generated artifacts are intentionally untracked: `Packages/`, `sourcemap.json`, `.lest/`, and `.verify/`. Standalone analysis uses the vendored Roblox definitions described in [`tooling/roblox/README.md`](tooling/roblox/README.md), so verification does not depend on editor caches or machine-local Studio state.
 
+## Networking
+
+Blink owns new project-authored client/server protocols. Define them in `src/shared/Network/main.blink`, then regenerate the committed Luau modules with:
+
+```sh
+lute run scripts/generate-blink.luau
+```
+
+The wrapper runs `blink compile --profile release src/shared/Network/main.blink` and updates the committed integrity stamp. Server features require `Shared.Network.Server`; client features require `Shared.Network.Client`. Do not edit the generated `Client.luau`, `Server.luau`, `Types.luau`, or stamp by hand. The canonical verifier checks their integrity and performs a restored compile smoke test.
+
+## UI development
+
+Charm owns domain and shared application state. Fusion 0.3 owns UI rendering and local presentation state, including springs and tweens. UI Labs owns isolated component stories.
+
+Install the [UI Labs Studio plugin](https://create.roblox.com/store/asset/14293316215/UI-Labs), run `rojo serve`, and open the `UI` storybook to preview the `StatusCard` stack smoke test. Wally installs the matching UI Labs utility package with the rest of the project dependencies.
+
 ## Project structure
 
 - `src/server/` contains server lifecycle-root ModuleScripts.

@@ -1,0 +1,70 @@
+schema_version: 3
+
+resource: "Charm"
+slug: "littensy-charm"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "Domain and shared state whose lifetime extends beyond a single UI component"
+  scope: "."
+  authority: "roblox-resource-acquisition"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user explicitly required Charm and requested a verified compatible release."
+
+canonical_url: "https://github.com/littensy/charm"
+package_id: "littensy/charm"
+
+verification:
+  status: verified
+  validated_at: "2026-09-17"
+  version_or_commit: "0.11.0"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-17"
+  installed_identity: "littensy/charm"
+  installed_version_or_commit: "0.11.0"
+  detection_method: "Wally registry search, wally.toml, generated wally.lock, installed package manifest, and native Lest execution against the exact installed source"
+  parent_state_sources:
+    - "Wally registry result and canonical Charm repository for littensy/charm@0.11.0"
+    - "wally.toml and generated wally.lock (littensy/charm@0.11.0)"
+    - "installed Packages/_Index/littensy_charm@0.11.0/charm/wally.toml and package source"
+  result: "The current compatible Wally release resolved as littensy/charm@0.11.0. Its exact installed source passed a signal-update-computed smoke test under the project's native Lest runner."
+
+capability: "Provides small reactive atoms/signals, computed state, and update functions for shared or domain-level application state."
+devforum_url: ""
+selection_reason: "The user required Charm without fixing a version; 0.11.0 is the current canonical Wally release and its core state flow passed the requested smoke test."
+alternatives_considered: []
+
+resource_proof:
+  executed: true
+  passed: true
+  target_version_or_commit: "0.11.0"
+  environment: "Project native Lest backend requiring the exact installed Wally source at Packages/_Index/littensy_charm@0.11.0/charm/src/init."
+  result: "A signal initialized to 2, accepted a functional update to 3, and drove a computed value from 4 to 6; the canonical verifier passed the test with the full unit suite."
+  unavailable_claims: []
+
+generated_skill: ""
+skill_validation:
+  structural_passed: false
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: ""
+  result: ""
+  catalog_routing_status: not-applicable
+  catalog_fingerprint: ""
+  catalog_environment: ""
+  catalog_result: ""
+
+host_adoptions: []
+
+limitations:
+  - "Pinned to 0.11.0; upgrades require an intentional resource refresh and smoke-test rerun."
+  - "Native Lest cannot load the generated Wally redirect module because redirects depend on Roblox's script global, so the test resolves the exact installed source path instead."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""

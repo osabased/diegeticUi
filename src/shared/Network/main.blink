@@ -1,0 +1,5 @@
+-- Blink v1.0.0-pre.8 protocol entrypoint. Add shared network declarations here.
+option types_output = "./Types"
+option client_output = "./Client"
+option server_output = "./Server"
+option casing = "PascalCase"

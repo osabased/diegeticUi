@@ -1,0 +1,74 @@
+schema_version: 3
+
+resource: "UI Labs"
+slug: "pepeeltoro41-ui-labs"
+discovery_origin: "other"
+
+project_use:
+  status: adopted
+  role: "Visual development, isolated stories, and interactive controls for client UI"
+  scope: "src/client/UI"
+  authority: "roblox-resource-acquisition"
+
+trust:
+  level: trusted
+  basis: explicit-user
+  reason: "The user explicitly required UI Labs for this UI-development setup."
+
+canonical_url: "https://github.com/PepeElToro41/ui-labs"
+package_id: "pepeeltoro41/ui-labs"
+
+verification:
+  status: unavailable
+  validated_at: "2026-09-17"
+  version_or_commit: "2.4.2"
+
+reconciliation:
+  status: matched
+  checked_at: "2026-09-17"
+  installed_identity: "pepeeltoro41/ui-labs"
+  installed_version_or_commit: "2.4.2"
+  detection_method: "Wally registry search, wally.toml, generated wally.lock, installed package manifest, strict analysis, and disposable Rojo build"
+  parent_state_sources:
+    - "Wally registry result and canonical UI Labs repository for pepeeltoro41/ui-labs@2.4.2"
+    - "wally.toml and generated wally.lock (pepeeltoro41/ui-labs@2.4.2)"
+    - "UI Labs Fusion story and installation documentation"
+  result: "Wally resolved and installed the UI Labs utility package at 2.4.2. A Fusion 0.3 story and storybook type-check and are included in a successful disposable place build."
+
+capability: "Runs isolated Roblox UI stories with interactive controls and framework-specific story helpers."
+devforum_url: ""
+selection_reason: "Fixed UI-development tool supplied by the user; 2.4.2 is the current canonical Wally utility release and supports Fusion stories."
+alternatives_considered: []
+
+resource_proof:
+  executed: false
+  passed: false
+  target_version_or_commit: ""
+  environment: "Static project verification only; the Roblox Studio UI Labs plugin/runtime was not available."
+  result: "The utility package resolves, the story matches UI Labs' Fusion contract, and strict analysis plus place build pass."
+  unavailable_claims:
+    - "UI Labs plugin discovery and rendering of the UI storybook in Roblox Studio"
+    - "Interactive Count control updates"
+    - "Story hot reload, unmount, and Fusion scope cleanup"
+
+generated_skill: ""
+skill_validation:
+  structural_passed: false
+  independent_behavioral_executed: false
+  independent_behavioral_passed: false
+  environment: ""
+  result: ""
+  catalog_routing_status: not-applicable
+  catalog_fingerprint: ""
+  catalog_environment: ""
+  catalog_result: ""
+
+host_adoptions: []
+
+limitations:
+  - "The UI Labs Studio plugin must be installed separately from its Wally utility package."
+  - "Pinned to utility package 2.4.2; plugin/runtime compatibility should be rechecked when either release changes."
+  - "The utility's v2.4.2 Git tag contains stale internal 2.4.1 metadata, while the canonical Wally index and installed package manifest identify the artifact as 2.4.2."
+blocked_use_or_version: ""
+rejection_reason: ""
+reconsider_when: ""

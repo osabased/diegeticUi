@@ -14,7 +14,7 @@ Rojo 7.7.0 maps the filesystem into the DataModel. Wally 0.3.2 restores packages
 
 ## Module organization
 
-Use canonical Single Script Architecture with feature-first `Server/<Feature>` and `Client/<Feature>` lifecycle roots. Put client-visible shared dependencies under `Shared/<Feature>` and structurally defined communication instances under `Remotes/<Feature>`. Helpers belong beneath their owning lifecycle root, outside the loader's direct-child discovery slot.
+Use canonical Single Script Architecture with feature-first `Server/<Feature>` and `Client/<Feature>` lifecycle roots. Put client-visible shared dependencies under `Shared/<Feature>` and structurally defined non-Blink communication instances under `Remotes/<Feature>`. Blink protocol sources and generated modules live under `Shared/Network`; the generated server module owns Blink's hashed runtime remotes directly under `ReplicatedStorage`, so do not duplicate those instances under `Remotes`. Helpers belong beneath their owning lifecycle root, outside the loader's direct-child discovery slot.
 
 ## Module style
 

@@ -14,7 +14,7 @@ All project-authored Luau uses `--!strict`. Keep types precise, prefer `unknown`
 - `src/client/` owns client-only feature roots and presentation.
 - `src/shared/` contains runtime-neutral modules that are required explicitly.
 - Each direct-child ModuleScript under `Server` or `Client` is an SSA lifecycle root. Put implementation modules beneath the root that owns them.
-- Cross-runtime behavior must use an intentional Roblox remote boundary. LemonSignal is only for in-process events.
+- New project-authored client/server protocols use Blink-generated networking. Libraries that own their transport, such as Scribe, keep that boundary; LemonSignal is only for in-process events.
 
 Install the pinned toolchain with `rokit install`. The single required local and CI gate is:
 
@@ -38,5 +38,9 @@ Use the project-standard resources below when their listed roles apply. If a res
 - **ActualFire-Games Module Loader** — Canonical SSA lifecycle discovery and startup. Structural selection is governed by `.agents/roblox/structure.md`.
 - **Janitor** — Project-standard lifecycle cleanup and resource ownership for client, server, and shared feature modules.
 - **LemonSignal** — Project-standard in-process typed signals and event dispatch for client, server, and shared feature modules.
+- **Blink** — Project-standard typed, generated client/server networking and remote protocol definitions.
 - **Scribe** — Project-standard persistent, typed, automatically replicated player data and server-authoritative data workflows.
+- **Charm** — Project-standard domain and shared application state.
+- **Fusion 0.3** — Project-standard UI rendering, UI-local presentation state, springs, and tweens.
+- **UI Labs** — Project-standard isolated visual development and component stories.
 <!-- roblox-resource-acquisition:onboarding:end -->

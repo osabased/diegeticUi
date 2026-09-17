@@ -1,6 +1,6 @@
 ---
 name: roblox-lemonsignal
-description: Implement or troubleshoot local typed event flows with Data-Oriented-House/LemonSignal in Roblox client, server, or shared feature modules; use RemoteEvents for cross-runtime communication and roblox-resource-acquisition for adoption or upgrades.
+description: Implement or troubleshoot local typed event flows with Data-Oriented-House/LemonSignal in Roblox client, server, or shared feature modules; use Blink-generated networking for new cross-runtime protocols and roblox-resource-acquisition for adoption or upgrades.
 ---
 
 # LemonSignal
@@ -15,7 +15,7 @@ Use **LemonSignal** for lightweight in-process signals with reconnectable connec
 
 ## Do not use when
 
-- Client and server must communicate; use a structurally owned `RemoteEvent` or `RemoteFunction` and validate client input on the server.
+- Client and server must communicate; use the project's Blink-generated networking modules and validate client input on the server.
 - A direct function call or one obvious Roblox connection is simpler.
 - The task is choosing, adopting, replacing, or upgrading the signal dependency; use `roblox-resource-acquisition` for that lifecycle decision.
 - The installed identity or version does not reconcile with the expected package state below.
@@ -60,7 +60,7 @@ HealthChanged:Destroy()
 
 ## Client/server placement
 
-LemonSignal is a shared-realm package and may be required by client, server, and shared modules. Each signal exists only inside the Luau runtime that created it: a client signal does not notify the server, and a server signal does not replicate to clients. Keep authoritative gameplay state and decisions on the server. Use remotes for network boundaries, validate every client-controlled payload on the server, then fan validated results into local LemonSignals if decoupled server-side or client-side observers are useful.
+LemonSignal is a shared-realm package and may be required by client, server, and shared modules. Each signal exists only inside the Luau runtime that created it: a client signal does not notify the server, and a server signal does not replicate to clients. Keep authoritative gameplay state and decisions on the server. Use Blink-generated modules at network boundaries, validate every client-controlled payload on the server, then fan validated results into local LemonSignals if decoupled server-side or client-side observers are useful.
 
 ## Mental model
 
