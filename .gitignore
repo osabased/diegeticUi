@@ -9,3 +9,7 @@ sourcemap.json
 
 # Installed Wally packages (restored from wally.toml/wally.lock)
 /Packages/
+
+# Generated verification/test artifacts
+/.lest/
+/.verify/

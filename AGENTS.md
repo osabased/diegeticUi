@@ -4,6 +4,32 @@
 Before making a structural placement, startup, source-of-truth, organization, or structurally owned dependency decision, read `.agents/roblox/structure.md` for the project's durable structural conventions.
 <!-- structure-roblox-projects:onboarding:end -->
 
+## Development workflow
+
+The filesystem is authoritative. Rojo projects `src/` into Studio; do not make lasting source edits in the Studio DataModel. Keep runtime boundaries explicit:
+
+All project-authored Luau uses `--!strict`. Keep types precise, prefer `unknown` over `any`, and use type casts deliberately.
+
+- `src/server/` owns server-authoritative feature roots.
+- `src/client/` owns client-only feature roots and presentation.
+- `src/shared/` contains runtime-neutral modules that are required explicitly.
+- Each direct-child ModuleScript under `Server` or `Client` is an SSA lifecycle root. Put implementation modules beneath the root that owns them.
+- Cross-runtime behavior must use an intentional Roblox remote boundary. LemonSignal is only for in-process events.
+
+Install the pinned toolchain with `rokit install`. The single required local and CI gate is:
+
+```sh
+lute run scripts/verify.luau
+```
+
+Use `stylua src tests scripts` to apply formatting and `lest run unit` for the fastest test-only loop. The verifier installs the locked Wally graph, generates the real Rojo sourcemap and package types, checks formatting and lint, analyzes strict Luau with pinned Roblox API definitions, runs unit tests, and performs a disposable place build.
+
+`Packages/`, `sourcemap.json`, `.lest/`, and `.verify/` are generated; never hand-edit them. `tooling/roblox/globalTypes.d.luau` and `roblox.yml` are vendored generated inputs for luau-lsp and Selene respectively; follow `tooling/roblox/README.md` to refresh them rather than editing them.
+
+Fast native tests belong under `tests/unit/**/*.spec.luau`. If a test truly depends on the Roblox DataModel, add a separate non-default Lest Studio suite instead of weakening native isolation. Runtime changes involving replication, remotes, lifecycle order, UI/input/camera, physics, or other engine behavior also require a Roblox Studio MCP playtest after the static gate. Inspect the Studio console, stop the play session when finished, and report any visual or interactive behavior that could not be verified automatically.
+
+Before completion, run the canonical verifier, inspect the final diff, and report any validation that the environment prevented.
+
 <!-- roblox-resource-acquisition:onboarding:start -->
 ## Roblox resources
 

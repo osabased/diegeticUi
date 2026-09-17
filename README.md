@@ -2,27 +2,34 @@
 
 A Roblox project using Rojo and canonical Single Script Architecture (SSA).
 
-## Getting Started
+## Getting started
 
-Install the pinned Wally dependencies:
-
-```bash
-wally install
-```
-
-To build the place from scratch, use:
+Install the pinned CLI toolchain and run the canonical verification gate:
 
 ```bash
-rojo build -o "diegeticUi.rbxlx"
+rokit install
+lute run scripts/verify.luau
 ```
 
-Next, open `diegeticUi.rbxlx` in Roblox Studio and start the Rojo server:
+That one command is also used in CI. It restores the locked Wally graph, generates the actual Rojo sourcemap and Wally package types, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs the native unit suite, and proves that the place builds.
+
+Useful focused commands are:
+
+```bash
+stylua src tests scripts
+lest run unit
+rojo build default.project.json --output diegeticUi.rbxlx
+```
+
+Open the built place in Roblox Studio and start the Rojo server for live development:
 
 ```bash
 rojo serve
 ```
 
 For more help, check out [the Rojo documentation](https://rojo.space/docs).
+
+Generated artifacts are intentionally untracked: `Packages/`, `sourcemap.json`, `.lest/`, and `.verify/`. Standalone analysis uses the vendored Roblox definitions described in [`tooling/roblox/README.md`](tooling/roblox/README.md), so verification does not depend on editor caches or machine-local Studio state.
 
 ## Project structure
 

@@ -1,0 +1,20 @@
+name: Verify
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pinned Roblox tools
+        uses: paradoxum-games/setup-rokit@v3
+        with:
+          cache: true
+          version: 1.2.0
+
+      - name: Run canonical verification
+        run: lute run scripts/verify.luau
