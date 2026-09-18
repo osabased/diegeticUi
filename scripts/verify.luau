@@ -6,6 +6,7 @@ local process = require("@std/process")
 local system = require("@lute/system")
 
 local Verification = require("./verification")
+local PackageInstall = require("./package-install")
 
 type JsonObject = json.Object
 type OrchestrationResult = Verification.OrchestrationResult
@@ -235,17 +236,9 @@ local function runWally(): StepResult
 		return missing
 	end
 
-	-- Wally 0.3.2 predates `wally install --locked`. Preserve its working pin
-	-- and enforce the same invariant by rejecting and undoing lockfile drift.
-	local lockBefore = fs.readFileToString("wally.lock")
-	local result = process.run({ "wally", "install" }, { stdio = "inherit" })
-	local lockAfter = fs.readFileToString("wally.lock")
-	if lockAfter ~= lockBefore then
-		fs.writeStringToFile("wally.lock", lockBefore)
-		return failed("Wally dependency declarations do not match wally.lock")
-	end
-	if not result.ok then
-		return failed("Wally dependency installation failed", result.exitcode)
+	local ok, reason, exitCode = PackageInstall.install()
+	if not ok then
+		return failed(reason or "Wally dependency installation failed", exitCode)
 	end
 	return passed()
 end
@@ -317,10 +310,23 @@ local function runStep(step: StepName): StepResult
 			"Rojo sourcemap generation failed"
 		)
 	elseif step == "package_types" then
-		return runCommand(
+		if PackageInstall.typesCurrent() then
+			print("[verify] Reusing generated Wally package typings")
+			return passed()
+		end
+		local prepared, reason, exitCode = PackageInstall.prepareTypes()
+		if not prepared then
+			return failed(reason or "Could not prepare Wally package typings", exitCode)
+		end
+		local result = runCommand(
 			{ "wally-package-types", "--sourcemap", SOURCEMAP, "Packages" },
 			"Wally package type generation failed"
 		)
+		if result.ok then
+			-- The type generator intentionally rewrites Wally's require shims.
+			PackageInstall.rememberTypes()
+		end
+		return result
 	elseif step == "lest_core" then
 		local result = runCommand({ "lest", "run", "bootstrap", "--forbid-only" }, "Lest framework preparation failed")
 		if not result.ok then
@@ -360,6 +366,13 @@ local function runStep(step: StepName): StepResult
 			"tests/studio",
 		}, "Luau analysis failed")
 	elseif step == "unit" then
+		local packages = runCommand(
+			{ "lute", "run", "tests/unit/PackageInstall.regression.luau" },
+			"package installation regression failed"
+		)
+		if not packages.ok then
+			return packages
+		end
 		return runCommand({ "lest", "run", "unit", "--forbid-only" }, "unit tests failed")
 	elseif step == "build" then
 		fs.createDirectory(BUILD_DIRECTORY, { makeParents = true })

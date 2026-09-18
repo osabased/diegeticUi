@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "1axen-blink"
+canonical_url: "https://github.com/1Axen/blink"
+package_id: "1Axen/blink@1.0.0-pre.8"
+
+observed: "2026-09-18"
+statement: "The roblox-blink child previously treated every instruction defect as state reconciliation, which let safe recurring workarounds compete with immediate task delivery instead of activating focused repair. Its early repair interrupt now distinguishes soft guidance debt from hard correctness or state defects while preserving the conditional pin/header fast path."
+evidence: "The strengthened structural validator and full parent pytest suite passed; a fresh isolated agent passed Tests A-I and K, including implicit soft activation, hard stops, harmless-adjustment control, and silent-workaround falsifiability; fresh catalog routing and explicit invocation also passed."
+version_context: "1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+reconsider_when: ""
+task_context: "Repair of self-invoking generated-child guidance without changing Blink runtime code, pins, or trust."
+related_entry: ""

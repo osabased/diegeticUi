@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "howmanysmall-janitor"
+canonical_url: "https://github.com/howmanysmall/Janitor"
+package_id: "howmanysmall/janitor"
+
+observed: "2026-09-18"
+statement: "The roblox-janitor child previously lacked an early rule that made recurring undocumented cleanup workarounds activate focused repair even when the immediate cleanup still worked. Its repair interrupt now separates safe guidance repair from hard correctness, identity, version, security, or verification failures."
+evidence: "The strengthened structural validator and full parent pytest suite passed; a fresh isolated agent passed Tests A-I and K, including implicit soft activation, hard stops, harmless-adjustment control, and silent-workaround falsifiability; fresh catalog routing and explicit invocation also passed."
+version_context: "1.18.3"
+reconsider_when: ""
+task_context: "Repair of self-invoking generated-child guidance without changing Janitor runtime code, pins, or trust."
+related_entry: ""

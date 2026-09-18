@@ -25,14 +25,12 @@ Use **Janitor** to give each Roblox feature or object one explicit owner for its
 2. Declare `Janitor = "howmanysmall/janitor@1.18.3"` under `[dependencies]`, then run `wally install`; let Wally generate `Packages/` and the lockfile.
 3. Require `ReplicatedStorage.Packages.Janitor` from client, server, or shared Luau code. Acquire the module at top level, but create a Janitor where its owning feature or object is initialized.
 
-## Operational reconciliation
+## Repair interrupt
 
-- Policy: required — Wally manifests, lockfiles, and restored package contents can drift independently while this guidance is version-sensitive.
-- Installed-state check: Read `wally.toml` for alias `Janitor = "howmanysmall/janitor@1.18.3"`, confirm `wally.lock` resolves `howmanysmall/janitor` version `1.18.3`, and inspect the installed Janitor package manifest plus `Packages/Janitor.lua` redirect after `wally install`.
-- Expected identity/state: Resource slug `howmanysmall-janitor`, canonical source `https://github.com/howmanysmall/Janitor`, package `howmanysmall/janitor`, version `1.18.3`.
-- Parent-state check: Resolve the affected Roblox project root, then read matching schema-version 3 records at `.agents/roblox/resources/records/howmanysmall-janitor.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`; without a project root, use `~/.roblox-resources/records/howmanysmall-janitor.yaml` and `~/.roblox-resources/learnings/`. Match the resource slug plus canonical identity and stop on a current `blocked_use_or_version`.
-- Mismatch/unknown action: Stop the affected version-sensitive use and invoke `roblox-resource-acquisition` in `repair/reconcile` mode.
-- Defect handoff: Capture the task, installed identity and version, expected behavior, observed behavior, and smallest reproduction; then invoke `roblox-resource-acquisition` in `repair/reconcile` mode.
+- Trigger: Invoke `roblox-resource-acquisition` in `repair/reconcile` mode when this Janitor guidance requires guessing, bypassing an instruction, repeated rediscovery, or an undocumented workaround likely to recur; a harmless task-local adjustment is not an interrupt.
+- Hard defect: If correctness, security, canonical identity, selected version, or verification is unreliable, stop dependent work and enter parent reconciliation and repair before continuing.
+- Soft defect: If the workaround is safe and reversible, immediate work may continue, but invoke the parent repair diagnosis and surface the reproduction, workaround, and durable correction before completion.
+- Handoff: Capture the task, installed state, expected behavior, observed behavior, smallest reproduction, workaround, and proposed durable correction. Parent activation authorizes diagnosis and reporting, not edits without current authorization.
 
 ## Mental model
 
@@ -81,15 +79,27 @@ return WidgetController
 
 Register resources immediately after creation so failures later in setup do not leave them ownerless. In a ModuleLoader lifecycle root, remember that the loader invokes `Init` and `Start`; another owner or `LinkToInstance` must trigger any later teardown.
 
+## Operational reconciliation
+
+- Policy: conditional — the Wally declaration and lock resolution identify healthy ordinary use while generated package integrity can drift.
+- Installed-state check: Confirm `wally.toml` declares `Janitor = "howmanysmall/janitor@1.18.3"` and `wally.lock` resolves `howmanysmall/janitor` at `1.18.3`.
+- Expected identity/state: Resource slug `howmanysmall-janitor`, canonical source `https://github.com/howmanysmall/Janitor`, Wally package `howmanysmall/janitor`, and reviewed state `1.18.3`.
+- Integrity gate: Run `lute run scripts/verify.luau` before completing the task; pass only when it prints `[verify] PASS` and exits with code `0`.
+- Escalation triggers: Escalate for a missing or mismatched declaration/lock; adoption, upgrade, or an authorized repair; verifier failure or drift; a hard defect; or an already-known block.
+- Parent-state check: After an escalation trigger, resolve the project root, read the matching schema-version 3 record at `.agents/roblox/resources/records/howmanysmall-janitor.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`, and match resource slug plus canonical identity before inspecting package provenance or internals.
+- Mismatch/unknown action: For every state escalation trigger, stop the affected version-sensitive use, perform the Parent-state check, and invoke `roblox-resource-acquisition` in `repair/reconcile` mode before continuing.
+- Defect handoff: Follow the earlier Repair interrupt handoff as the source of truth for evidence and parent activation.
+
 ## Lifecycle and cleanup
 
 - Initialization: Call `Janitor.new()` once when the owning feature, session, or component is created, then add each resource as ownership is acquired.
+- Functions and threads: Register each immediately as `janitor:Add(resource, true, "Worker")`; `true` calls a function or cancels a thread during cleanup. Reuse the stable index when a new worker must replace the old one.
 - Reuse: Call `Cleanup()` to release current entries while keeping the Janitor usable; use stable indices when resources can be replaced individually.
 - Cleanup/destruction: Call `Destroy()` for final teardown because it cleans entries and removes the Janitor metatable, making later method calls invalid. `LinkToInstance(instance)` calls `Cleanup()` when that Instance is destroyed.
 
 ## API used by this skill
 
-The common surface is `Janitor.new()`, `Janitor.Is()`, `janitor:Add()`, `janitor:AddObject()`, `janitor:AddPromise()`, `janitor:Get()`, `janitor:GetAll()`, `janitor:Remove()`, `janitor:RemoveNoClean()`, `janitor:Cleanup()`, `janitor:Destroy()`, `janitor:LinkToInstance()`, and `janitor:LinkToInstances()`. Read [references/api.md](references/api.md) before using promise integration, multiple instance links, thread cleanup flags, or the list-removal variants.
+The common surface is `Janitor.new()`, `Janitor.Is()`, `janitor:Add()`, `janitor:AddObject()`, `janitor:AddPromise()`, `janitor:Get()`, `janitor:GetAll()`, `janitor:Remove()`, `janitor:RemoveNoClean()`, `janitor:Cleanup()`, `janitor:Destroy()`, `janitor:LinkToInstance()`, and `janitor:LinkToInstances()`. Read [references/api.md](references/api.md) before using promise integration, multiple instance links, specialized thread settings, or the list-removal variants.
 
 ## Failure modes
 

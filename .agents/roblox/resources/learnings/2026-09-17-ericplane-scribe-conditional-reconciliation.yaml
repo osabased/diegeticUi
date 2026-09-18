@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "ericplane-scribe"
+canonical_url: "https://github.com/ericplane/Scribe"
+package_id: "ericplane/scribe"
+
+observed: "2026-09-17"
+statement: "The roblox-scribe child was repaired from unconditional package, provenance, and parent-state inspection to a conditional Wally declaration/lock fast path. Every escalation trigger now stops version-sensitive use and routes through parent state plus repair/reconcile."
+evidence: "The updated structural validator passed; an isolated agent passed Tests A-I, and the prior required-policy wording failed the healthy-path economy control."
+version_context: "2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795"
+reconsider_when: ""
+task_context: "Repair of generated child reconciliation guidance without changing the Scribe dependency or runtime code."
+related_entry: ""

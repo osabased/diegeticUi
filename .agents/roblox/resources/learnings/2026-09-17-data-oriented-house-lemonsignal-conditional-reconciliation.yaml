@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "data-oriented-house-lemonsignal"
+canonical_url: "https://github.com/Data-Oriented-House/LemonSignal"
+package_id: "data-oriented-house/lemonsignal"
+
+observed: "2026-09-17"
+statement: "The roblox-lemonsignal child was repaired from unconditional parent-state reconciliation to a conditional Wally declaration/lock fast path. Its latest-sequence-wins guidance was also clarified to re-check the sequence immediately before committing after asynchronous work."
+evidence: "The updated structural validator passed; an isolated agent passed Tests A-I and a deterministic six-interleaving check for two successive asynchronous events, while the prior required-policy wording failed the healthy-path economy control."
+version_context: "2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
+reconsider_when: ""
+task_context: "Repair of generated child reconciliation and state-ordering guidance without changing the LemonSignal dependency or runtime code."
+related_entry: ""

@@ -74,6 +74,8 @@ describe("Fusion construction", function()
 				assert(currentButton:FindFirstChildOfClass("UICorner") ~= nil, "Button is missing its UICorner")
 				assert(currentButton:FindFirstChildOfClass("UIStroke") ~= nil, "Button is missing its UIStroke")
 				assert(currentButton:FindFirstChildOfClass("UIScale") ~= nil, "Button is missing its UIScale")
+				assert(currentButton:FindFirstChild("Label") ~= nil, "Button is missing its visible label")
+				assert(currentButton:FindFirstChild("ActionBadge") ~= nil, "Button is missing its action badge")
 			end, function()
 				if scope ~= nil then
 					Fusion.doCleanup(scope)
@@ -85,6 +87,71 @@ describe("Fusion construction", function()
 			if button ~= nil then
 				expect(button.Parent).toBe(nil)
 			end
+		end)
+	end)
+
+	it("supports custom content, variants, disabled, and loading states", function()
+		withHolder(function(holder)
+			local scope: Scope? = nil
+
+			local result = DiagnosticCapture.run(function()
+				local currentScope = Fusion.scoped(Fusion)
+				scope = currentScope
+				local screenGui = currentScope:New("ScreenGui")({
+					Name = "ButtonFeatureTest",
+					Parent = holder,
+				})
+				local dangerButton = Button(currentScope, {
+					Parent = screenGui,
+					Text = "Delete",
+					IconText = "!",
+					Variant = "danger",
+					Disabled = true,
+				})
+				local loadingButton = Button(currentScope, {
+					Parent = screenGui,
+					Text = "Publish",
+					Loading = true,
+				})
+				local holdButton = Button(currentScope, {
+					Parent = screenGui,
+					Text = "Hold",
+					HoldDuration = 0.8,
+					CooldownDuration = 2,
+				})
+
+				assert(dangerButton.Text == "Delete", "custom label was not applied")
+				assert(dangerButton.Active == false, "disabled button must not be active")
+				assert(dangerButton.Selectable == false, "disabled button must not be selectable")
+				local dangerLabel = dangerButton:FindFirstChild("Label")
+				assert(dangerLabel ~= nil and dangerLabel:IsA("TextLabel"), "disabled button label is missing")
+				assert(dangerLabel.Text == "Delete", "visible custom label was not applied")
+				local dangerBadge = dangerButton:FindFirstChild("ActionBadge")
+				assert(dangerBadge ~= nil and dangerBadge:IsA("Frame"), "custom badge is missing")
+				local dangerIcon = dangerBadge:FindFirstChildOfClass("TextLabel")
+				assert(dangerIcon ~= nil and dangerIcon.Text == "!", "custom badge icon was not applied")
+				local dangerGradient = dangerButton:FindFirstChildOfClass("UIGradient")
+				assert(dangerGradient ~= nil, "danger variant gradient is missing")
+				assert(
+					dangerGradient.Color.Keypoints[1].Value == Color3.fromRGB(255, 165, 210),
+					"danger variant palette was not applied"
+				)
+
+				assert(loadingButton.Active == false, "loading button must not be active")
+				local loadingLabel = loadingButton:FindFirstChild("Label")
+				assert(loadingLabel ~= nil and loadingLabel:IsA("TextLabel"), "loading button label is missing")
+				assert(loadingLabel.Text == "Loading...", "loading label was not applied")
+				local holdTrack = holdButton:FindFirstChild("HoldTrack")
+				assert(holdTrack ~= nil and holdTrack:IsA("Frame"), "hold progress track is missing")
+				assert(holdTrack:FindFirstChild("Fill") ~= nil, "hold progress fill is missing")
+			end, function()
+				if scope ~= nil then
+					Fusion.doCleanup(scope)
+				end
+			end)
+
+			assertCleanResult(result, nil)
+			expect(#holder:GetChildren()).toBe(0)
 		end)
 	end)
 

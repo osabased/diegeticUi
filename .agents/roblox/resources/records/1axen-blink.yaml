@@ -50,28 +50,28 @@ resource_proof:
 generated_skill: "roblox-blink"
 skill_validation:
   structural_passed: true
-  independent_behavioral_executed: false
-  independent_behavioral_passed: false
-  environment: "Same-agent contract audit against the generated-skill testing protocol; independent delegation was not authorized. Resource runtime behavior was separately verified in a live Roblox Studio client/server play session."
-  result: "Structural validation passed. The contract audit covered activation boundaries, exact Rokit setup, prerelease CLI and IDL differences, realm placement, lifecycle cleanup, failure diagnosis, security, provenance, and operational reconciliation. Independent behavioral verification of child-skill use remains unexecuted."
-  catalog_routing_status: unavailable
-  catalog_fingerprint: "sha256:b269bd9d2447dc5460ee2e2fe6f2a307174ee9c8ad9d354f5879c9a2dd5f6e69"
-  catalog_environment: "Codex repository-skill catalog with generated children roblox-blink, roblox-janitor, roblox-lemonsignal, and roblox-scribe, plus roblox-resource-acquisition and structure-roblox-projects as routing competitors."
-  catalog_result: "Static catalog validation passed with four generated children, two routing competitors, and no overlap cluster. Independent multi-skill routing validation was unavailable because fresh-agent delegation was not authorized."
+  independent_behavioral_executed: true
+  independent_behavioral_passed: true
+  environment: "Fresh isolated Codex agent executed generated-skill Tests A-I and K against the repaired child and current Rokit pin/generated headers; existing Studio resource proof remained the runtime-behavior evidence."
+  result: "Tests A-I and K passed, including healthy conditional use, state escalation, implicit soft repair activation, hard-defect stops, harmless task-local negative control, explicit activation, and the silent-workaround falsifiability control."
+  catalog_routing_status: verified
+  catalog_fingerprint: "sha256:aaf6fea8dcfe9fe4baffba705a8b58ed53db8e49223751eb6dcd8810f9962a42"
+  catalog_environment: "Codex catalog with generated children roblox-blink, roblox-janitor, roblox-lemonsignal, and roblox-scribe, plus roblox-resource-acquisition, structure-roblox-projects, and codebase-design as routing competitors."
+  catalog_result: "Static catalog validation passed with no overlap cluster. Fresh isolated routing tasks selected every child and competitor boundary, selected neither for a simpler task, and passed explicit invocation for all four children."
 
 host_adoptions:
   - host: "Codex"
     scope: repo
     location: ".agents/skills/roblox-blink"
-    status: installed
-    checked_at: "2026-09-17"
-    result: "The validated artifact was installed in the repository skill discovery path with no name collision or disable entry. Explicit activation has not run in a fresh Codex task, so operational status is not claimed."
+    status: operational
+    checked_at: "2026-09-18"
+    result: "The repaired child is installed, discoverable, enabled, and passed explicit roblox-blink invocation plus implicit repair-interrupt routing in fresh isolated Codex tasks."
     evidence:
       installed: present
       registered: not-applicable
       discoverable: "yes"
       enabled: "yes"
-      explicit_activation: not-run
+      explicit_activation: passed
 
 limitations:
   - "1.0.0-pre.8 is a prerelease whose CLI, IDL, generated API, and output syntax may change before stable 1.0.0."

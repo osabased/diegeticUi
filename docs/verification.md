@@ -8,7 +8,15 @@ The required local and CI gate remains:
 lute run scripts/verify.luau
 ```
 
-With no arguments, the verifier installs the locked Wally graph, checks Blink generation while restoring its randomized output, creates the Rojo sourcemap and package typings, checks formatting, lints and analyzes Luau, runs native unit tests, and builds a disposable place. This is the only invocation that can print `[verify] PASS`.
+With no arguments, the verifier ensures the locked Wally graph is installed, checks Blink generation while restoring its randomized output, creates the Rojo sourcemap and package typings, checks formatting, lints and analyzes Luau, runs native unit tests, and builds a disposable place. This is the only invocation that can print `[verify] PASS`.
+
+Unchanged dependencies are reused without invoking Wally. A local SHA-256 fingerprint in `.verify/wally-install.sha256` covers `rokit.toml`, `wally.toml`, `wally.lock`, and every installed package file; package type generation refreshes it after successfully rewriting require shims. Missing, added, or modified files invalidate the fingerprint.
+
+Generated typings are also reused when their package fingerprint and sourcemap match `.verify/wally-types.sha256`. The pinned typing generator cannot process its own rewritten shims, so invalidated typings require original shims from a staged Wally restore before regeneration.
+
+On a cache miss, Wally installs into a unique staging directory and the verifier rejects lockfile drift before updating only changed package files. This avoids Wally 0.3.2 deleting and recreating the live `Packages/` tree, which can crash Rojo 7.7.0 while it is serving. If restoring dependencies requires removing old package files, verification stops before copying anything: stop Rojo, run `wally install`, and restart Rojo. Also stop Rojo before running `wally install` directly. Deleting the local fingerprint forces a staged restore on the next dependency-dependent verification run.
+
+The unit stage also runs `lute run tests/unit/PackageInstall.regression.luau` to check cache invalidation and package synchronization with filesystem fixtures. Lute owns this test because Lest's native resolver does not expose `@std/fs`.
 
 For a narrower loop, select one or more stages:
 
@@ -58,9 +66,9 @@ The suite mounts the real Fusion Button and verifies its label, property configu
 
 Because Studio Lest runs in edit mode, it cannot verify client startup or real pointer interaction. UI/input changes still require the following playtest.
 
-## MCP Button interaction playtest
+## Studio Button interaction playtest
 
-Use `tests/studio/ButtonPlaytest.luau` as the filesystem-owned client assertion probe. Inject or execute it transiently through Studio MCP during the play session; never save it into the Studio DataModel.
+Use `tests/studio/ButtonPlaytest.luau` as the filesystem-owned client assertion probe. Inject or execute it transiently through Studio MCP during the play session; never save it into the Studio DataModel. The probe observes settled presentation state but does not synthesize Roblox input, so the pointer steps remain real interaction checks.
 
 1. Select the Studio instance opened for this checkout and note the current console position.
 2. Start a client play session and wait for `PlayerGui.ButtonDemo.Button`.
@@ -72,3 +80,7 @@ Use `tests/studio/ButtonPlaytest.luau` as the filesystem-owned client assertion 
 8. Stop the play session if this verification started it.
 
 The probe compares settled colors and scale with tolerances. Its timeout covers both startup hierarchy discovery and state settling, and missing instances are reported by path. When Roblox reduced motion is enabled, every state expects scale `1` while still requiring distinct state colors.
+
+Studio MCP pointer injection may land in CoreGUI instead of the experience viewport, and assistant-executed Luau may lack the `RobloxScript` capability required by `VirtualInputManager`. After either failure appears, stop retrying automated input. Collect the fallback evidence that remains available: inspect the rendered UI, confirm the expected client UI and server lifecycle roots loaded, count the Blink transport instances, and inspect new console output. Then stop Play and report each interaction or network round trip that remains unverified.
+
+One reliable and one unreliable Blink transport instance prove that the generated network module initialized. Their presence does not prove that an action request reached the server or that its response reached the client.

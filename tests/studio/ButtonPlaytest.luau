@@ -49,7 +49,7 @@ local function tryFindButton(): (TextButton?, string?)
 		return nil, "missing LocalPlayer.PlayerGui.ButtonDemo.Button"
 	end
 	assert(button:IsA("TextButton"), "ButtonDemo.Button must be a TextButton")
-	assert(button.Text == "Click me", "ButtonDemo.Button has the wrong label")
+	assert(button.Text == "Deploy", "ButtonDemo.Button has the wrong label")
 	return button, nil
 end
 

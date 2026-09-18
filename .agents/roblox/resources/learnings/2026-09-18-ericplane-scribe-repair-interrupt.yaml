@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "ericplane-scribe"
+canonical_url: "https://github.com/ericplane/Scribe"
+package_id: "ericplane/scribe"
+
+observed: "2026-09-18"
+statement: "The roblox-scribe child previously lacked an early rule that made a recurring safe documentation workaround activate focused repair without automatically reopening Scribe provenance. Its repair interrupt now permits bounded immediate progress for soft defects while hard persistence, security, identity, version, or verification defects stop dependent work."
+evidence: "The strengthened structural validator and full parent pytest suite passed; a fresh isolated agent passed Tests A-I and K, including implicit soft activation, hard stops, harmless-adjustment control, and silent-workaround falsifiability; fresh catalog routing and explicit invocation also passed."
+version_context: "2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795"
+reconsider_when: ""
+task_context: "Repair of self-invoking generated-child guidance without changing Scribe runtime code, pins, or trust."
+related_entry: ""

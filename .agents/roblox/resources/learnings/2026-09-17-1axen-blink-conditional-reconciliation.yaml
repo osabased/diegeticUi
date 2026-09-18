@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "1axen-blink"
+canonical_url: "https://github.com/1Axen/blink"
+package_id: "1Axen/blink@1.0.0-pre.8"
+
+observed: "2026-09-17"
+statement: "The roblox-blink child was repaired from unconditional parent-state reconciliation to a conditional fast path that checks the Rokit pin and generated version headers. Every escalation trigger now stops version-sensitive use and routes through parent state plus repair/reconcile."
+evidence: "The updated structural validator passed; an isolated agent passed Tests A-I after one escalation-wording repair, and the prior required-policy wording failed the healthy-path economy control."
+version_context: "1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+reconsider_when: ""
+task_context: "Repair of generated child reconciliation guidance without changing the Blink dependency or runtime code."
+related_entry: ""

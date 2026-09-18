@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "howmanysmall-janitor"
+canonical_url: "https://github.com/howmanysmall/Janitor"
+package_id: "howmanysmall/janitor"
+
+observed: "2026-09-17"
+statement: "The roblox-janitor child was repaired from unconditional parent-state reconciliation to a conditional Wally declaration/lock fast path. Its primary lifecycle guidance now includes concrete callable/thread registration syntax rather than deferring that ordinary case to the API reference."
+evidence: "The updated structural validator passed; an isolated agent passed Tests A-I after one escalation-wording repair, and the prior required-policy wording failed the healthy-path economy control."
+version_context: "1.18.3"
+reconsider_when: ""
+task_context: "Repair of generated child reconciliation and lifecycle guidance without changing the Janitor dependency or runtime code."
+related_entry: ""

@@ -26,14 +26,12 @@ Use **LemonSignal** for lightweight in-process signals with reconnectable connec
 2. Declare `LemonSignal = "data-oriented-house/lemonsignal@2.0.0"` under `[dependencies]`, then run `wally install`; let Wally generate `Packages/` and the lockfile.
 3. Require `ReplicatedStorage.Packages.LemonSignal` from client, server, or shared Luau code.
 
-## Operational reconciliation
+## Repair interrupt
 
-- Policy: required — Wally manifests, lockfiles, and restored package contents can drift independently while this guidance is version-sensitive.
-- Installed-state check: Read `wally.toml` for alias `LemonSignal = "data-oriented-house/lemonsignal@2.0.0"`, confirm `wally.lock` resolves `data-oriented-house/lemonsignal` version `2.0.0`, and inspect `Packages/LemonSignal.lua` plus the installed package manifest after `wally install`.
-- Expected identity/state: Resource slug `data-oriented-house-lemonsignal`, canonical source `https://github.com/Data-Oriented-House/LemonSignal`, package `data-oriented-house/lemonsignal`, and reviewed state `2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2`.
-- Parent-state check: Resolve the affected Roblox project root, then read the matching schema-version 3 record at `.agents/roblox/resources/records/data-oriented-house-lemonsignal.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`; without a project root, use `~/.roblox-resources/records/data-oriented-house-lemonsignal.yaml` and `~/.roblox-resources/learnings/`. Match the resource slug plus canonical URL and package identity, and stop on a current `blocked_use_or_version`.
-- Mismatch/unknown action: Stop the affected version-sensitive use and invoke `roblox-resource-acquisition` in `repair/reconcile` mode.
-- Defect handoff: Capture the task, installed identity and version, expected behavior, observed behavior, and smallest reproduction; then invoke `roblox-resource-acquisition` in `repair/reconcile` mode.
+- Trigger: Invoke `roblox-resource-acquisition` in `repair/reconcile` mode when this LemonSignal guidance requires guessing, bypassing an instruction, repeated rediscovery, or an undocumented workaround likely to recur; a harmless task-local adjustment is not an interrupt.
+- Hard defect: If correctness, security, canonical identity, selected version, or verification is unreliable, stop dependent work and enter parent reconciliation and repair before continuing.
+- Soft defect: If the workaround is safe and reversible, immediate work may continue, but invoke the parent repair diagnosis and surface the reproduction, workaround, and durable correction before completion.
+- Handoff: Capture the task, installed state, expected behavior, observed behavior, smallest reproduction, workaround, and proposed durable correction. Parent activation authorizes diagnosis and reporting, not edits without current authorization.
 
 ## Common path
 
@@ -57,6 +55,17 @@ HealthChanged:Destroy()
 ```
 
 `Fire` schedules each callback asynchronously with `task.spawn` in Roblox. Code after `Fire` may run before callbacks finish, and callback completion order is not a contract.
+
+## Operational reconciliation
+
+- Policy: conditional — the Wally declaration and lock resolution identify healthy ordinary use while generated package integrity can drift.
+- Installed-state check: Confirm `wally.toml` declares `LemonSignal = "data-oriented-house/lemonsignal@2.0.0"` and `wally.lock` resolves `data-oriented-house/lemonsignal` at `2.0.0`.
+- Expected identity/state: Resource slug `data-oriented-house-lemonsignal`, canonical source `https://github.com/Data-Oriented-House/LemonSignal`, Wally package `data-oriented-house/lemonsignal`, and reviewed state `2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2`.
+- Integrity gate: Run `lute run scripts/verify.luau` before completing the task; pass only when it prints `[verify] PASS` and exits with code `0`.
+- Escalation triggers: Escalate for a missing or mismatched declaration/lock; adoption, upgrade, or an authorized repair; verifier failure or drift; a hard defect; or an already-known block.
+- Parent-state check: After an escalation trigger, resolve the project root, read the matching schema-version 3 record at `.agents/roblox/resources/records/data-oriented-house-lemonsignal.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`, and match resource slug plus canonical identity before inspecting package provenance or internals.
+- Mismatch/unknown action: For every state escalation trigger, stop the affected version-sensitive use, perform the Parent-state check, and invoke `roblox-resource-acquisition` in `repair/reconcile` mode before continuing.
+- Defect handoff: Follow the earlier Repair interrupt handoff as the source of truth for evidence and parent activation.
 
 ## Client/server placement
 
@@ -89,6 +98,26 @@ A signal owns a linked set of connections. `Connect` inserts a listener and retu
 ### State checked immediately after `Fire` is stale
 
 Callbacks run through `task.spawn`. Move sequencing into the callback, await a separate completion signal, or yield only in test code; do not assume `Fire` is synchronous.
+
+### Successive events restore stale state
+
+Callbacks from separate `Fire` calls may overlap, and completion order is not a state-ordering contract. When events replace visible or authoritative local state, include a monotonically increasing sequence and ignore an event older than the latest one already applied:
+
+```luau
+local latestSequence = 0
+
+signal:Connect(function(sequence: number, value: string)
+	if sequence <= latestSequence then
+		return
+	end
+	latestSequence = sequence
+	applyValue(value)
+end)
+```
+
+Increment the sequence at the producer before each `Fire`. Use this latest-wins pattern only for replaceable state; independent events should remain independent.
+
+If the callback yields or awaits asynchronous work, compute the result first and re-check `sequence == latestSequence` immediately before applying it. The entry check alone cannot prevent an older callback that finishes later from restoring stale state.
 
 ### Janitor warns that the connection has no `Destroy` method
 

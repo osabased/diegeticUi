@@ -50,28 +50,28 @@ resource_proof:
 generated_skill: "roblox-scribe"
 skill_validation:
   structural_passed: true
-  independent_behavioral_executed: false
-  independent_behavioral_passed: false
-  environment: "Same-agent source and contract audit plus a live Roblox Studio mock-mode integration against the generated-skill testing protocol; independent delegation was not authorized. Upstream runtime behavior was separately exercised by the canonical headless suite."
-  result: "A live proof caught and repaired colon-call examples that incorrectly passed the accessor table as a value; the corrected dot-call guidance then drove a passing server/client replication proof. Structural validation and the same-agent contract audit cover positive and negative activation, clean Wally setup, failure diagnosis, provenance, security, and operational reconciliation. Independent behavioral verification of child-skill use remains unexecuted."
-  catalog_routing_status: unavailable
-  catalog_fingerprint: "sha256:b149fa8b588d7ca6a1b3e37d536711a2383595099348309751e5410e31d02cd9"
-  catalog_environment: "Codex repository-skill catalog with generated children roblox-janitor, roblox-lemonsignal, and roblox-scribe; repository, user, admin, and system activation metadata were inspected for plausible routing competitors."
-  catalog_result: "Static catalog validation passed with three generated children, no plausible routing competitors, and no overlap cluster. Independent multi-skill routing validation was unavailable because fresh-agent delegation was not authorized."
+  independent_behavioral_executed: true
+  independent_behavioral_passed: true
+  environment: "Fresh isolated Codex agent executed generated-skill Tests A-I and K against the repaired child and current Wally declaration/lock; existing upstream and Studio resource proofs remained the runtime-behavior evidence."
+  result: "Tests A-I and K passed, including healthy conditional use, state escalation, implicit soft repair activation, hard-defect stops, harmless task-local negative control, explicit activation, and the silent-workaround falsifiability control."
+  catalog_routing_status: verified
+  catalog_fingerprint: "sha256:aaf6fea8dcfe9fe4baffba705a8b58ed53db8e49223751eb6dcd8810f9962a42"
+  catalog_environment: "Codex catalog with generated children roblox-blink, roblox-janitor, roblox-lemonsignal, and roblox-scribe, plus roblox-resource-acquisition, structure-roblox-projects, and codebase-design as routing competitors."
+  catalog_result: "Static catalog validation passed with no overlap cluster. Fresh isolated routing tasks selected every child and competitor boundary, selected neither for a simpler task, and passed explicit invocation for all four children."
 
 host_adoptions:
   - host: "Codex"
     scope: repo
     location: ".agents/skills/roblox-scribe"
-    status: installed
-    checked_at: "2026-09-16"
-    result: "The validated artifact was promoted into the repository skill discovery path with no duplicate staging copy, name collision, or matching disable entry. Explicit activation has not run in a fresh Codex task, so operational status is not claimed."
+    status: operational
+    checked_at: "2026-09-18"
+    result: "The repaired child is installed, discoverable, enabled, and passed explicit roblox-scribe invocation plus implicit repair-interrupt routing in fresh isolated Codex tasks."
     evidence:
       installed: present
       registered: not-applicable
       discoverable: "yes"
       enabled: "yes"
-      explicit_activation: not-run
+      explicit_activation: passed
 
 limitations:
   - "The live Roblox Studio proof used Mode = Mock; DataStore persistence, MarketplaceService, ordered-store, and cross-server service behavior remain unexercised."

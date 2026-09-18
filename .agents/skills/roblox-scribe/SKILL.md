@@ -28,14 +28,12 @@ Use **Scribe** for one typed player-data schema that persists on the server and 
 3. Use the new Luau type solver for Scribe's typed accessor API. Runtime behavior does not depend on that editor/typechecker setting.
 4. Choose `ProfileStoreIndex` and `ProfileKeyPrefix` deliberately. They are required persistence identity, not decorative labels.
 
-## Operational reconciliation
+## Repair interrupt
 
-- Policy: required — the Wally manifest, lockfile, installed redirect, generated package contents, and source-sensitive API guidance can drift independently.
-- Installed-state check: Confirm `wally.toml` contains `Scribe = "ericplane/scribe@2.3.0"`, `wally.lock` resolves `ericplane/scribe` version `2.3.0`, `Packages/Scribe.lua` redirects to that package, and its `Version.luau` reports `2.3.0` after `wally install`.
-- Expected identity/state: Resource slug `ericplane-scribe`, canonical source `https://github.com/ericplane/Scribe`, Wally package `ericplane/scribe`, and reviewed state `2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795`.
-- Parent-state check: Resolve the affected Roblox project root, then read the matching schema-version 3 record at `.agents/roblox/resources/records/ericplane-scribe.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`; without a project root, use `~/.roblox-resources/records/ericplane-scribe.yaml` and `~/.roblox-resources/learnings/`. Match the resource slug plus canonical URL and package identity, and stop on a current `blocked_use_or_version`.
-- Mismatch/unknown action: Stop version-sensitive work and invoke `roblox-resource-acquisition` in `repair/reconcile` mode.
-- Defect handoff: Capture the task, installed identity/version, persistence mode, expected and observed behavior, relevant warnings, and the smallest reproduction; then invoke `roblox-resource-acquisition` in `repair/reconcile` mode.
+- Trigger: Invoke `roblox-resource-acquisition` in `repair/reconcile` mode when this Scribe guidance requires guessing, bypassing an instruction, repeated rediscovery, or an undocumented workaround likely to recur; a harmless task-local adjustment is not an interrupt.
+- Hard defect: If correctness, security, canonical identity, selected version, or verification is unreliable, stop dependent work and enter parent reconciliation and repair before continuing.
+- Soft defect: If the workaround is safe and reversible, immediate work may continue, but invoke the parent repair diagnosis and surface the reproduction, workaround, and durable correction before completion.
+- Handoff: Capture the task, installed state, expected behavior, observed behavior, smallest reproduction, workaround, and proposed durable correction. Parent activation authorizes diagnosis and reporting, not edits without current authorization.
 
 ## Mental model
 
@@ -121,6 +119,17 @@ if PlayerData.WaitForData(30) then
 	-- Add `disconnect` to the UI or feature Janitor as a callable cleanup.
 end
 ```
+
+## Operational reconciliation
+
+- Policy: conditional — the Wally declaration and lock resolution identify healthy ordinary use while generated package integrity and source-sensitive guidance can drift.
+- Installed-state check: Confirm `wally.toml` declares `Scribe = "ericplane/scribe@2.3.0"` and `wally.lock` resolves `ericplane/scribe` at `2.3.0`.
+- Expected identity/state: Resource slug `ericplane-scribe`, canonical source `https://github.com/ericplane/Scribe`, Wally package `ericplane/scribe`, and reviewed state `2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795`.
+- Integrity gate: Run `lute run scripts/verify.luau` before completing the task; pass only when it prints `[verify] PASS` and exits with code `0`.
+- Escalation triggers: Escalate for a missing or mismatched declaration/lock; adoption, upgrade, or an authorized repair; verifier failure or drift; a hard defect; or an already-known block.
+- Parent-state check: After an escalation trigger, resolve the project root, read the matching schema-version 3 record at `.agents/roblox/resources/records/ericplane-scribe.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`, and match resource slug plus canonical identity before inspecting package provenance or internals.
+- Mismatch/unknown action: For every state escalation trigger, stop the affected version-sensitive use, perform the Parent-state check, and invoke `roblox-resource-acquisition` in `repair/reconcile` mode before continuing.
+- Defect handoff: Follow the earlier Repair interrupt handoff as the source of truth; include persistence mode and relevant warnings in its reproduction.
 
 ## Lifecycle and cleanup
 

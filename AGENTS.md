@@ -4,6 +4,14 @@
 Before making a structural placement, startup, source-of-truth, organization, or structurally owned dependency decision, read `.agents/roblox/structure.md` for the project's durable structural conventions.
 <!-- structure-roblox-projects:onboarding:end -->
 
+## Repair interrupts
+
+Treat a workaround as defect evidence when following reusable project guidance, a skill, tooling, or automation requires guessing, bypassing documented behavior, repeated rediscovery, or an undocumented adjustment likely to recur. Capture the smallest reproduction and expected/observed behavior, surface the issue, and invoke the owning repair workflow when one exists. A successful local workaround does not resolve the reusable defect.
+
+- For a hard defect affecting correctness, security, identity, version state, or verification evidence, stop dependent work until it is reconciled.
+- For a soft guidance or tooling defect with a safe, reversible workaround, the current task may continue, but report the workaround and the durable correction needed before completion.
+- Keep repair mutations within the current authorization; when the durable owner is outside scope, provide the evidence and proposed correction instead of silently absorbing the workaround.
+
 ## Development workflow
 
 The filesystem is authoritative. Rojo projects `src/` into Studio; do not make lasting source edits in the Studio DataModel. Keep runtime boundaries explicit:

@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "data-oriented-house-lemonsignal"
+canonical_url: "https://github.com/Data-Oriented-House/LemonSignal"
+package_id: "data-oriented-house/lemonsignal"
+
+observed: "2026-09-18"
+statement: "The roblox-lemonsignal child previously lacked an early rule that made a safe recurring workaround activate focused repair without forcing unrelated lifecycle reconciliation. Its repair interrupt now preserves immediate safe progress while requiring parent diagnosis and a surfaced durable correction, and keeps hard defects blocking."
+evidence: "The strengthened structural validator and full parent pytest suite passed; a fresh isolated agent passed Tests A-I and K, silent-workaround falsifiability, and the latest-sequence-wins cases; fresh catalog routing and explicit invocation also passed."
+version_context: "2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
+reconsider_when: ""
+task_context: "Repair of self-invoking generated-child guidance without changing LemonSignal runtime code, pins, or trust."
+related_entry: ""

@@ -10,17 +10,17 @@ local REPLICATED_STORAGE = game:GetService("ReplicatedStorage")
 local RUN_SERVICE = game:GetService("RunService")
 
 assert(RUN_SERVICE:IsServer(), "The server module can only be required from the server!")
-local RELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("8cfd39c036166d10e19b3553f9c6b865") :: RemoteEvent
+local RELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("f6c5caf92ed591640e752817a449d3b7") :: RemoteEvent
 if not RELIABLE_EVENT then
 	local event = Instance.new("RemoteEvent")
-	event.Name = "8cfd39c036166d10e19b3553f9c6b865"
+	event.Name = "f6c5caf92ed591640e752817a449d3b7"
 	event.Parent = REPLICATED_STORAGE
 	RELIABLE_EVENT = event
 end
-local UNRELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("98475c9c4edbdae331224c350ae53fce") :: UnreliableRemoteEvent
+local UNRELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("69bd090d3eb76814a1e57589e308774a") :: UnreliableRemoteEvent
 if not UNRELIABLE_EVENT then
 	local event = Instance.new("UnreliableRemoteEvent")
-	event.Name = "98475c9c4edbdae331224c350ae53fce"
+	event.Name = "69bd090d3eb76814a1e57589e308774a"
 	event.Parent = REPLICATED_STORAGE
 	UNRELIABLE_EVENT = event
 end
@@ -86,6 +86,76 @@ local templates = {}
 local invocations_bitset = 4294967295
 local connections = {}
 local types = {}
+function types.TY_read_0x000001cd2b032c80(): (string) 
+	-- bb1 {
+	local r0 = buffer.readu32(in_buffer, advance(4))
+	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
+	-- bb1 }
+	return r1
+end
+function types.TY_write_0x000001cd2b032c80(p1: string): () 
+	-- bb1 {
+	local r0 = #p1
+	local r1 = out_cursor
+	allocate(4)
+	buffer.writeu32(out_buffer, r1, r0)
+	local r2 = out_cursor
+	allocate(r0)
+	buffer.writestring(out_buffer, r2, p1, r0)
+	-- bb1 }
+end
+function types.TY_read_0x000001cd2b032bc0(): (boolean) 
+	-- bb1 {
+	local r0 = if buffer.readu8(in_buffer, advance(1)) == 1 then true else false
+	-- bb1 }
+	return r0
+end
+function types.TY_write_0x000001cd2b032bc0(p1: boolean): () 
+	-- bb1 {
+	-- bb1 }
+	if typeof(p1) ~= 'boolean' then
+		-- bb2 {
+		error(string.format('Expected a boolean, got %s instead', typeof(p1)))
+		-- bb2 }
+		-- goto (bb3)
+	end
+	-- bb3 {
+	local r0 = out_cursor
+	allocate(1)
+	buffer.writeu8(out_buffer, r0, if p1 == true then 1 else 0)
+	-- bb3 }
+end
+function types.TY_read_0x000001cd2b032a70(): (string) 
+	-- bb1 {
+	local r0 = buffer.readu32(in_buffer, advance(4))
+	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
+	-- bb1 }
+	return r1
+end
+function types.TY_write_0x000001cd2b032a70(p1: string): () 
+	-- bb1 {
+	local r0 = #p1
+	local r1 = out_cursor
+	allocate(4)
+	buffer.writeu32(out_buffer, r1, r0)
+	local r2 = out_cursor
+	allocate(r0)
+	buffer.writestring(out_buffer, r2, p1, r0)
+	-- bb1 }
+end
+function types.TY_read_0x000001cd2b0329e0(): (number) 
+	-- bb1 {
+	local r0 = buffer.readf32(in_buffer, advance(4))
+	-- bb1 }
+	return r0
+end
+function types.TY_write_0x000001cd2b0329e0(p1: number): () 
+	-- bb1 {
+	local r0 = out_cursor
+	allocate(4)
+	buffer.writef32(out_buffer, r0, p1)
+	-- bb1 }
+end
 RELIABLE_EVENT.OnServerEvent:Connect(function(player: Player, packet_buffer: buffer, packet_unknowns: {unknown}): () 
 	-- bb1 {
 	local r0 = buffer.len(packet_buffer)
@@ -98,19 +168,103 @@ RELIABLE_EVENT.OnServerEvent:Connect(function(player: Player, packet_buffer: buf
 		-- bb2 {
 		local r1 = buffer.readu8(in_buffer, advance(1))
 		-- bb2 }
-		-- if (1/1) (bb3, bb5)
-		if true == true then
+		-- if (1/2) (bb3, bb10)
+		if r1 == 96 then
 			-- bb3 {
-			error(string.format('Unknown event id: %d', r1))
+			-- REMARK: RequestButtonAction
+			local r2 = connections[96]
+			local r3 = buffer.readu8(in_buffer, advance(1))
+			local r4
 			-- bb3 }
-			-- goto (bb5)
+			r4 = types.TY_read_0x000001cd2b032c80()
+			-- bb4 {
+			-- bb4 }
+			-- if (1/2) (bb5, bb6)
+			if r2 == nil then
+				-- bb5 {
+				local r5 = out_cursor
+				allocate(1)
+				buffer.writeu8(out_buffer, r5, 96)
+				local r6 = out_cursor
+				allocate(1)
+				buffer.writeu8(out_buffer, r6, r3)
+				local r7 = out_cursor
+				allocate(1)
+				buffer.writeu8(out_buffer, r7, 0)
+				-- bb5 }
+				-- goto (bb9)
+			-- bb6 {
+			-- bb6 }
+			-- if (2/2) (bb7, bb9)
+			elseif r2 ~= nil then
+				-- bb7 {
+				local r5 = player
+				task.spawn(function(): () 
+					-- bb1 {
+					local r6, r7, r8, r9 = pcall(r2, r5, r4)
+					local r10 = players_map[r5]
+					-- bb1 }
+					if r10 == nil then
+						-- bb2 {
+						-- bb2 }
+						return 
+					end
+					-- bb3 {
+					out_cursor = 0
+					table.clear(out_unknown)
+					local r11 = out_cursor
+					allocate(1)
+					buffer.writeu8(out_buffer, r11, 96)
+					local r12 = out_cursor
+					allocate(1)
+					buffer.writeu8(out_buffer, r12, r3)
+					local r13 = out_cursor
+					allocate(1)
+					buffer.writeu8(out_buffer, r13, if r6 == true then 1 else 0)
+					-- bb3 }
+					if r6 == true then
+						-- bb4 {
+						-- bb4 }
+						types.TY_write_0x000001cd2b032bc0(r7)
+						-- bb5 {
+						-- bb5 }
+						types.TY_write_0x000001cd2b032a70(r8)
+						-- bb6 {
+						-- bb6 }
+						types.TY_write_0x000001cd2b0329e0(r9)
+						-- bb7 {
+						-- bb7 }
+						-- goto (bb8)
+					end
+					-- bb8 {
+					local r14 = buffer.create(out_cursor)
+					buffer.copy(r14, 0, out_buffer, 0, out_cursor)
+					local r15 = r10.unknown
+					table.insert(r10.buffers, r14)
+					table.insert(r10.lengths, out_cursor)
+					table.move(out_unknown, 1, #out_unknown, (#r15 + 1), r15)
+					-- bb8 }
+				end)
+				-- bb7 }
+				-- goto (bb9)
+			end
+			-- bb9 {
+			-- bb9 }
+			-- goto (bb13)
+		-- bb10 {
+		-- bb10 }
+		-- if (2/2) (bb11, bb13)
+		else			-- bb11 {
+			error(string.format('Unknown event id: %d', r1))
+			-- bb11 }
+			-- goto (bb13)
 		end
-		-- bb5 {
-		-- bb5 }
-		-- goto (bb6)
+		-- bb13 {
+		-- bb13 }
+		-- goto (bb14)
 	end
-	-- bb6 {
-	-- bb6 }
+	-- bb14 {
+	-- bb14 }
 end)
 UNRELIABLE_EVENT.OnServerEvent:Connect(function(player: Player, packet_buffer: buffer, packet_unknowns: {unknown}): () 
 	-- bb1 {
@@ -231,5 +385,25 @@ return {
 		-- bb9 }
 	end,
 	exports = {
+		RequestButtonAction = {
+			On = function(callback: (player: Player, action_id: string) -> (boolean, string, number)): (() -> ()) 
+				-- bb1 {
+				-- bb1 }
+				if connections[96] ~= nil then
+					-- bb2 {
+					warn(debug.traceback('[Blink]: Function "RequestButtonAction" already has a callback, the current callback will be discarded.', 2))
+					-- bb2 }
+					-- goto (bb3)
+				end
+				-- bb3 {
+				connections[96] = callback
+				-- bb3 }
+				return function(): () 
+					-- bb1 {
+					connections[96] = nil
+					-- bb1 }
+				end
+			end,
+		},
 	}
 }
