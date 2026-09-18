@@ -56,7 +56,9 @@ The wrapper runs `blink compile --profile release src/shared/Network/main.blink`
 
 Charm owns domain and shared application state. Fusion 0.3 owns UI rendering and local presentation state, including springs and tweens. UI Labs owns isolated component stories.
 
-Install the [UI Labs Studio plugin](https://create.roblox.com/store/asset/14293316215/UI-Labs), run `rojo serve`, and open the `UI` storybook to preview the Button component states. Wally installs the matching UI Labs utility package with the rest of the project dependencies.
+Install the [UI Labs Studio plugin](https://create.roblox.com/store/asset/14293316215/UI-Labs) and connect Studio to `rojo serve`. Wally installs the UI Labs utility package; the Studio plugin is installed separately.
+
+Place component stories beneath the feature that owns them, alongside a UI Labs storybook. This starter currently has no application UI example. Use the [behavior verification and Studio playtest workflow](docs/verification.md#behavior-verification) to distinguish rendered-state checks from real input validation.
 
 ## Project structure
 

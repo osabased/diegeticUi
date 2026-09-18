@@ -18,12 +18,19 @@ export type Selection = {
 	fullGate: boolean,
 }
 
+export type CommandDiagnostics = {
+	arguments: { string },
+	stdout: string,
+	stderr: string,
+}
+
 export type StageRecord = {
 	name: StepName,
 	status: StageStatus,
 	durationMs: number,
 	exitCode: number?,
 	reason: string?,
+	diagnostics: CommandDiagnostics?,
 }
 
 export type Report = {
@@ -40,6 +47,7 @@ export type StepResult = {
 	ok: boolean,
 	exitCode: number?,
 	reason: string?,
+	diagnostics: CommandDiagnostics?,
 }
 
 export type Runner = (StepName) -> StepResult
@@ -273,6 +281,7 @@ function Verification.execute(
 			record.status = "failed"
 			record.exitCode = if result.exitCode ~= nil and result.exitCode ~= 0 then result.exitCode else 1
 			record.reason = result.reason or "command failed"
+			record.diagnostics = result.diagnostics
 			report.outcome = "failed"
 			blockRemaining(report, plan, step)
 			if onUpdate ~= nil then

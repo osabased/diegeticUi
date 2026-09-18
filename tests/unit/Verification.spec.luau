@@ -171,6 +171,49 @@ describe("verification planning", function()
 end)
 
 describe("verification execution", function()
+	it("retains failed command diagnostics through cleanup and report persistence", function()
+		local selection = assert(Verification.parseArguments({ "--stage", "lint", "--stage", "analyze" }))
+		local report = Verification.newReport(selection, "diagnostics")
+		local stdout = "source.luau:12: expected number, got string\n"
+		local stderr = 'checker detail with quotes: "value"\r\n'
+		local persistedFailures = 0
+		local result = Verification.orchestrate(report, Verification.plan(selection), function(step)
+			if step == "lint" then
+				return {
+					ok = false,
+					exitCode = 7,
+					reason = "lint failed",
+					diagnostics = {
+						arguments = { "selene", "src" },
+						stdout = stdout,
+						stderr = stderr,
+					},
+				}
+			end
+			return { ok = true }
+		end, function()
+			return 0
+		end, function(snapshot)
+			local failedStage = findRecord(snapshot, "lint")
+			if failedStage.status == "failed" then
+				local diagnostics = assert(failedStage.diagnostics, "failed report lost command diagnostics")
+				expect(table.concat(diagnostics.arguments, " ")).toBe("selene src")
+				expect(diagnostics.stdout).toBe(stdout)
+				expect(diagnostics.stderr).toBe(stderr)
+				expect(failedStage.exitCode).toBe(7)
+				persistedFailures += 1
+			end
+		end, function()
+			error("injected cleanup failure after command failure")
+		end)
+		expect(result.ok).toBe(false)
+		expect(result.finalReportPersisted).toBe(true)
+		expect(persistedFailures).toBe(2)
+		expect(report.errors[1].kind).toBe("cleanup")
+		expect(findRecord(report, "analyze").reason).toBe("blocked_by:lint")
+		expect(findRecord(report, "preflight").diagnostics).toBe(nil)
+	end)
+
 	it("stops after a failure and records blocked stages", function()
 		local selection = assert(Verification.parseArguments({ "--stage", "analyze" }))
 		local plan = Verification.plan(selection)

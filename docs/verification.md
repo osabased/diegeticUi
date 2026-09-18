@@ -33,6 +33,8 @@ A single local SHA-256 stamp in `.verify/dependencies.sha256` covers `rokit.toml
 
 The unit stage also runs `lute run tests/unit/Dependencies.regression.luau` to check preparation freshness with disposable filesystem fixtures.
 
+It also checks README's relative file links with `lute run tests/unit/Documentation.regression.luau`, including any linked UI example entry points. This detects deleted or moved linked examples; it does not validate prose, remote URLs, or Markdown anchors.
+
 ## Focused runs
 
 For a narrower loop, select one or more stages:
@@ -59,6 +61,10 @@ The Studio stage is deliberately absent from the canonical gate. It requires a l
 ## Reports and failures
 
 Every valid run writes a unique schema-version-1 JSON report beneath `.verify/reports/` and prints its path. Reports contain the selected stages, whether the full gate ran, the overall outcome, ordered stage records with status, duration, exit code, and reason, and an additive `errors` collection for report, orchestration, or cleanup failures.
+
+Failed checker commands also retain `diagnostics.arguments`, `diagnostics.stdout`, and `diagnostics.stderr` on the failed stage. Read these fields for the original error before rerunning a check; the short `reason` identifies only the failed stage. Command output is captured and echoed after each command completes. Successful command output is not stored in the report, and failures before a checker launches use `reason` without command diagnostics. Older reports may omit these additive fields.
+
+The unit stage runs `lute run tests/unit/VerificationDiagnostics.regression.luau` to exercise the actual CLI in a disposable fixture: an invalid source must fail with its original checker output and exit code preserved; a corrected run must pass without overwriting that failure report. The fixture uses only formatting and never installs packages or changes live project source.
 
 - `passed` means the stage or prerequisite completed.
 - `failed` identifies the first failing stage and preserves its nonzero exit code.
@@ -101,5 +107,7 @@ Report which scenarios passed, failed, or remain unverified. A canonical-gate pa
 6. Stop the play session if this verification started it, including after a failed check.
 
 Keep reusable assertion probes in the filesystem. Execute them transiently through Studio MCP; never save test probes into the Studio DataModel.
+
+Use current-session failures to scope input limitations. A historical console error is not evidence that the current pointer tool is blocked. Drive controls with real input and observe rendered state through read-only probes. If an input tool rejects a key because it is bound to a CoreGUI action, stop that blocked input path, retain successful evidence for other inputs, and report that key as unverified. Do not substitute direct callback invocation for input or change runtime capabilities to satisfy a probe.
 
 Studio MCP pointer injection may land in CoreGUI instead of the experience viewport, and assistant-executed Luau may lack the `RobloxScript` capability required by `VirtualInputManager`. After either failure appears, stop retrying automated input. Collect the available hierarchy, rendered-state, and console evidence, then report each interaction or network round trip that remains unverified. Fallback observations retain their narrower scope of evidence.
