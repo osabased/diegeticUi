@@ -79,25 +79,27 @@ lute run scripts/verify.luau --stage studio
 
 The verifier builds `.verify/diegeticUi.rbxlx`, launches the non-default `studio` Lest suite, and removes only that exact place file afterward. Lest retains `.lest/studio-run.luau` and `.lest/studio-output.log` when Studio startup or a test fails.
 
-The suite mounts the real Fusion Button and verifies its label, property configuration, children, cleanup, and absence of unexpected Fusion diagnostics. A deliberate invalid-property fixture must produce `cannotAssignProperty`; this proves the suite detects Fusion errors that can still return a partially constructed Instance.
+The suite constructs a small scoped Fusion hierarchy, checks a reactive text update, and verifies cleanup without unexpected diagnostics. It is independent of application features. A deliberate invalid-property fixture must produce `cannotAssignProperty` and fail the clean-result assertion; this proves the suite detects Fusion errors that can still return a partially constructed Instance. Injected body and cleanup failures must preserve both original messages, and an assertion failure must still destroy the test holder.
 
 Because Studio Lest runs in edit mode, it cannot verify client startup or real pointer interaction. UI/input changes still require the following playtest.
 
-## Studio Button interaction playtest
+## Behavior verification
 
-Use `tests/studio/ButtonPlaytest.luau` as the filesystem-owned client assertion probe. Inject or execute it transiently through Studio MCP during the play session; never save it into the Studio DataModel. The probe observes settled presentation state but does not synthesize Roblox input, so the pointer steps remain real interaction checks.
+For each behavior change, define observable expected outcomes from the request and governing contracts before implementing it. Select only relevant scenarios: normal completion, invalid or unauthorized input, interruption or cancellation, dependency failure, and cleanup. State the supported input devices when input handling is involved. Resolve discrepancies between tests and implementation against that contract, and explain expectation changes in the final diff or report.
 
-1. Select the Studio instance opened for this checkout and note the current console position.
-2. Reuse an existing client play session when suitable. If it cannot support the check, preserve it and report the limitation. When no session is running, start one and record that this verification owns it. Wait for `PlayerGui.ButtonDemo.Button`.
-3. Execute `ButtonPlaytest.waitForState("default")` with the pointer away from the button.
-4. Move the real pointer over the button, then execute `waitForState("hover")`.
-5. Hold the primary pointer button down and execute `waitForState("pressed")` before releasing it.
-6. Release while still hovering and execute `waitForState("hover")`; move away and execute `waitForState("default")`.
-7. Inspect only console messages emitted since step 1 and fail the playtest on new project or Fusion errors.
-8. Stop the play session if this verification started it.
+Use native tests for runtime-neutral logic, Studio construction tests for engine objects, and a Studio playtest for behavior that depends on input, lifecycle startup, replication, or other engine execution. Choose assertions that would detect the relevant failure; constructing a control does not prove it handles input, and creating a transport does not prove a request reached the server or its response reached the client. Keep reusable tooling checks independent of disposable experiments.
 
-The probe compares settled colors and scale with tolerances. Its timeout covers both startup hierarchy discovery and state settling, and missing instances are reported by path. When Roblox reduced motion is enabled, every state expects scale `1` while still requiring distinct state colors.
+Report which scenarios passed, failed, or remain unverified. A canonical-gate pass establishes only the stages it executes; a required Studio or interaction check that fails or cannot run remains an explicit completion limitation. Preserve original assertion messages, observed values, and cleanup failures so the next investigation can identify the failed contract.
 
-Studio MCP pointer injection may land in CoreGUI instead of the experience viewport, and assistant-executed Luau may lack the `RobloxScript` capability required by `VirtualInputManager`. After either failure appears, stop retrying automated input. Collect the fallback evidence that remains available: inspect the rendered UI, confirm the expected client UI and server lifecycle roots loaded, count the Blink transport instances, and inspect new console output. Then stop Play only if this verification started it, preserve an existing user session, and report each interaction or network round trip that remains unverified.
+## Studio behavior playtest
 
-One reliable and one unreliable Blink transport instance prove that the generated network module initialized. Their presence does not prove that an action request reached the server or that its response reached the client.
+1. Select the Studio instance opened for this checkout, confirm it contains the changed source, and note the current console position.
+2. Reuse an existing client play session when suitable. If it cannot support the check, preserve it and report the limitation. When no session is running, start one and record that this verification owns it.
+3. Wait for the feature's expected startup state with a bounded timeout. For a removal, confirm the remaining lifecycle roots start and the removed behavior is absent.
+4. Exercise the selected scenarios using real input and the required client/server realms. Assert observable outcomes, including non-activation when an action is rejected or cancelled. Use bounded waits for asynchronous state; UI checks should account for supported reduced-motion behavior.
+5. Inspect only console messages emitted since step 1 and fail the playtest on new project or unexpected Fusion errors.
+6. Stop the play session if this verification started it, including after a failed check.
+
+Keep reusable assertion probes in the filesystem. Execute them transiently through Studio MCP; never save test probes into the Studio DataModel.
+
+Studio MCP pointer injection may land in CoreGUI instead of the experience viewport, and assistant-executed Luau may lack the `RobloxScript` capability required by `VirtualInputManager`. After either failure appears, stop retrying automated input. Collect the available hierarchy, rendered-state, and console evidence, then report each interaction or network round trip that remains unverified. Fallback observations retain their narrower scope of evidence.

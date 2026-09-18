@@ -3,8 +3,3 @@ option types_output = "./Types"
 option client_output = "./Client"
 option server_output = "./Server"
 option casing = "PascalCase"
-
-function RequestButtonAction = {
-	data: (action_id: string),
-	return: (accepted: boolean, message: string, cooldown_seconds: f32)
-}

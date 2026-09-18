@@ -10,8 +10,8 @@ local REPLICATED_STORAGE = game:GetService("ReplicatedStorage")
 local RUN_SERVICE = game:GetService("RunService")
 
 assert(RUN_SERVICE:IsClient(), "The client module can only be required from the client!")
-local RELIABLE_EVENT = REPLICATED_STORAGE:WaitForChild("f6c5caf92ed591640e752817a449d3b7") :: RemoteEvent
-local UNRELIABLE_EVENT = REPLICATED_STORAGE:WaitForChild("69bd090d3eb76814a1e57589e308774a") :: UnreliableRemoteEvent
+local RELIABLE_EVENT = REPLICATED_STORAGE:WaitForChild("fb4345268498c36225e4bb89ccc8b322") :: RemoteEvent
+local UNRELIABLE_EVENT = REPLICATED_STORAGE:WaitForChild("22e6cd01379df4f0c7d275dd1f8a0bd6") :: UnreliableRemoteEvent
 
 local in_buffer = buffer.create(64)
 local in_cursor = 0
@@ -52,76 +52,6 @@ local templates = {}
 local invocations_bitset = 4294967295
 local connections = {}
 local types = {}
-function types.TY_read_0x000001cd2b032c80(): (string) 
-	-- bb1 {
-	local r0 = buffer.readu32(in_buffer, advance(4))
-	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
-	-- bb1 }
-	return r1
-end
-function types.TY_write_0x000001cd2b032c80(p1: string): () 
-	-- bb1 {
-	local r0 = #p1
-	local r1 = out_cursor
-	allocate(4)
-	buffer.writeu32(out_buffer, r1, r0)
-	local r2 = out_cursor
-	allocate(r0)
-	buffer.writestring(out_buffer, r2, p1, r0)
-	-- bb1 }
-end
-function types.TY_read_0x000001cd2b032bc0(): (boolean) 
-	-- bb1 {
-	local r0 = if buffer.readu8(in_buffer, advance(1)) == 1 then true else false
-	-- bb1 }
-	return r0
-end
-function types.TY_write_0x000001cd2b032bc0(p1: boolean): () 
-	-- bb1 {
-	-- bb1 }
-	if typeof(p1) ~= 'boolean' then
-		-- bb2 {
-		error(string.format('Expected a boolean, got %s instead', typeof(p1)))
-		-- bb2 }
-		-- goto (bb3)
-	end
-	-- bb3 {
-	local r0 = out_cursor
-	allocate(1)
-	buffer.writeu8(out_buffer, r0, if p1 == true then 1 else 0)
-	-- bb3 }
-end
-function types.TY_read_0x000001cd2b032a70(): (string) 
-	-- bb1 {
-	local r0 = buffer.readu32(in_buffer, advance(4))
-	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
-	-- bb1 }
-	return r1
-end
-function types.TY_write_0x000001cd2b032a70(p1: string): () 
-	-- bb1 {
-	local r0 = #p1
-	local r1 = out_cursor
-	allocate(4)
-	buffer.writeu32(out_buffer, r1, r0)
-	local r2 = out_cursor
-	allocate(r0)
-	buffer.writestring(out_buffer, r2, p1, r0)
-	-- bb1 }
-end
-function types.TY_read_0x000001cd2b0329e0(): (number) 
-	-- bb1 {
-	local r0 = buffer.readf32(in_buffer, advance(4))
-	-- bb1 }
-	return r0
-end
-function types.TY_write_0x000001cd2b0329e0(p1: number): () 
-	-- bb1 {
-	local r0 = out_cursor
-	allocate(4)
-	buffer.writef32(out_buffer, r0, p1)
-	-- bb1 }
-end
 RELIABLE_EVENT.OnClientEvent:Connect(function(packet_buffer: buffer, packet_unknowns: {unknown}): () 
 	-- bb1 {
 	local r0 = buffer.len(packet_buffer)
@@ -134,66 +64,19 @@ RELIABLE_EVENT.OnClientEvent:Connect(function(packet_buffer: buffer, packet_unkn
 		-- bb2 {
 		local r1 = buffer.readu8(in_buffer, advance(1))
 		-- bb2 }
-		-- if (1/2) (bb3, bb13)
-		if r1 == 96 then
+		-- if (1/1) (bb3, bb5)
+		if true == true then
 			-- bb3 {
-			-- REMARK: RequestButtonAction
-			local r2 = buffer.readu8(in_buffer, advance(1))
-			local r3 = buffer.readu8(in_buffer, advance(1)) == 1
-			local r4
-			local r5
-			local r6
-			-- bb3 }
-			if r3 == true then
-				-- bb4 {
-				-- bb4 }
-				r4 = types.TY_read_0x000001cd2b032bc0()
-				-- bb5 {
-				-- bb5 }
-				r5 = types.TY_read_0x000001cd2b032a70()
-				-- bb6 {
-				-- bb6 }
-				r6 = types.TY_read_0x000001cd2b0329e0()
-				-- bb7 {
-				-- bb7 }
-				-- goto (bb8)
-			end
-			-- bb8 {
-			local r7 = (r2 + 1)
-			local r8 = invocations[r7]
-			-- bb8 }
-			if r8 ~= nil then
-				-- bb9 {
-				invocations[r7] = nil
-				invocations_bitset = bit32.bxor(invocations_bitset, (2 ^ r2))
-				-- bb9 }
-				if coroutine.status(r8) == 'suspended' then
-					-- bb10 {
-					coroutine.resume(r8, r3, r4, r5, r6)
-					-- bb10 }
-					-- goto (bb11)
-				end
-				-- bb11 {
-				-- bb11 }
-				-- goto (bb12)
-			end
-			-- bb12 {
-			-- bb12 }
-			-- goto (bb16)
-		-- bb13 {
-		-- bb13 }
-		-- if (2/2) (bb14, bb16)
-		else			-- bb14 {
 			error(string.format('Unknown event id: %d', r1))
-			-- bb14 }
-			-- goto (bb16)
+			-- bb3 }
+			-- goto (bb5)
 		end
-		-- bb16 {
-		-- bb16 }
-		-- goto (bb17)
+		-- bb5 {
+		-- bb5 }
+		-- goto (bb6)
 	end
-	-- bb17 {
-	-- bb17 }
+	-- bb6 {
+	-- bb6 }
 end)
 UNRELIABLE_EVENT.OnClientEvent:Connect(function(packet_buffer: buffer, packet_unknowns: {unknown}): () 
 	-- bb1 {
@@ -272,42 +155,5 @@ return {
 		-- bb5 }
 	end,
 	exports = {
-		RequestButtonAction = {
-			Invoke = function(action_id: string): (boolean, string, number) 
-				-- bb1 {
-				local r0 = invocations_bitset
-				-- bb1 }
-				if r0 == 0 then
-					-- bb2 {
-					error('[Blink]: More than 32 invocations are awaiting a response, this invocation has been dropped.')
-					-- bb2 }
-					-- goto (bb3)
-				end
-				-- bb3 {
-				local r1 = bit32.countrz(r0)
-				invocations_bitset = bit32.bxor(r0, (2 ^ r1))
-				invocations[(r1 + 1)] = coroutine.running()
-				local r2 = out_cursor
-				allocate(1)
-				buffer.writeu8(out_buffer, r2, 96)
-				local r3 = out_cursor
-				allocate(1)
-				buffer.writeu8(out_buffer, r3, r1)
-				-- bb3 }
-				types.TY_write_0x000001cd2b032c80(action_id)
-				-- bb4 {
-				local r4, r5, r6, r7 = coroutine.yield()
-				-- bb4 }
-				if r4 == false then
-					-- bb5 {
-					error('[Blink]: Server encountered an error while processing the invocation.')
-					-- bb5 }
-					-- goto (bb6)
-				end
-				-- bb6 {
-				-- bb6 }
-				return r5, r6, r7
-			end,
-		},
 	}
 }
