@@ -5,6 +5,20 @@
 [suites.unit]
 include = ["tests/unit/**/*.spec.luau"]
 
+[suites.bootstrap]
+include = ["tests/tooling/LestBootstrap.luau"]
+backend = "native"
+default = false
+
+[suites.studio]
+include = ["tests/studio/**/*.spec.luau"]
+backend = "studio"
+default = false
+
+[suites.studio.place]
+file = ".verify/diegeticUi.rbxlx"
+rojo = "default.project.json"
+
 [settings]
 backend = "native" # default for suites that don't declare one
 timeout_ms = 5000

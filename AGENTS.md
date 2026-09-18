@@ -26,7 +26,7 @@ Use `stylua src tests scripts` to apply formatting and `lest run unit` for the f
 
 `Packages/`, `sourcemap.json`, `.lest/`, and `.verify/` are generated; never hand-edit them. `tooling/roblox/globalTypes.d.luau` and `roblox.yml` are vendored generated inputs for luau-lsp and Selene respectively; follow `tooling/roblox/README.md` to refresh them rather than editing them.
 
-Fast native tests belong under `tests/unit/**/*.spec.luau`. If a test truly depends on the Roblox DataModel, add a separate non-default Lest Studio suite instead of weakening native isolation. Runtime changes involving replication, remotes, lifecycle order, UI/input/camera, physics, or other engine behavior also require a Roblox Studio MCP playtest after the static gate. Inspect the Studio console, stop the play session when finished, and report any visual or interactive behavior that could not be verified automatically.
+Fast native tests belong under `tests/unit/**/*.spec.luau`. If a test truly depends on the Roblox DataModel, add a separate non-default Lest Studio suite instead of weakening native isolation. Runtime changes involving replication, remotes, lifecycle order, UI/input/camera, physics, or other engine behavior also require a Roblox Studio MCP playtest after the static gate. Inspect the Studio console, stop the play session when finished, and report any visual or interactive behavior that could not be verified automatically. Follow [`docs/verification.md`](docs/verification.md) for focused-stage reporting and the UI playtest sequence.
 
 Before completion, run the canonical verifier, inspect the final diff, and report any validation that the environment prevented.
 

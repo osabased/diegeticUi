@@ -13,15 +13,25 @@ lute run scripts/verify.luau
 
 That one command is also used in CI. It restores the locked Wally graph, generates the actual Rojo sourcemap and Wally package types, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs the native unit suite, and proves that the place builds.
 
-Useful focused commands are:
+Use the same verifier for focused evidence without claiming the full gate:
 
 ```bash
-stylua src tests scripts
-lest run unit
+lute run scripts/verify.luau --stage format
+lute run scripts/verify.luau --stage lint --stage analyze
+lute run scripts/verify.luau --stage unit
+lute run scripts/verify.luau --stage build
+lute run scripts/verify.luau --stage studio
+```
+
+Repeated `--stage` flags are deduplicated and run in canonical order with their required preparation. Every started run writes an ignored JSON report under `.verify/reports/`; only the no-argument command can print `[verify] PASS`. See [`docs/verification.md`](docs/verification.md) for stage dependencies, report semantics, Studio setup, and the required UI interaction playtest.
+
+Verifier builds are disposable. Create the persistent development place before opening it in Roblox Studio:
+
+```bash
 rojo build default.project.json --output diegeticUi.rbxlx
 ```
 
-Open the built place in Roblox Studio and start the Rojo server for live development:
+Then start the Rojo server for live development:
 
 ```bash
 rojo serve
@@ -45,7 +55,7 @@ The wrapper runs `blink compile --profile release src/shared/Network/main.blink`
 
 Charm owns domain and shared application state. Fusion 0.3 owns UI rendering and local presentation state, including springs and tweens. UI Labs owns isolated component stories.
 
-Install the [UI Labs Studio plugin](https://create.roblox.com/store/asset/14293316215/UI-Labs), run `rojo serve`, and open the `UI` storybook to preview the `StatusCard` stack smoke test. Wally installs the matching UI Labs utility package with the rest of the project dependencies.
+Install the [UI Labs Studio plugin](https://create.roblox.com/store/asset/14293316215/UI-Labs), run `rojo serve`, and open the `UI` storybook to preview the Button component states. Wally installs the matching UI Labs utility package with the rest of the project dependencies.
 
 ## Project structure
 
