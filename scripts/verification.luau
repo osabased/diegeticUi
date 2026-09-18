@@ -3,7 +3,7 @@
 local Verification = {}
 
 export type StageName = "format" | "lint" | "analyze" | "unit" | "build" | "studio"
-export type StepName = "preflight" | "wally" | "blink" | "sourcemap" | "package_types" | "lest_core" | StageName
+export type StepName = "preflight" | "wally" | "blink" | "sourcemap" | "lest_core" | StageName
 export type StageStatus = "passed" | "failed" | "not_run"
 export type Outcome = "pending" | "passed" | "failed"
 export type ReportErrorKind = "report" | "orchestration" | "cleanup"
@@ -75,7 +75,6 @@ local STEP_ORDER: { StepName } = {
 	"wally",
 	"blink",
 	"sourcemap",
-	"package_types",
 	"lest_core",
 	"format",
 	"lint",
@@ -147,7 +146,6 @@ local function addDependencies(needed: { [StepName]: boolean }, stage: StageName
 	elseif stage == "analyze" then
 		needed.wally = true
 		needed.sourcemap = true
-		needed.package_types = true
 		needed.lest_core = true
 	elseif stage == "studio" then
 		needed.wally = true
@@ -168,7 +166,6 @@ function Verification.plan(selection: Selection): { StepName }
 		needed.wally = true
 		needed.blink = true
 		needed.sourcemap = true
-		needed.package_types = true
 	end
 
 	local plan: { StepName } = {}

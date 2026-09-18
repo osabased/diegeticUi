@@ -27,7 +27,7 @@ end
 describe("verification planning", function()
 	it("closes dependencies and preserves canonical order", function()
 		expect(planNames({ "--stage", "analyze", "--stage", "lint" })).toBe(
-			"preflight,wally,sourcemap,package_types,lest_core,lint,analyze"
+			"preflight,wally,sourcemap,lest_core,lint,analyze"
 		)
 		expect(planNames({ "--stage", "build", "--stage", "unit" })).toBe("preflight,wally,unit,build")
 		expect(planNames({ "--stage", "studio" })).toBe("preflight,wally,build,studio")
@@ -43,7 +43,7 @@ describe("verification planning", function()
 		assert(selection ~= nil, parseError)
 		expect(table.concat(selection.selectedStages, ",")).toBe("analyze")
 		expect(planNames({ "--stage", "analyze", "--stage", "analyze" })).toBe(
-			"preflight,wally,sourcemap,package_types,lest_core,analyze"
+			"preflight,wally,sourcemap,lest_core,analyze"
 		)
 	end)
 
@@ -196,7 +196,7 @@ describe("verification execution", function()
 		expect(table.concat(calls, ",")).toBe("preflight,wally,sourcemap")
 		expect(report.outcome).toBe("failed")
 		expect(findRecord(report, "sourcemap").exitCode).toBe(7)
-		expect(findRecord(report, "package_types").reason).toBe("blocked_by:sourcemap")
+		expect(findRecord(report, "lest_core").reason).toBe("blocked_by:sourcemap")
 		expect(findRecord(report, "analyze").reason).toBe("blocked_by:sourcemap")
 		expect(findRecord(report, "format").reason).toBe("unselected")
 	end)

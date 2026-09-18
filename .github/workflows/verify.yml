@@ -16,5 +16,8 @@ jobs:
           cache: true
           version: 1.2.0
 
+      - name: Prepare locked dependencies and package types
+        run: lute run scripts/prepare-dependencies.luau
+
       - name: Run canonical verification
         run: lute run scripts/verify.luau

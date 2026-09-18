@@ -6,7 +6,7 @@ local process = require("@std/process")
 local system = require("@lute/system")
 
 local Verification = require("./verification")
-local PackageInstall = require("./package-install")
+local Dependencies = require("./dependencies")
 
 type JsonObject = json.Object
 type OrchestrationResult = Verification.OrchestrationResult
@@ -35,10 +35,9 @@ local HASH_MODULUS = 4294967296
 
 local STEP_LABELS: { [StepName]: string } = {
 	preflight = "Check repository prerequisites",
-	wally = "Install Wally dependencies without lockfile drift",
+	wally = "Check prepared Wally dependencies and package types",
 	blink = "Check Blink-generated networking modules",
 	sourcemap = "Generate the Rojo sourcemap",
-	package_types = "Generate Wally package typings",
 	lest_core = "Prepare the Lest framework",
 	format = "Check formatting",
 	lint = "Lint Luau",
@@ -236,9 +235,10 @@ local function runWally(): StepResult
 		return missing
 	end
 
-	local ok, reason, exitCode = PackageInstall.install()
-	if not ok then
-		return failed(reason or "Wally dependency installation failed", exitCode)
+	if not Dependencies.isPrepared(".") then
+		return failed(
+			"Dependencies are missing or stale. Stop Rojo, run `lute run scripts/prepare-dependencies.luau`, then restart Rojo."
+		)
 	end
 	return passed()
 end
@@ -309,24 +309,6 @@ local function runStep(step: StepName): StepResult
 			{ "rojo", "sourcemap", PROJECT_FILE, "--output", SOURCEMAP },
 			"Rojo sourcemap generation failed"
 		)
-	elseif step == "package_types" then
-		if PackageInstall.typesCurrent() then
-			print("[verify] Reusing generated Wally package typings")
-			return passed()
-		end
-		local prepared, reason, exitCode = PackageInstall.prepareTypes()
-		if not prepared then
-			return failed(reason or "Could not prepare Wally package typings", exitCode)
-		end
-		local result = runCommand(
-			{ "wally-package-types", "--sourcemap", SOURCEMAP, "Packages" },
-			"Wally package type generation failed"
-		)
-		if result.ok then
-			-- The type generator intentionally rewrites Wally's require shims.
-			PackageInstall.rememberTypes()
-		end
-		return result
 	elseif step == "lest_core" then
 		local result = runCommand({ "lest", "run", "bootstrap", "--forbid-only" }, "Lest framework preparation failed")
 		if not result.ok then
@@ -367,8 +349,8 @@ local function runStep(step: StepName): StepResult
 		}, "Luau analysis failed")
 	elseif step == "unit" then
 		local packages = runCommand(
-			{ "lute", "run", "tests/unit/PackageInstall.regression.luau" },
-			"package installation regression failed"
+			{ "lute", "run", "tests/unit/Dependencies.regression.luau" },
+			"dependency preparation regression failed"
 		)
 		if not packages.ok then
 			return packages
@@ -437,6 +419,11 @@ local orchestration: OrchestrationResult = Verification.orchestrate(
 	cleanupBuildArtifact
 )
 print(Verification.resultMessage(report))
+for _, record in report.stages do
+	if record.status == "failed" and record.reason ~= nil then
+		print("[verify] " .. record.reason)
+	end
+end
 if pathOk and orchestration.durableReport then
 	print("[verify] report: " .. reportPath)
 else

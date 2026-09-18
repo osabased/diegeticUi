@@ -4,14 +4,15 @@ A Roblox project using Rojo and canonical Single Script Architecture (SSA).
 
 ## Getting started
 
-Install the pinned CLI toolchain and run the canonical verification gate:
+Install the pinned CLI toolchain, prepare dependencies with Rojo stopped, and run the canonical verification gate:
 
 ```bash
 rokit install
+lute run scripts/prepare-dependencies.luau
 lute run scripts/verify.luau
 ```
 
-That one command is also used in CI. It restores the locked Wally graph, generates the actual Rojo sourcemap and Wally package types, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs the native unit suite, and proves that the place builds.
+CI uses the same preparation and verification commands. Preparation installs the locked Wally graph and generates package types. Run it again with Rojo stopped after dependency, toolchain, or project-mapping changes. Routine verification checks prepared dependencies without modifying `Packages/`, generates the actual Rojo sourcemap, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs unit tests, and proves that the place builds.
 
 Use the same verifier for focused evidence without claiming the full gate:
 

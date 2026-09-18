@@ -24,13 +24,15 @@ All project-authored Luau uses `--!strict`. Keep types precise, prefer `unknown`
 - Each direct-child ModuleScript under `Server` or `Client` is an SSA lifecycle root. Put implementation modules beneath the root that owns them.
 - New project-authored client/server protocols use Blink-generated networking. Libraries that own their transport, such as Scribe, keep that boundary; LemonSignal is only for in-process events.
 
-Install the pinned toolchain with `rokit install`. The single required local and CI gate is:
+Install the pinned toolchain with `rokit install`. On initial setup or after dependency/toolchain/project-mapping changes, stop Rojo and run `lute run scripts/prepare-dependencies.luau` to install the locked Wally graph and generate package types. Start Rojo after preparation succeeds. CI also prepares dependencies before verification. See [`docs/verification.md`](docs/verification.md) for the preparation contract.
+
+The single required local and CI gate is:
 
 ```sh
 lute run scripts/verify.luau
 ```
 
-Use `stylua src tests scripts` to apply formatting and `lest run unit` for the fastest test-only loop. The verifier installs the locked Wally graph, generates the real Rojo sourcemap and package types, checks formatting and lint, analyzes strict Luau with pinned Roblox API definitions, runs unit tests, and performs a disposable place build.
+Use `stylua src tests scripts` to apply formatting and `lest run unit` for the fastest test-only loop. The verifier checks prepared dependencies without modifying `Packages/`, generates the real Rojo sourcemap, checks formatting and lint, analyzes strict Luau with pinned Roblox API definitions, runs unit tests, and performs a disposable place build. Missing or stale preparation fails with the preparation command.
 
 `Packages/`, `sourcemap.json`, `.lest/`, and `.verify/` are generated; never hand-edit them. `tooling/roblox/globalTypes.d.luau` and `roblox.yml` are vendored generated inputs for luau-lsp and Selene respectively; follow `tooling/roblox/README.md` to refresh them rather than editing them.
 

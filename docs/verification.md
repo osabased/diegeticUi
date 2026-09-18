@@ -8,15 +8,19 @@ The required local and CI gate remains:
 lute run scripts/verify.luau
 ```
 
-With no arguments, the verifier ensures the locked Wally graph is installed, checks Blink generation while restoring its randomized output, creates the Rojo sourcemap and package typings, checks formatting, lints and analyzes Luau, runs native unit tests, and builds a disposable place. This is the only invocation that can print `[verify] PASS`.
+With no arguments, the verifier checks prepared dependencies, checks Blink generation while restoring its randomized output, creates the Rojo sourcemap, checks formatting, lints and analyzes Luau, runs unit tests, and builds a disposable place. This is the only invocation that can print `[verify] PASS`. Verification never installs packages or rewrites package typings, so it can run while Rojo serves the project.
 
-Unchanged dependencies are reused without invoking Wally. A local SHA-256 fingerprint in `.verify/wally-install.sha256` covers `rokit.toml`, `wally.toml`, `wally.lock`, and every installed package file; package type generation refreshes it after successfully rewriting require shims. Missing, added, or modified files invalidate the fingerprint.
+On initial setup or when verification reports missing or stale preparation, stop Rojo and run:
 
-Generated typings are also reused when their package fingerprint and sourcemap match `.verify/wally-types.sha256`. The pinned typing generator cannot process its own rewritten shims, so invalidated typings require original shims from a staged Wally restore before regeneration.
+```sh
+lute run scripts/prepare-dependencies.luau
+```
 
-On a cache miss, Wally installs into a unique staging directory and the verifier rejects lockfile drift before updating only changed package files. This avoids Wally 0.3.2 deleting and recreating the live `Packages/` tree, which can crash Rojo 7.7.0 while it is serving. If restoring dependencies requires removing old package files, verification stops before copying anything: stop Rojo, run `wally install`, and restart Rojo. Also stop Rojo before running `wally install` directly. Deleting the local fingerprint forces a staged restore on the next dependency-dependent verification run.
+Preparation runs Wally, generates a Rojo sourcemap, then generates package typings. It fails on lockfile drift and restores the original lockfile; reconcile intentional dependency changes before retrying. The preparation stamp is invalidated at the start and recorded only after all steps succeed. Start Rojo after preparation succeeds. Wally 0.3.2 replaces the live `Packages/` tree, which can crash Rojo 7.7.0's watcher; the preparation command requires Rojo to be stopped but does not stop it automatically. The pinned typing generator requires fresh Wally shims, so preparation always installs before generating types. CI prepares dependencies before running the gate.
 
-The unit stage also runs `lute run tests/unit/PackageInstall.regression.luau` to check cache invalidation and package synchronization with filesystem fixtures. Lute owns this test because Lest's native resolver does not expose `@std/fs`.
+A single local SHA-256 stamp in `.verify/dependencies.sha256` covers `rokit.toml`, `wally.toml`, `wally.lock`, `default.project.json`, and every prepared package file. Changed inputs or missing, added, or modified package files require preparation again. Ordinary source edits and sourcemap regeneration do not. Deleting `.verify/` also removes the stamp. The verifier checks this stamp under the `wally` prerequisite and fails with the exact preparation command when it is stale; it never repairs dependencies implicitly.
+
+The unit stage also runs `lute run tests/unit/Dependencies.regression.luau` to check preparation freshness with disposable filesystem fixtures.
 
 For a narrower loop, select one or more stages:
 
@@ -33,9 +37,9 @@ Selections are deduplicated and execute once in canonical order. The verifier ad
 | Selected stage | Automatic preparation |
 | --- | --- |
 | `format`, `lint` | None |
-| `unit`, `build` | Locked Wally installation |
-| `analyze` | Locked Wally installation, Rojo sourcemap, package typings, Lest framework bootstrap |
-| `studio` | Locked Wally installation, disposable place build |
+| `unit`, `build` | Prepared dependency check |
+| `analyze` | Prepared dependency check, Rojo sourcemap, Lest framework bootstrap |
+| `studio` | Prepared dependency check, disposable place build |
 
 The Studio stage is deliberately absent from the canonical gate. It requires a local Roblox Studio installation and runs Lest in edit-mode `RunScript`, while CI remains platform-neutral.
 
