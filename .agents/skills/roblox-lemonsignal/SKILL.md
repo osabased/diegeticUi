@@ -23,7 +23,7 @@ Use **LemonSignal** for lightweight in-process signals with reconnectable connec
 ## Prerequisites and installation
 
 1. From the Roblox project root, inspect `wally.toml` and `wally.lock` before changing dependencies.
-2. Declare `LemonSignal = "data-oriented-house/lemonsignal@2.0.0"` under `[dependencies]`, then run `wally install`; let Wally generate `Packages/` and the lockfile.
+2. The project pin is `LemonSignal = "data-oriented-house/lemonsignal@2.0.0"` under `[dependencies]`. For installation or an authorized declaration change, follow [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates), including stopping this checkout's Rojo server before installation and reviewing intentional lockfile changes.
 3. Require `ReplicatedStorage.Packages.LemonSignal` from client, server, or shared Luau code.
 
 ## Repair interrupt

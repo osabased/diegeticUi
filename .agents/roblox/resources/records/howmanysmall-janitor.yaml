@@ -53,12 +53,12 @@ skill_validation:
   structural_passed: true
   independent_behavioral_executed: true
   independent_behavioral_passed: true
-  environment: "Fresh isolated Codex agent executed generated-skill Tests A-I and K against the repaired child and current Wally declaration/lock; existing Studio resource proof remained the runtime-behavior evidence."
-  result: "Tests A-I and K passed, including healthy conditional use, state escalation, implicit soft repair activation, hard-defect stops, harmless task-local negative control, explicit activation, and the silent-workaround falsifiability control."
+  environment: "Fresh isolated Codex agents ran read-only instruction-response scenarios for Tests A-I and K and catalog routing/explicit activation. No installation or runtime tests were executed by those agents; retained resource_proof remains the runtime evidence."
+  result: "Instruction-response checks passed for setup, reviewed lockfile updates with Rojo stopped, prepared ordinary use without reinstalling, failed preparation, repeated proof, session ownership, provenance/security, conditional reconciliation, and repair interrupts. Defective child-only installation, always-reconcile, and silent-workaround controls failed as expected; current AGENTS.md independently guards installation."
   catalog_routing_status: verified
   catalog_fingerprint: "sha256:aaf6fea8dcfe9fe4baffba705a8b58ed53db8e49223751eb6dcd8810f9962a42"
   catalog_environment: "Codex catalog with generated children roblox-blink, roblox-janitor, roblox-lemonsignal, and roblox-scribe, plus roblox-resource-acquisition, structure-roblox-projects, and codebase-design as routing competitors."
-  catalog_result: "Static catalog validation passed with no overlap cluster. Fresh isolated routing tasks selected every child and competitor boundary, selected neither for a simpler task, and passed explicit invocation for all four children."
+  catalog_result: "After the dependency-guidance repair, static catalog validation passed with the same routing fingerprint and no overlap cluster. A fresh isolated agent selected all four children and three competitor boundaries, selected neither for a string-formatting task, and passed explicit instruction-activation scenarios for all four children."
 
 host_adoptions:
   - host: "Codex"
@@ -66,7 +66,7 @@ host_adoptions:
     location: ".agents/skills/roblox-janitor"
     status: operational
     checked_at: "2026-09-18"
-    result: "The repaired child is installed, discoverable, enabled, and passed explicit roblox-janitor invocation plus implicit repair-interrupt routing in fresh isolated Codex tasks."
+    result: "The existing installed child remains discoverable and enabled. Fresh isolated Codex instruction-response scenarios passed explicit roblox-janitor activation and implicit repair routing after the dependency-guidance repair; these checks did not execute Roblox runtime tests."
     evidence:
       installed: present
       registered: not-applicable

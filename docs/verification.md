@@ -1,6 +1,6 @@
 # Verification
 
-## Canonical and focused runs
+## Canonical gate
 
 The required local and CI gate remains:
 
@@ -10,17 +10,30 @@ lute run scripts/verify.luau
 
 With no arguments, the verifier checks prepared dependencies, checks Blink generation while restoring its randomized output, creates the Rojo sourcemap, checks formatting, lints and analyzes Luau, runs unit tests, and builds a disposable place. This is the only invocation that can print `[verify] PASS`. Verification never installs packages or rewrites package typings, so it can run while Rojo serves the project.
 
-On initial setup or when verification reports missing or stale preparation, stop Rojo and run:
+## Dependency preparation and updates
+
+Before any package installation, stop the Rojo server serving this checkout, including before direct `wally install`. Record whether it was running so it can be resumed after successful preparation. Preserve unrelated Rojo servers.
+
+For initial setup with the committed lockfile, or when verification reports missing or stale preparation without an intentional dependency change, run:
 
 ```sh
 lute run scripts/prepare-dependencies.luau
 ```
 
-Preparation runs Wally, generates a Rojo sourcemap, then generates package typings. It fails on lockfile drift and restores the original lockfile; reconcile intentional dependency changes before retrying. The preparation stamp is invalidated at the start and recorded only after all steps succeed. Start Rojo after preparation succeeds. Wally 0.3.2 replaces the live `Packages/` tree, which can crash Rojo 7.7.0's watcher; the preparation command requires Rojo to be stopped but does not stop it automatically. The pinned typing generator requires fresh Wally shims, so preparation always installs before generating types. CI prepares dependencies before running the gate.
+For an authorized dependency addition, removal, or version change:
+
+1. Update the intended declaration in `wally.toml`.
+2. With Rojo still stopped, run `wally install` to resolve the new graph and update `wally.lock`.
+3. Inspect `git diff -- wally.toml wally.lock`; confirm the intended direct dependency and explain any transitive changes before continuing. Keep both files in the change.
+4. Run `lute run scripts/prepare-dependencies.luau` against that reviewed lockfile, then run the canonical verifier.
+
+Preparation runs Wally, generates a Rojo sourcemap, then generates package typings. It fails on lockfile drift and restores the original lockfile; it does not authorize or resolve intentional updates. Its stamp is invalidated at the start and recorded only after all steps succeed. Resume a previously running Rojo server after preparation succeeds; leave it stopped if preparation fails. Wally 0.3.2 replaces the live `Packages/` tree, which can crash Rojo 7.7.0's watcher; the preparation command does not stop Rojo automatically. The pinned typing generator requires fresh Wally shims, so preparation always installs before generating types. CI prepares dependencies before running the gate.
 
 A single local SHA-256 stamp in `.verify/dependencies.sha256` covers `rokit.toml`, `wally.toml`, `wally.lock`, `default.project.json`, and every prepared package file. Changed inputs or missing, added, or modified package files require preparation again. Ordinary source edits and sourcemap regeneration do not. Deleting `.verify/` also removes the stamp. The verifier checks this stamp under the `wally` prerequisite and fails with the exact preparation command when it is stale; it never repairs dependencies implicitly.
 
 The unit stage also runs `lute run tests/unit/Dependencies.regression.luau` to check preparation freshness with disposable filesystem fixtures.
+
+## Focused runs
 
 For a narrower loop, select one or more stages:
 
@@ -75,7 +88,7 @@ Because Studio Lest runs in edit mode, it cannot verify client startup or real p
 Use `tests/studio/ButtonPlaytest.luau` as the filesystem-owned client assertion probe. Inject or execute it transiently through Studio MCP during the play session; never save it into the Studio DataModel. The probe observes settled presentation state but does not synthesize Roblox input, so the pointer steps remain real interaction checks.
 
 1. Select the Studio instance opened for this checkout and note the current console position.
-2. Start a client play session and wait for `PlayerGui.ButtonDemo.Button`.
+2. Reuse an existing client play session when suitable. If it cannot support the check, preserve it and report the limitation. When no session is running, start one and record that this verification owns it. Wait for `PlayerGui.ButtonDemo.Button`.
 3. Execute `ButtonPlaytest.waitForState("default")` with the pointer away from the button.
 4. Move the real pointer over the button, then execute `waitForState("hover")`.
 5. Hold the primary pointer button down and execute `waitForState("pressed")` before releasing it.
@@ -85,6 +98,6 @@ Use `tests/studio/ButtonPlaytest.luau` as the filesystem-owned client assertion 
 
 The probe compares settled colors and scale with tolerances. Its timeout covers both startup hierarchy discovery and state settling, and missing instances are reported by path. When Roblox reduced motion is enabled, every state expects scale `1` while still requiring distinct state colors.
 
-Studio MCP pointer injection may land in CoreGUI instead of the experience viewport, and assistant-executed Luau may lack the `RobloxScript` capability required by `VirtualInputManager`. After either failure appears, stop retrying automated input. Collect the fallback evidence that remains available: inspect the rendered UI, confirm the expected client UI and server lifecycle roots loaded, count the Blink transport instances, and inspect new console output. Then stop Play and report each interaction or network round trip that remains unverified.
+Studio MCP pointer injection may land in CoreGUI instead of the experience viewport, and assistant-executed Luau may lack the `RobloxScript` capability required by `VirtualInputManager`. After either failure appears, stop retrying automated input. Collect the fallback evidence that remains available: inspect the rendered UI, confirm the expected client UI and server lifecycle roots loaded, count the Blink transport instances, and inspect new console output. Then stop Play only if this verification started it, preserve an existing user session, and report each interaction or network round trip that remains unverified.
 
 One reliable and one unreliable Blink transport instance prove that the generated network module initialized. Their presence does not prove that an action request reached the server or that its response reached the client.

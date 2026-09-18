@@ -5,7 +5,7 @@ description: Implement or troubleshoot lifecycle cleanup with howmanysmall/Janit
 
 # Janitor
 
-Use **Janitor** to give each Roblox feature or object one explicit owner for its disposable resources. Guidance targets **1.18.3** (source reviewed **2026-09-16**). Resource verification: **verified**.
+Use **Janitor** to give each Roblox feature or object one explicit owner for its disposable resources. Guidance targets **1.18.3** (source reviewed **2026-09-16**). Resource verification: **verified** in isolated Roblox Studio tests of this exact Wally package.
 
 ## Use when
 
@@ -22,7 +22,7 @@ Use **Janitor** to give each Roblox feature or object one explicit owner for its
 ## Prerequisites and installation
 
 1. From the Roblox project root, inspect `wally.toml` and `wally.lock` before changing dependencies.
-2. Declare `Janitor = "howmanysmall/janitor@1.18.3"` under `[dependencies]`, then run `wally install`; let Wally generate `Packages/` and the lockfile.
+2. The project pin is `Janitor = "howmanysmall/janitor@1.18.3"` under `[dependencies]`. For installation or an authorized declaration change, follow [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates), including stopping this checkout's Rojo server before installation and reviewing intentional lockfile changes.
 3. Require `ReplicatedStorage.Packages.Janitor` from client, server, or shared Luau code. Acquire the module at top level, but create a Janitor where its owning feature or object is initialized.
 
 ## Repair interrupt
@@ -132,7 +132,7 @@ Janitor introduces no special remote, HTTP, credential, persistence, or dynamic-
 
 ## Verify after installation
 
-Run: After `wally install`, execute this code in a disposable Roblox Studio server Script mapped with `ReplicatedStorage.Packages`:
+Run: With dependencies current under [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates), execute this code in a disposable Roblox Studio server Script mapped with `ReplicatedStorage.Packages`; ordinary proof reruns do not require reinstalling packages:
 
 ```luau
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

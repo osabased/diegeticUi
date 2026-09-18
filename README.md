@@ -12,7 +12,7 @@ lute run scripts/prepare-dependencies.luau
 lute run scripts/verify.luau
 ```
 
-CI uses the same preparation and verification commands. Preparation installs the locked Wally graph and generates package types. Run it again with Rojo stopped after dependency, toolchain, or project-mapping changes. Routine verification checks prepared dependencies without modifying `Packages/`, generates the actual Rojo sourcemap, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs unit tests, and proves that the place builds.
+CI uses the same preparation and verification commands. Preparation installs the locked Wally graph and generates package types. Follow [dependency preparation and updates](docs/verification.md#dependency-preparation-and-updates) for stale preparation or intentional dependency changes, including stopping Rojo and reviewing lockfile updates. Routine verification checks prepared dependencies without modifying `Packages/`, generates the actual Rojo sourcemap, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs unit tests, and proves that the place builds.
 
 Use the same verifier for focused evidence without claiming the full gate:
 

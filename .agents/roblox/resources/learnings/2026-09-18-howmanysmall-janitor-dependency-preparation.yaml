@@ -1,0 +1,10 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: "howmanysmall-janitor"
+canonical_url: "https://github.com/howmanysmall/Janitor"
+package_id: "howmanysmall/janitor"
+observed: "2026-09-18"
+statement: "The child skill's direct Wally installation instructions omitted the project's Rojo watcher constraint and bypassed its dependency preparation contract. Installation and proof prerequisites now point to the shared procedure, which separates intentional lockfile updates from locked preparation and avoids reinstalling for ordinary proof reruns."
+evidence: "Reviewed child installation/proof instructions against AGENTS.md and scripts/prepare-dependencies.luau; the preparer restores lockfile drift. Replaced direct install instructions with docs/verification.md#dependency-preparation-and-updates; structural skill and catalog checks passed."
+task_context: "Repair the AGENTS.md review findings about dependency updates and session ownership."

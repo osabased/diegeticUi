@@ -24,7 +24,7 @@ Use **Scribe** for one typed player-data schema that persists on the server and 
 ## Prerequisites and installation
 
 1. Read the project structure guidance before choosing the shared bundle's location. In this project, place the bundle under `src/shared/` and consume it from lifecycle-owned client/server features.
-2. Declare `Scribe = "ericplane/scribe@2.3.0"` under `[dependencies]` in `wally.toml`, then run `wally install`; do not edit generated `Packages/` contents.
+2. The project pin is `Scribe = "ericplane/scribe@2.3.0"` under `[dependencies]` in `wally.toml`. For installation or an authorized declaration change, follow [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates), including stopping this checkout's Rojo server before installation and reviewing intentional lockfile changes.
 3. Use the new Luau type solver for Scribe's typed accessor API. Runtime behavior does not depend on that editor/typechecker setting.
 4. Choose `ProfileStoreIndex` and `ProfileKeyPrefix` deliberately. They are required persistence identity, not decorative labels.
 
@@ -179,11 +179,11 @@ Treat every client request as untrusted. Validate command names, arguments, owne
 
 ## Verify after installation
 
-Run: From the project root, execute `wally install`, then perform the disposable Roblox Studio mock-mode integration described below.
+Run: With dependencies current under [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates), perform the disposable Roblox Studio mock-mode integration described below; ordinary proof reruns do not require reinstalling packages.
 
 Run these checks from the project root:
 
-1. Run `wally install` and confirm the manifest, lock entry, redirect, and installed `Version.luau` all resolve `ericplane/scribe@2.3.0`.
+1. Confirm the manifest, lock entry, redirect, and installed `Version.luau` all resolve `ericplane/scribe@2.3.0`. If preparation is missing or stale, follow [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates) before continuing.
 2. In a disposable Studio play test, construct a separate test bundle with a unique `ProfileStoreIndex`, `ProfileKeyPrefix`, and `Mode = "Mock"`; require it from both server and client.
 3. On player join, assert server `WaitForData` returns an accessor, register a client observer, increment a server field, and confirm the observer receives the authoritative value.
 4. Stop only that disposable test bundle during test teardown.
