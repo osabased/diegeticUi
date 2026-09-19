@@ -68,7 +68,7 @@ skill_validation:
       target_version_or_commit: "2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
       inputs: []
       result: "Historical: Tests A-I and K passed before lifecycle, Current-block check, and executable-fixture boundary guidance changed on 2026-09-19."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
     - check_id: lemonsignal-pre-repair-routing
       kind: routing
       execution_mode: independent-agent
@@ -77,7 +77,7 @@ skill_validation:
       target_version_or_commit: "2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
       inputs: []
       result: "Historical: independent catalog routing and explicit activation preceded the 2026-09-19 child repair."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
     - check_id: lemonsignal-parent-contract-audit-20260919
       kind: instruction-response
       execution_mode: same-agent-audit
@@ -89,7 +89,7 @@ skill_validation:
           path: SKILL.md
           sha256: "sha256:1a7e1e97d8db0626b51d4f4331acd9b60acef5cbd923e7d68819bf4c43d2bf16"
       result: "Same-agent audit confirmed explicit ownership of callbacks already spawned by Fire and pending Wait coroutines, the read-only HEALTHY block query, and the absence of a current executable-integration claim."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
 
     - check_id: lemonsignal-independent-advice-acceptance-20260919
       kind: instruction-response
@@ -102,7 +102,7 @@ skill_validation:
           path: SKILL.md
           sha256: "sha256:1a7e1e97d8db0626b51d4f4331acd9b60acef5cbd923e7d68819bf4c43d2bf16"
       result: "Independent advice-only acceptance explicitly invoked $roblox-lemonsignal, observed a HEALTHY block query, rejected uncancellable Wait for a destructible feature, used an owned Once connection, and required lifecycle guards because already-spawned callbacks survive disconnection or destruction. No runtime behavior was claimed."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
     - check_id: lemonsignal-nine-member-routing-20260919
       kind: routing
       execution_mode: independent-agent
@@ -139,7 +139,7 @@ skill_validation:
           sha256: "sha256:18a74f4a3ce54a443ade2a2f8d2e6732916e6a76cb6572fd745b23cb07ce5a10"
       command: ""
       result: "Independent routing selected $roblox-lemonsignal only for the in-process event, rejected it for cross-runtime transport and replicated persistence, treated Janitor as secondary connection ownership, and selected none of the five Roblox children for plain table formatting."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
       scope_fingerprint: "sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62"
 
 host_adoptions:

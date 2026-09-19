@@ -62,7 +62,7 @@ The Studio stage is deliberately absent from the canonical gate. It requires a l
 
 ## Build profiles
 
-The build stage first creates the disposable default place at `.verify/diegeticUi.rbxlx`, then runs `python tests/artifacts/verify_preset_picker_profiles.py`. The checker retains its generated development and release place files and sourcemaps beneath `.verify/preset-picker-profiles/`. It proves that the development profile contains the complete preset picker preview and authored stories, while `release.project.json` excludes demos, stories, and their dedicated helpers but retains the Loadout runtime and normal service roots.
+The build stage first creates the disposable default place at `.verify/diegeticUi.rbxlx`, then runs `python tests/artifacts/verify_project_profiles.py`. The checker retains generated development and release place files and sourcemaps beneath `.verify/profiles/`. Both profiles must retain the client/server entrypoints and shared networking modules with one instance of each service. The release profile must exclude authored stories. Extend the required runtime paths and preview exclusions when adding features.
 
 ## Reports and failures
 

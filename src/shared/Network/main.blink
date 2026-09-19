@@ -3,17 +3,3 @@ option types_output = "./Types"
 option client_output = "./Client"
 option server_output = "./Server"
 option casing = "PascalCase"
-
-event LoadoutEquipRequest = {
-	from: Client,
-	type: Reliable,
-	call: SingleSync,
-	data: (request_id: string, item_id: string)
-}
-
-event LoadoutEquipResult = {
-	from: Server,
-	type: Reliable,
-	call: SingleSync,
-	data: (request_id: string, accepted: boolean, equipped_id: string, message: string)
-}

@@ -408,7 +408,7 @@ local function runStep(step: StepName): StepResult
 			return place
 		end
 		return runCommand(
-			{ "python", "tests/artifacts/verify_preset_picker_profiles.py" },
+			{ "python", "tests/artifacts/verify_project_profiles.py" },
 			"development/release artifact contract failed"
 		)
 	elseif step == "studio" then

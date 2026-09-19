@@ -10,17 +10,17 @@ local REPLICATED_STORAGE = game:GetService("ReplicatedStorage")
 local RUN_SERVICE = game:GetService("RunService")
 
 assert(RUN_SERVICE:IsServer(), "The server module can only be required from the server!")
-local RELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("ea273ca1028583d9be7a65c7a5dfb355") :: RemoteEvent
+local RELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("c4b3893baefa82ae606fc531cebab568") :: RemoteEvent
 if not RELIABLE_EVENT then
 	local event = Instance.new("RemoteEvent")
-	event.Name = "ea273ca1028583d9be7a65c7a5dfb355"
+	event.Name = "c4b3893baefa82ae606fc531cebab568"
 	event.Parent = REPLICATED_STORAGE
 	RELIABLE_EVENT = event
 end
-local UNRELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("ccc18c7bcaab98dfe2011fee104146bf") :: UnreliableRemoteEvent
+local UNRELIABLE_EVENT = REPLICATED_STORAGE:FindFirstChild("ed4cc61aebecfc8aee52be72405e9005") :: UnreliableRemoteEvent
 if not UNRELIABLE_EVENT then
 	local event = Instance.new("UnreliableRemoteEvent")
-	event.Name = "ccc18c7bcaab98dfe2011fee104146bf"
+	event.Name = "ed4cc61aebecfc8aee52be72405e9005"
 	event.Parent = REPLICATED_STORAGE
 	UNRELIABLE_EVENT = event
 end
@@ -80,123 +80,12 @@ local function allocate(bytes: number)
 	out_cursor = in_use
 end
 
-local queues = {[82] = {['size'] = 0,['row'] = 0,['columns'] = {({} :: {any}),({} :: {any}),({} :: {any}),},},[79] = {['size'] = 0,['row'] = 0,['columns'] = {({} :: {any}),({} :: {any}),({} :: {any}),({} :: {any}),},},}
+local queues = {}
 local invocations = {}
 local templates = {}
 local invocations_bitset = 4294967295
 local connections = {}
 local types = {}
-function types.TY_read_0x0000021205c012a0(): (string) 
-	-- bb1 {
-	local r0 = buffer.readu32(in_buffer, advance(4))
-	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
-	-- bb1 }
-	return r1
-end
-function types.TY_write_0x0000021205c012a0(p1: string): () 
-	-- bb1 {
-	local r0 = #p1
-	local r1 = out_cursor
-	allocate(4)
-	buffer.writeu32(out_buffer, r1, r0)
-	local r2 = out_cursor
-	allocate(r0)
-	buffer.writestring(out_buffer, r2, p1, r0)
-	-- bb1 }
-end
-function types.TY_read_0x0000021205c01210(): (string) 
-	-- bb1 {
-	local r0 = buffer.readu32(in_buffer, advance(4))
-	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
-	-- bb1 }
-	return r1
-end
-function types.TY_write_0x0000021205c01210(p1: string): () 
-	-- bb1 {
-	local r0 = #p1
-	local r1 = out_cursor
-	allocate(4)
-	buffer.writeu32(out_buffer, r1, r0)
-	local r2 = out_cursor
-	allocate(r0)
-	buffer.writestring(out_buffer, r2, p1, r0)
-	-- bb1 }
-end
-function types.TY_read_0x0000021205c01150(): (string) 
-	-- bb1 {
-	local r0 = buffer.readu32(in_buffer, advance(4))
-	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
-	-- bb1 }
-	return r1
-end
-function types.TY_write_0x0000021205c01150(p1: string): () 
-	-- bb1 {
-	local r0 = #p1
-	local r1 = out_cursor
-	allocate(4)
-	buffer.writeu32(out_buffer, r1, r0)
-	local r2 = out_cursor
-	allocate(r0)
-	buffer.writestring(out_buffer, r2, p1, r0)
-	-- bb1 }
-end
-function types.TY_read_0x0000021205c010c0(): (boolean) 
-	-- bb1 {
-	local r0 = if buffer.readu8(in_buffer, advance(1)) == 1 then true else false
-	-- bb1 }
-	return r0
-end
-function types.TY_write_0x0000021205c010c0(p1: boolean): () 
-	-- bb1 {
-	-- bb1 }
-	if typeof(p1) ~= 'boolean' then
-		-- bb2 {
-		error(string.format('Expected a boolean, got %s instead', typeof(p1)))
-		-- bb2 }
-		-- goto (bb3)
-	end
-	-- bb3 {
-	local r0 = out_cursor
-	allocate(1)
-	buffer.writeu8(out_buffer, r0, if p1 == true then 1 else 0)
-	-- bb3 }
-end
-function types.TY_read_0x0000021205c01030(): (string) 
-	-- bb1 {
-	local r0 = buffer.readu32(in_buffer, advance(4))
-	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
-	-- bb1 }
-	return r1
-end
-function types.TY_write_0x0000021205c01030(p1: string): () 
-	-- bb1 {
-	local r0 = #p1
-	local r1 = out_cursor
-	allocate(4)
-	buffer.writeu32(out_buffer, r1, r0)
-	local r2 = out_cursor
-	allocate(r0)
-	buffer.writestring(out_buffer, r2, p1, r0)
-	-- bb1 }
-end
-function types.TY_read_0x0000021205c00fa0(): (string) 
-	-- bb1 {
-	local r0 = buffer.readu32(in_buffer, advance(4))
-	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
-	-- bb1 }
-	return r1
-end
-function types.TY_write_0x0000021205c00fa0(p1: string): () 
-	-- bb1 {
-	local r0 = #p1
-	local r1 = out_cursor
-	allocate(4)
-	buffer.writeu32(out_buffer, r1, r0)
-	local r2 = out_cursor
-	allocate(r0)
-	buffer.writestring(out_buffer, r2, p1, r0)
-	-- bb1 }
-end
 RELIABLE_EVENT.OnServerEvent:Connect(function(player: Player, packet_buffer: buffer, packet_unknowns: {unknown}): () 
 	-- bb1 {
 	local r0 = buffer.len(packet_buffer)
@@ -209,48 +98,19 @@ RELIABLE_EVENT.OnServerEvent:Connect(function(player: Player, packet_buffer: buf
 		-- bb2 {
 		local r1 = buffer.readu8(in_buffer, advance(1))
 		-- bb2 }
-		-- if (1/2) (bb3, bb8)
-		if r1 == 82 then
+		-- if (1/1) (bb3, bb5)
+		if true == true then
 			-- bb3 {
-			-- REMARK: LoadoutEquipRequest
-			local r2
-			-- bb3 }
-			r2 = types.TY_read_0x0000021205c012a0()
-			-- bb4 {
-			local r3
-			-- bb4 }
-			r3 = types.TY_read_0x0000021205c01210()
-			-- bb5 {
-			-- bb5 }
-			if connections[82] ~= nil then
-				-- bb6 {
-				connections[82](player, r2, r3)
-				-- bb6 }
-				continue
-			end
-			-- bb7 {
-			local r4 = (queues[82].size + 1)
-			local r5 = queues[82].columns
-			queues[82].size = r4
-			r5[1][r4] = player
-			r5[2][r4] = r2
-			r5[3][r4] = r3
-			-- bb7 }
-			-- goto (bb11)
-		-- bb8 {
-		-- bb8 }
-		-- if (2/2) (bb9, bb11)
-		else			-- bb9 {
 			error(string.format('Unknown event id: %d', r1))
-			-- bb9 }
-			-- goto (bb11)
+			-- bb3 }
+			-- goto (bb5)
 		end
-		-- bb11 {
-		-- bb11 }
-		-- goto (bb12)
+		-- bb5 {
+		-- bb5 }
+		-- goto (bb6)
 	end
-	-- bb12 {
-	-- bb12 }
+	-- bb6 {
+	-- bb6 }
 end)
 UNRELIABLE_EVENT.OnServerEvent:Connect(function(player: Player, packet_buffer: buffer, packet_unknowns: {unknown}): () 
 	-- bb1 {
@@ -371,163 +231,5 @@ return {
 		-- bb9 }
 	end,
 	exports = {
-		LoadoutEquipResult = {
-			Fire = function(player: Player, request_id: string, accepted: boolean, equipped_id: string, message: string): () 
-				-- bb1 {
-				out_cursor = 0
-				table.clear(out_unknown)
-				local r0 = out_cursor
-				allocate(1)
-				buffer.writeu8(out_buffer, r0, 79)
-				-- bb1 }
-				types.TY_write_0x0000021205c01150(request_id)
-				-- bb2 {
-				-- bb2 }
-				types.TY_write_0x0000021205c010c0(accepted)
-				-- bb3 {
-				-- bb3 }
-				types.TY_write_0x0000021205c01030(equipped_id)
-				-- bb4 {
-				-- bb4 }
-				types.TY_write_0x0000021205c00fa0(message)
-				-- bb5 {
-				local r1 = buffer.create(out_cursor)
-				buffer.copy(r1, 0, out_buffer, 0, out_cursor)
-				local r2 = players_map[player].unknown
-				table.insert(players_map[player].buffers, r1)
-				table.insert(players_map[player].lengths, out_cursor)
-				table.move(out_unknown, 1, #out_unknown, (#r2 + 1), r2)
-				-- bb5 }
-			end,
-			FireAll = function(request_id: string, accepted: boolean, equipped_id: string, message: string): () 
-				-- bb1 {
-				out_cursor = 0
-				table.clear(out_unknown)
-				local r0 = out_cursor
-				allocate(1)
-				buffer.writeu8(out_buffer, r0, 79)
-				-- bb1 }
-				types.TY_write_0x0000021205c01150(request_id)
-				-- bb2 {
-				-- bb2 }
-				types.TY_write_0x0000021205c010c0(accepted)
-				-- bb3 {
-				-- bb3 }
-				types.TY_write_0x0000021205c01030(equipped_id)
-				-- bb4 {
-				-- bb4 }
-				types.TY_write_0x0000021205c00fa0(message)
-				-- bb5 {
-				local r1 = buffer.create(out_cursor)
-				buffer.copy(r1, 0, out_buffer, 0, out_cursor)
-				-- bb5 }
-				for r2, r3 in players_map do
-					-- bb6 {
-					local r4 = r3.unknown
-					table.insert(r3.buffers, r1)
-					table.insert(r3.lengths, out_cursor)
-					table.move(out_unknown, 1, #out_unknown, (#r4 + 1), r4)
-					-- bb6 }
-					-- goto (bb7)
-				end
-				-- bb7 {
-				-- bb7 }
-			end,
-			FireList = function(players: {Player}, request_id: string, accepted: boolean, equipped_id: string, message: string): () 
-				-- bb1 {
-				out_cursor = 0
-				table.clear(out_unknown)
-				local r0 = out_cursor
-				allocate(1)
-				buffer.writeu8(out_buffer, r0, 79)
-				-- bb1 }
-				types.TY_write_0x0000021205c01150(request_id)
-				-- bb2 {
-				-- bb2 }
-				types.TY_write_0x0000021205c010c0(accepted)
-				-- bb3 {
-				-- bb3 }
-				types.TY_write_0x0000021205c01030(equipped_id)
-				-- bb4 {
-				-- bb4 }
-				types.TY_write_0x0000021205c00fa0(message)
-				-- bb5 {
-				local r1 = buffer.create(out_cursor)
-				buffer.copy(r1, 0, out_buffer, 0, out_cursor)
-				-- bb5 }
-				for r2, r3 in players do
-					-- bb6 {
-					local r4 = players_map[r3].unknown
-					table.insert(players_map[r3].buffers, r1)
-					table.insert(players_map[r3].lengths, out_cursor)
-					table.move(out_unknown, 1, #out_unknown, (#r4 + 1), r4)
-					-- bb6 }
-					-- goto (bb7)
-				end
-				-- bb7 {
-				-- bb7 }
-			end,
-			FireExcept = function(player: Player, request_id: string, accepted: boolean, equipped_id: string, message: string): () 
-				-- bb1 {
-				out_cursor = 0
-				table.clear(out_unknown)
-				local r0 = out_cursor
-				allocate(1)
-				buffer.writeu8(out_buffer, r0, 79)
-				-- bb1 }
-				types.TY_write_0x0000021205c01150(request_id)
-				-- bb2 {
-				-- bb2 }
-				types.TY_write_0x0000021205c010c0(accepted)
-				-- bb3 {
-				-- bb3 }
-				types.TY_write_0x0000021205c01030(equipped_id)
-				-- bb4 {
-				-- bb4 }
-				types.TY_write_0x0000021205c00fa0(message)
-				-- bb5 {
-				local r1 = buffer.create(out_cursor)
-				buffer.copy(r1, 0, out_buffer, 0, out_cursor)
-				-- bb5 }
-				for r2, r3 in players_map do
-					-- bb6 {
-					-- bb6 }
-					if r2 ~= player then
-						-- bb7 {
-						local r4 = r3.unknown
-						table.insert(r3.buffers, r1)
-						table.insert(r3.lengths, out_cursor)
-						table.move(out_unknown, 1, #out_unknown, (#r4 + 1), r4)
-						-- bb7 }
-						-- goto (bb8)
-					end
-					-- bb8 {
-					-- bb8 }
-					-- goto (bb9)
-				end
-				-- bb9 {
-				-- bb9 }
-			end,
-		},
-		LoadoutEquipRequest = {
-			On = function(listener: (player: Player, request_id: string, item_id: string) -> ()): (() -> ()) 
-				-- bb1 {
-				-- bb1 }
-				if connections[82] ~= nil then
-					-- bb2 {
-					warn(debug.traceback('[Blink]: Event "LoadoutEquipRequest" already has a listener, the current listener will be discarded.', 2))
-					-- bb2 }
-					-- goto (bb3)
-				end
-				-- bb3 {
-				connections[82] = listener
-				-- bb3 }
-				return function(): () 
-					-- bb1 {
-					connections[82] = nil
-					-- bb1 }
-				end
-			end,
-		},
 	}
 }

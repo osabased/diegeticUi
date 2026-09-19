@@ -5,7 +5,7 @@ description: Implement or troubleshoot Roblox UI with this project's pinned Fusi
 
 # Fusion 0.3
 
-Use **Fusion** for reactive Roblox UI rendering, UI-local state, and UI animation. Guidance targets **0.3.0** (source reviewed **2026-09-19**). Resource verification: **unverified** overall. Guarded Studio tests prove the maintained core fixture and the actual preset-picker composition, including protected Janitor/Fusion acquisition and teardown, while a byte-matched normal-startup replay proves desktop pointer and text input. The diagnostic guard covers the first Lest protocol record through Studio process exit; Studio boot, rendered motion, UI Labs reload, touch, and gamepad remain outside proof.
+Use **Fusion** for reactive Roblox UI rendering, UI-local state, and UI animation. Guidance targets **0.3.0** (source reviewed **2026-09-19**). Resource verification remains **unverified** overall. The maintained core fixture is available for API and direct-scope checks; the removed UI benchmark's composition and input results are historical evidence in the resource record.
 
 ## Use when
 
@@ -54,7 +54,7 @@ end
 return createLabel
 ```
 
-For list transforms, animation, inner scopes, special keys, and older-example hazards, read [Fusion 0.3 API and project patterns](references/fusion-0.3.md). The maintained core fixture is the compact executable API reference. The actual composition at `src/client/Loadout/PresetPickerDemo/Mount.luau`, exercised by `tests/studio/LoadoutPresetPickerDemo.spec.luau`, is the executable owner-level example for Charm producer disposal, Janitor ownership, and Fusion scope teardown. Keep snippets here smaller than those examples.
+For list transforms, animation, inner scopes, special keys, and older-example hazards, read [Fusion 0.3 API and project patterns](references/fusion-0.3.md). The maintained core fixture is the compact executable API reference. Keep snippets here smaller than that fixture. Verify owner-level Charm producer disposal, Janitor ownership, and Fusion scope teardown in the feature that uses them.
 
 ## Operational reconciliation
 
@@ -87,7 +87,7 @@ Charm remains the source of truth for domain and shared application state. The f
 
 ## API used by this skill
 
-Use `Fusion.scoped`, `Fusion.doCleanup`, `Fusion.peek`, and the scoped `Value`, `Computed`, `Observer`, `ForKeys`/`ForPairs`/`ForValues`, `New`, `Hydrate`, `Spring`, and `Tween` constructors. Property tables may use `scope.Children`, `scope.OnEvent(name)`, `scope.OnChange(name)`, and `scope.Out(name)`. These are public APIs confirmed in the installed 0.3.0 source. The maintained core fixture covers construction, reactive updates, events, direct scope cleanup, and the strict typed `ForPairs` plus numeric `Tween` construction boundary. The actual preset-picker tests cover the protected Fusion-to-Janitor composition, including early acquisition and partial-view failures, a throwing producer disposer, repeated destruction, and a producer write after disposal. Overall resource verification remains unverified because rendered motion and UI Labs behavior are not proven.
+Use `Fusion.scoped`, `Fusion.doCleanup`, `Fusion.peek`, and the scoped `Value`, `Computed`, `Observer`, `ForKeys`/`ForPairs`/`ForValues`, `New`, `Hydrate`, `Spring`, and `Tween` constructors. Property tables may use `scope.Children`, `scope.OnEvent(name)`, `scope.OnChange(name)`, and `scope.Out(name)`. These are public APIs confirmed in the installed 0.3.0 source. The maintained core fixture covers construction, reactive updates, events, direct scope cleanup, and the strict typed `ForPairs` plus numeric `Tween` construction boundary. Owner-level composition requires feature-specific tests for early acquisition and partial-view failures, a throwing producer disposer, repeated destruction, and a producer write after disposal. Overall resource verification remains unverified because rendered motion and UI Labs behavior are not proven.
 
 ## Failure modes
 
@@ -110,7 +110,7 @@ Use `UILabs.CreateFusionStory`, accept `props.scope` and `props.target`, and cal
 ## Limitations
 
 - Guidance is pinned to Fusion 0.3.0 and does not authorize upgrades or API substitutions.
-- The final byte-matched normal-startup replay proves desktop pointer clicks, keyboard text input, filtering, and selection for the actual preset picker. It does not prove touch, gamepad, replication, or rendered animation timing and quality.
+- Historical desktop benchmark input results do not validate new features. Exercise their actual input, lifecycle, and rendering in Studio.
 - The maintained fixture deliberately uses deterministic state changes rather than timing-sensitive Spring/Tween completion.
 - The guarded Studio wrapper rejects unexpected warning/error output from the first Lest protocol record through process exit, including output after the done marker. Pinned Lest suppresses ordinary Studio output before its first protocol record, so Studio boot diagnostics remain unobserved.
 - UI Labs reload and story interaction remain unverified.
@@ -123,11 +123,10 @@ Fusion adds no special credential, HTTP, persistence, or remote trust boundary. 
 
 - Executable fixture: `fixtures/FusionIntegrationFixture.luau`
 - Core runner: `tests/studio/FusionSkillIntegration.spec.luau` imports that compact API and direct-scope reference.
-- Executable composition: `src/client/Loadout/PresetPickerDemo/Mount.luau`, exercised by `tests/studio/LoadoutPresetPickerDemo.spec.luau`, covers the owner-level Charm, Janitor, and Fusion seam.
 - Run: From the project root after host adoption, run `lute run scripts/verify.luau`, then `lute run scripts/verify.luau --stage studio`. The Studio stage builds its prerequisite disposable place and invokes the guarded `scripts/run-studio-tests.luau` wrapper; use `lute run scripts/run-studio-tests.luau --filter "<test-name-substring>"` only for a focused repeat after the place exists.
-- Pass condition: The full verifier exits 0 and prints `[verify] PASS`; the staged Studio verifier exits 0 and prints `[verify] SELECTED STAGES PASS`; the Studio wrapper reports no diagnostic-guard problem; the core fixture reports every named check true and restores its parent baseline; and the preset-picker tests pass normal mount/reactivity, early and partial acquisition failure, throwing-producer cleanup continuation, repeated destruction, and post-disposal producer isolation.
+- Pass condition: The full verifier exits 0 and prints `[verify] PASS`; the staged Studio verifier exits 0 and prints `[verify] SELECTED STAGES PASS`; the Studio wrapper reports no diagnostic-guard problem; the core fixture reports every named check true and restores its parent baseline. Add feature-owned tests for normal mount/reactivity, early and partial acquisition failure, throwing-producer cleanup continuation, repeated destruction, and post-disposal producer isolation when using that composition.
 
-The Studio wrapper observes warning/error output from the first Lest protocol record through process exit, but pinned Lest omits ordinary Studio boot output before that boundary. The maintained core fixture, actual composition, guarded 13-test Studio suite, and byte-current desktop replay passed on 2026-09-19. Overall resource verification remains `unverified` because rendered Spring/Tween behavior, UI Labs reload, touch, and gamepad are not covered; see the matching record for the exact proof scope.
+The Studio wrapper observes warning/error output from the first Lest protocol record through process exit, but pinned Lest omits ordinary Studio boot output before that boundary. The 2026-09-19 benchmark suite and desktop replay are historical after removal of the demo and its tests; re-run the retained fixture for current API evidence. Overall resource verification remains `unverified` because rendered Spring/Tween behavior, UI Labs reload, touch, and gamepad are not covered; see the matching record for the exact proof scope.
 
 ## Alternatives
 

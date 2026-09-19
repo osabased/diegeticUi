@@ -69,7 +69,7 @@ skill_validation:
       target_version_or_commit: "1.18.3"
       inputs: []
       result: "Historical: Tests A-I and K passed before lifecycle, Current-block check, and executable-fixture boundary guidance changed on 2026-09-19."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
     - check_id: janitor-pre-repair-routing
       kind: routing
       execution_mode: independent-agent
@@ -78,7 +78,7 @@ skill_validation:
       target_version_or_commit: "1.18.3"
       inputs: []
       result: "Historical: independent catalog routing and explicit activation preceded the 2026-09-19 child repair."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
     - check_id: janitor-parent-contract-audit-20260919
       kind: instruction-response
       execution_mode: same-agent-audit
@@ -90,7 +90,7 @@ skill_validation:
           path: SKILL.md
           sha256: "sha256:67592ad729cfebe91faa56ebd47b70e582dd24537a9872471ddcd1e5e0de4f56"
       result: "Same-agent audit confirmed owner-scoped initialization, cancellation of registered pending threads during final teardown, the read-only HEALTHY block query, and the absence of a current executable-integration claim."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
 
     - check_id: janitor-independent-advice-acceptance-20260919
       kind: instruction-response
@@ -103,7 +103,7 @@ skill_validation:
           path: SKILL.md
           sha256: "sha256:67592ad729cfebe91faa56ebd47b70e582dd24537a9872471ddcd1e5e0de4f56"
       result: "Independent advice-only acceptance explicitly invoked $roblox-janitor, observed a HEALTHY block query, created one session-lifetime owner, registered replaceable worker threads immediately, invalidated generations before final Destroy, and surfaced the unordered/throwing-cleaner boundary. No runtime behavior was claimed."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
     - check_id: janitor-nine-member-routing-20260919
       kind: routing
       execution_mode: independent-agent
@@ -140,7 +140,7 @@ skill_validation:
           sha256: "sha256:18a74f4a3ce54a443ade2a2f8d2e6732916e6a76cb6572fd745b23cb07ce5a10"
       command: ""
       result: "Independent routing selected $roblox-janitor as primary for the replaceable session worker and secondary for owned listeners or continuations, rejected it as transport, persistence, or rendering guidance, and selected none of the five Roblox children for plain table formatting."
-      artifact: ".agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
+      artifact: "https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
       scope_fingerprint: "sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62"
 
 host_adoptions:

@@ -9,7 +9,7 @@ statement: The skill-local Lest config found zero specs because its directory be
   skill tree was not a working discovery boundary. The repository-root Studio suite imports the maintained fixture
   through a visible runner and must execute through scripts/run-studio-tests.luau so the outer diagnostic guard owns
   process output; scripts/verify.luau --stage studio is the canonical staged entrypoint.
-evidence: .agents/roblox/resources/evidence/fusion-2026-09-19.md; .agents/roblox/resources/evidence/studio-diagnostic-guard-2026-09-19.md;
+evidence: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/fusion-2026-09-19.md; https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/studio-diagnostic-guard-2026-09-19.md;
   lute run scripts/run-studio-tests.luau passed all 13 Studio tests under the diagnostic guard.
 version_context: Fusion 0.3.0; Lest 0.6.0
 reconsider_when: ''

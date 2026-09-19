@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and verify the preset picker's development and release profiles."""
+"""Build and verify the project's development and release profiles."""
 
 from __future__ import annotations
 
@@ -12,50 +12,20 @@ from types import ModuleType
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-ARTIFACT_ROOT = REPO_ROOT / ".verify" / "preset-picker-profiles"
+ARTIFACT_ROOT = REPO_ROOT / ".verify" / "profiles"
 CHECKER_PATH = REPO_ROOT / "scripts" / "check_rojo_artifact.py"
 
 RUNTIME_REQUIRED_PATHS = (
     "ReplicatedStorage/ClientMain",
-    "ReplicatedStorage/Client/Loadout",
-    "ReplicatedStorage/Client/Loadout/Domain",
-    "ReplicatedStorage/Client/Loadout/View",
-    "ReplicatedStorage/Shared/Loadout/Catalog",
-    "ReplicatedStorage/Shared/Loadout/StateMachine",
-    "ReplicatedStorage/Shared/Loadout/Validator",
     "ReplicatedStorage/Shared/Network/Client",
     "ReplicatedStorage/Shared/Network/Server",
     "ReplicatedStorage/Shared/Network/Types",
     "ServerScriptService/ServerMain",
-    "ServerScriptService/Server/Loadout",
 )
 
-DEMO_SUBTREE_REQUIRED_PATHS = (
-    "ReplicatedStorage/Client/Loadout/PresetPickerDemo/Domain",
-    "ReplicatedStorage/Client/Loadout/PresetPickerDemo/Empty.story",
-    "ReplicatedStorage/Client/Loadout/PresetPickerDemo/Mount",
-    "ReplicatedStorage/Client/Loadout/PresetPickerDemo/Populated.story",
-    "ReplicatedStorage/Client/Loadout/PresetPickerDemo/PresetPicker.storybook",
-    "ReplicatedStorage/Client/Loadout/PresetPickerDemo/StoryFactory",
-    "ReplicatedStorage/Client/Loadout/PresetPickerDemo/View",
-)
+DEVELOPMENT_REQUIRED_PATHS = RUNTIME_REQUIRED_PATHS
 
-DEVELOPMENT_REQUIRED_PATHS = RUNTIME_REQUIRED_PATHS + (
-    "ReplicatedStorage/Client/PresetPickerDemoBootstrap",
-    "ReplicatedStorage/Client/Loadout/Error.story",
-    "ReplicatedStorage/Client/Loadout/Loadout.storybook",
-    "ReplicatedStorage/Client/Loadout/Locked.story",
-    "ReplicatedStorage/Client/Loadout/Normal.story",
-    "ReplicatedStorage/Client/Loadout/Pending.story",
-    "ReplicatedStorage/Client/Loadout/StoryFactory",
-    *DEMO_SUBTREE_REQUIRED_PATHS,
-)
-
-RELEASE_FORBIDDEN_FRAGMENTS = (
-    "PresetPickerDemo",
-    ".story",
-    "ReplicatedStorage/Client/Loadout/StoryFactory",
-)
+RELEASE_FORBIDDEN_FRAGMENTS = (".story",)
 
 
 def load_checker() -> ModuleType:
@@ -135,7 +105,7 @@ def check_profile(
 def main() -> int:
     rojo = shutil.which("rojo")
     if rojo is None:
-        print("preset-picker profiles: rojo is not installed or not on PATH", file=sys.stderr)
+        print("project profiles: rojo is not installed or not on PATH", file=sys.stderr)
         return 2
 
     ARTIFACT_ROOT.mkdir(parents=True, exist_ok=True)
@@ -162,12 +132,12 @@ def main() -> int:
             forbidden_fragments=RELEASE_FORBIDDEN_FRAGMENTS,
         )
     except (OSError, RuntimeError, ValueError) as error:
-        print(f"preset-picker profiles: {error}", file=sys.stderr)
+        print(f"project profiles: {error}", file=sys.stderr)
         return 2
 
     if not development_ok or not release_ok:
         return 1
-    print("PRESET_PICKER_PROFILE_VERIFY_PASS")
+    print("PROJECT_PROFILE_VERIFY_PASS")
     return 0
 
 

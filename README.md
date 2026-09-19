@@ -26,7 +26,7 @@ lute run scripts/verify.luau --stage studio
 
 Repeated `--stage` flags are deduplicated and run in canonical order with their required preparation. Every started run writes an ignored JSON report under `.verify/reports/`; only the no-argument command can print `[verify] PASS`. See [`docs/verification.md`](docs/verification.md) for stage dependencies, report semantics, Studio setup, and the required UI interaction playtest.
 
-The default verifier place is disposable; profile-check artifacts remain under `.verify/preset-picker-profiles/`. Create the development place before opening it in Roblox Studio:
+The default verifier place is disposable; profile-check artifacts remain under `.verify/profiles/`. Create the development place before opening it in Roblox Studio:
 
 ```bash
 rojo build default.project.json --output diegeticUi.rbxlx
@@ -38,7 +38,7 @@ Then start the Rojo server for live development:
 rojo serve
 ```
 
-The default and development profiles mount the interactive preset picker preview through normal client startup. Follow the [preset picker development workflow](docs/preset-picker-development.md) for the explicit `development.project.json` profile. Build `release.project.json` for release; it retains the Loadout runtime while excluding the preview bootstrap, demos, authored stories, and their dedicated helpers.
+The development profile includes authored UI Labs stories. Build `release.project.json` for release; it excludes `*.story.luau` and `*.storybook.luau` files. Keep any future preview-only bootstrap or helper explicitly excluded from the release profile.
 
 For more help, check out [the Rojo documentation](https://rojo.space/docs).
 
@@ -60,7 +60,7 @@ Charm owns domain and shared application state. Fusion 0.3 owns UI rendering and
 
 Install the [UI Labs Studio plugin](https://create.roblox.com/store/asset/14293316215/UI-Labs) and connect Studio to `rojo serve`. Wally installs the UI Labs utility package; the Studio plugin is installed separately.
 
-Place component stories beneath the feature that owns them, alongside a UI Labs storybook. The [preset picker development workflow](docs/preset-picker-development.md) describes the development-only interactive example and its release exclusion. Use the [behavior verification and Studio playtest workflow](docs/verification.md#behavior-verification) to distinguish rendered-state checks from real input validation.
+Place component stories beneath the feature that owns them, alongside a UI Labs storybook. Use the [behavior verification and Studio playtest workflow](docs/verification.md#behavior-verification) to distinguish rendered-state checks from real input validation.
 
 ## Project structure
 

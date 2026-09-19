@@ -27,9 +27,8 @@ reconciliation:
   - wally.toml and generated wally.lock (elttob/fusion@0.3.0)
   - installed Packages/_Index/elttob_fusion@0.3.0/fusion/wally.toml and Packages/Fusion.lua redirect
   - Fusion 0.3 scope, component, and Spring documentation
-  result: Fusion 0.3.0 matches declaration, lock, redirect, and installed package. Current executable evidence now covers
-    the maintained core fixture, the actual preset-picker composition, normal desktop startup/input, and guarded Studio diagnostics;
-    explicit skill activation remains untested.
+  result: Fusion 0.3.0 matches declaration, lock, redirect, and installed package. The demo and its tests were removed
+    during cleanup; their executable results are historical. The maintained core fixture remains available.
 capability: Builds reactive Roblox interfaces with scoped state, computed values, instances, and spring/tween animation.
 devforum_url: ''
 selection_reason: Fixed dependency and version supplied by the user for the requested UI-development foundation.
@@ -38,9 +37,9 @@ resource_proof:
   executed: true
   passed: false
   target_version_or_commit: 0.3.0
-  environment: Pinned Fusion 0.3.0 and Janitor 1.18.3 in guarded Lest 0.6.0 Studio edit-mode tests, plus a byte-matched normal
+  environment: Historical benchmark before cleanup. Pinned Fusion 0.3.0 and Janitor 1.18.3 in guarded Lest 0.6.0 Studio edit-mode tests, plus a byte-matched normal
     client startup replay in the attached Windows Studio instance.
-  result: The maintained core fixture passed construction, reactivity, events, strict ForPairs plus numeric Tween construction,
+  result: Historical benchmark results retained for provenance. The maintained core fixture passed construction, reactivity, events, strict ForPairs plus numeric Tween construction,
     and direct-scope cleanup. The actual preset-picker suite passed protected Janitor/Fusion acquisition and cleanup, early
     and partial failures, a throwing producer disposer, repeated destruction, and post-disposal producer isolation. A byte-current
     normal-startup replay passed desktop click/text/filter/selection behavior. Live warning and Fusion-error red proofs failed
@@ -58,19 +57,16 @@ skill_validation:
   independent_behavioral_executed: false
   independent_behavioral_passed: false
   claim_scope: executable-integration
-  environment: Current command evidence from the guarded 13-test Studio suite plus a byte-matched attached-Studio desktop
-    playtest. No fresh independent instruction-response acceptance or explicit skill activation was performed after
-    the proof wording changed; the earlier non-Studio canonical report is historical after profile-assertion gaps were found.
-  result: Current executable evidence proves the core fixture, the actual protected Charm/Janitor/Fusion composition, desktop
-    pointer/text startup behavior, and the outer diagnostic interval from first protocol record through process exit. It does
-    not prove rendered motion, UI Labs, touch, gamepad, or pre-protocol Studio boot diagnostics.
-  catalog_routing_status: verified
+  environment: Historical guarded Studio benchmark and desktop replay before removal of the demo and its tests.
+  result: The retained core fixture remains available. Composition, input, and suite evidence affected by cleanup is historical;
+    no new Studio execution or independent skill acceptance was performed during cleanup.
+  catalog_routing_status: unverified
   catalog_fingerprint: sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62
   catalog_environment: 'Exact routing set: five project children roblox-blink, roblox-fusion, roblox-janitor, roblox-lemonsignal,
     and roblox-scribe; four global competitors roblox-resource-acquisition, structure-roblox-projects, codebase-design, and
     animate.'
-  catalog_result: Static catalog validation passes for the exact nine-member set with no overlap cluster. Independent routing
-    acceptance treats Fusion as conditional on rendered Fusion view/scope work and rejects it for plain table formatting.
+  catalog_result: Historical independent routing acceptance is retained. Current-input validation found that the global
+    structure-roblox-projects activation metadata no longer matches the recorded hash; the catalog needs fresh acceptance.
   checks:
   - check_id: fusion-studio-integration
     kind: executable-integration
@@ -114,7 +110,7 @@ skill_validation:
     result: 'Historical: a fresh Sol High agent ran the documented command and the prior fixture passed one suite and one
       test. The fixture, Lifecycle and cleanup contract, and Verify after installation contract changed during the 2026-09-19
       repair, so this run is not current proof.'
-    artifact: .agents/roblox/resources/evidence/fusion-2026-09-19.md
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/fusion-2026-09-19.md
   - check_id: fusion-failure-cleanup
     kind: lifecycle-failure-cleanup
     execution_mode: independent-agent
@@ -127,7 +123,7 @@ skill_validation:
     result: 'Historical: the prior fixture preserved its injected construction failure, cleaned failed and normal scopes,
       and returned the parent child count to baseline. The fixture and lifecycle contract changed during the 2026-09-19 repair,
       so this result is not current cleanup proof.'
-    artifact: .agents/roblox/resources/evidence/fusion-2026-09-19.md
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/fusion-2026-09-19.md
   - check_id: fusion-repaired-fixture-20260919
     kind: executable-integration
     execution_mode: command
@@ -166,7 +162,7 @@ skill_validation:
       2.37s; total 14.15s) against the unchanged prepared place. The maintained fixture proved its named construction, reactivity,
       event, strict ForPairs plus numeric Tween construction, final cleanup, and connected diagnostic-window assertions. It
       did not execute rendered Tween motion or real input and cannot observe diagnostics after its listener disconnects.'
-    artifact: .agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md
   - check_id: fusion-repaired-direct-scope-cleanup-20260919
     kind: lifecycle-failure-cleanup
     execution_mode: command
@@ -179,7 +175,7 @@ skill_validation:
       construction error, cleaned its failed Fusion scope back to the exact pre-failure parent-child baseline, removed the
       failure root, and returned the normal scope to the fixture-entry baseline. This is direct Fusion scope cleanup proof
       only; it does not exercise the documented Fusion-to-Janitor composite or its ordered best-effort cleanup contract.'
-    artifact: .agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md
   - check_id: fusion-routing
     kind: routing
     execution_mode: independent-agent
@@ -214,12 +210,12 @@ skill_validation:
     command: ''
     result: 'Historical: this earlier eight-boundary catalog preceded the exact nine-member routing scope and the sibling
       repairs. Its reported sibling errors no longer describe current catalog state.'
-    artifact: .agents/roblox/resources/evidence/fusion-2026-09-19.md
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/fusion-2026-09-19.md
     scope_fingerprint: sha256:faa3fbe107414566bf3eb0960d48373786b21f57ef4e151c3e9edbda89fcf16c
   - check_id: fusion-production-studio-suite-20260919
     kind: executable-integration
     execution_mode: command
-    status: passed
+    status: historical
     tested_at: '2026-09-19'
     target_version_or_commit: 0.3.0
     inputs: &id003
@@ -256,26 +252,26 @@ skill_validation:
       section: Verify after installation
       sha256: sha256:7785fe19a7a34fe71e9121c384675a3deaf238971fb865e9bf9ba8ec259a2775
     command: lute run scripts/run-studio-tests.luau
-    result: The guarded Studio command passed all 13 tests. The maintained core fixture proved its named construction, reactivity,
+    result: 'Historical after removal of the UI benchmark and revision of its guidance. The guarded Studio command passed all 13 tests. The maintained core fixture proved its named construction, reactivity,
       event, strict ForPairs/numeric Tween construction, direct cleanup, and local diagnostic assertions; the actual preset-picker
-      tests proved mount, reactive updates, and remount against the pinned packages.
-    artifact: .agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
+      tests proved mount, reactive updates, and remount against the pinned packages.'
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
   - check_id: fusion-production-lifecycle-20260919
     kind: lifecycle-failure-cleanup
     execution_mode: command
-    status: passed
+    status: historical
     tested_at: '2026-09-19'
     target_version_or_commit: 0.3.0
     inputs: *id003
     command: lute run scripts/run-studio-tests.luau
-    result: The actual composition passed early domain acquisition failure, partial view construction failure, producer-before-Fusion
+    result: 'Historical after removal of the UI benchmark and revision of its guidance. The actual composition passed early domain acquisition failure, partial view construction failure, producer-before-Fusion
       teardown when the producer disposer throws, repeated destroy, later remount, and a producer write after disposal without
-      a stale Fusion update. The core fixture separately restored its exact failure and final parent baselines.
-    artifact: .agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
+      a stale Fusion update. The core fixture separately restored its exact failure and final parent baselines.'
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
   - check_id: fusion-byte-current-desktop-playtest-20260919
     kind: executable-integration
     execution_mode: studio-playtest
-    status: passed
+    status: historical
     tested_at: '2026-09-19'
     target_version_or_commit: 0.3.0
     inputs:
@@ -300,14 +296,14 @@ skill_validation:
       sha256: sha256:73212806b6d083c9c7bcef59d1e9ccd5c617a936d417cbc08f1e17f46db5e024
     command: Attached Roblox Studio normal Play via ClientMain/ModuleLoader; pointer click Search, type drone, pointer click
       recon; stop the task-owned play session
-    result: Immediately pre-play, Studio and dirty-filesystem bytes matched for all four runtime demo scripts. Normal startup
+    result: 'Historical after removal of the UI benchmark and revision of its guidance. Immediately pre-play, Studio and dirty-filesystem bytes matched for all four runtime demo scripts. Normal startup
       mounted the development preview; real desktop pointer and keyboard input filtered to one result and selected Ghost Recon,
-      with empty console output before and after interaction. Touch and gamepad were not exercised.
-    artifact: .agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
+      with empty console output before and after interaction. Touch and gamepad were not exercised.'
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
   - check_id: fusion-studio-diagnostic-guard-20260919
     kind: executable-integration
     execution_mode: command
-    status: passed
+    status: historical
     tested_at: '2026-09-19'
     target_version_or_commit: 0.3.0
     inputs:
@@ -328,15 +324,15 @@ skill_validation:
       section: Limitations
       sha256: sha256:73212806b6d083c9c7bcef59d1e9ccd5c617a936d417cbc08f1e17f46db5e024
     command: lute run tests/unit/StudioDiagnosticGuard.regression.luau; lute run scripts/run-studio-tests.luau
-    result: Live warning and Fusion MessageError proof cases returned false-green from Lest but nonzero from the outer guard;
+    result: 'Historical after removal of the UI benchmark and revision of its guidance. Live warning and Fusion MessageError proof cases returned false-green from Lest but nonzero from the outer guard;
       after their temporary specs were removed, the unit regression and guarded 13-test suite passed. The guard covers first
       protocol record through Studio process exit, including post-done output; ordinary Studio boot output before the first
-      record remains outside the pinned backend boundary.
-    artifact: .agents/roblox/resources/evidence/studio-diagnostic-guard-2026-09-19.md
+      record remains outside the pinned backend boundary.'
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/studio-diagnostic-guard-2026-09-19.md
   - check_id: fusion-nine-member-routing-20260919
     kind: routing
     execution_mode: independent-agent
-    status: passed
+    status: historical
     tested_at: '2026-09-19'
     target_version_or_commit: 0.3.0
     inputs:
@@ -371,7 +367,7 @@ skill_validation:
     result: Independent routing across the exact nine-member set kept Fusion conditional on rendered Fusion view/scope changes,
       assigned persistent data to Scribe and lifetime ownership to Janitor, rejected the four global competitors outside their
       triggers, and selected none of the five children for plain table formatting.
-    artifact: .agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md
+    artifact: https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md
     scope_fingerprint: sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62
 host_adoptions:
 - host: Codex
@@ -379,8 +375,8 @@ host_adoptions:
   location: .agents/skills/roblox-fusion
   status: installed
   checked_at: '2026-09-19'
-  result: Installed in the repository skill path and discoverable/enabled. Current command and Studio evidence proves the
-    recorded executable lanes, but no post-reconciliation explicit skill-activation test was run.
+  result: Installed in the repository skill path and discoverable/enabled. Benchmark execution evidence affected by cleanup
+    is historical; no new explicit skill-activation test was run.
   evidence:
     installed: present
     registered: not-applicable

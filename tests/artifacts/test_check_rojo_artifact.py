@@ -16,9 +16,9 @@ CHECKER = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = CHECKER
 SPEC.loader.exec_module(CHECKER)
 
-VERIFIER_PATH = Path(__file__).with_name("verify_preset_picker_profiles.py")
+VERIFIER_PATH = Path(__file__).with_name("verify_project_profiles.py")
 VERIFIER_SPEC = importlib.util.spec_from_file_location(
-    "verify_preset_picker_profiles", VERIFIER_PATH
+    "verify_project_profiles", VERIFIER_PATH
 )
 assert VERIFIER_SPEC is not None and VERIFIER_SPEC.loader is not None
 VERIFIER = importlib.util.module_from_spec(VERIFIER_SPEC)
@@ -98,7 +98,7 @@ class ArtifactContractRegressionTests(unittest.TestCase):
         self.assert_contract_result(0)
 
 
-class PresetPickerProfileContractTests(unittest.TestCase):
+class ProjectProfileContractTests(unittest.TestCase):
     @staticmethod
     def artifacts(paths: set[str]) -> dict[str, object]:
         view = CHECKER.ArtifactView(
@@ -121,28 +121,11 @@ class PresetPickerProfileContractTests(unittest.TestCase):
                     (artifact_name, missing_path, failures),
                 )
 
-    def test_development_rejects_missing_demo_subtree_when_bootstrap_remains(self) -> None:
-        paths = set(VERIFIER.DEVELOPMENT_REQUIRED_PATHS)
-        for path in VERIFIER.DEMO_SUBTREE_REQUIRED_PATHS:
-            paths.remove(path)
-        self.assertIn("ReplicatedStorage/Client/PresetPickerDemoBootstrap", paths)
-
-        failures = VERIFIER.profile_failures(
-            CHECKER,
-            self.artifacts(paths),
-            required_paths=VERIFIER.DEVELOPMENT_REQUIRED_PATHS,
-        )
-        self.assert_missing_in_both_artifacts(failures, VERIFIER.DEMO_SUBTREE_REQUIRED_PATHS)
-
     def test_release_rejects_runtime_loss_when_entrypoints_remain(self) -> None:
         lost_runtime = (
-            "ReplicatedStorage/Shared/Loadout/Catalog",
-            "ReplicatedStorage/Shared/Loadout/StateMachine",
-            "ReplicatedStorage/Shared/Loadout/Validator",
             "ReplicatedStorage/Shared/Network/Client",
             "ReplicatedStorage/Shared/Network/Server",
             "ReplicatedStorage/Shared/Network/Types",
-            "ServerScriptService/Server/Loadout",
         )
         paths = set(VERIFIER.RUNTIME_REQUIRED_PATHS)
         for path in lost_runtime:

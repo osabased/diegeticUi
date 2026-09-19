@@ -6,7 +6,7 @@ canonical_url: https://github.com/dphfox/Fusion
 package_id: elttob/fusion
 observed: '2026-09-19'
 statement: A failure-cleanup assertion tied to the fixture entry baseline became stale when another normal top-level root was added. Snapshot the exact parent child count immediately before injected failure, require failed-scope cleanup to restore that count, and keep final cleanup bound to the original entry baseline.
-evidence: Focused Studio fixture failed only failureCleanup after adding FusionFixtureRows; .agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md records the result and corrected invariant.
+evidence: Focused Studio fixture failed only failureCleanup after adding FusionFixtureRows; https://github.com/osabased/diegeticUi/blob/4244f95c99adb66124ec9d913ed77079bc82ab2d/.agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md records the result and corrected invariant.
 version_context: Fusion 0.3.0
 reconsider_when: ''
 task_context: Repair maintained Fusion integration fixture after focused Studio red result
