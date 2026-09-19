@@ -53,20 +53,103 @@ skill_validation:
   structural_passed: true
   independent_behavioral_executed: true
   independent_behavioral_passed: true
-  environment: "Fresh isolated Codex agents ran read-only instruction-response scenarios for Tests A-I and K and catalog routing/explicit activation. No installation or runtime tests were executed by those agents; retained resource_proof remains the runtime evidence."
-  result: "Instruction-response checks passed for setup, reviewed lockfile updates with Rojo stopped, prepared ordinary use without reinstalling, failed preparation, repeated proof, session ownership, provenance/security, conditional reconciliation, and repair interrupts. Defective child-only installation, always-reconcile, and silent-workaround controls failed as expected; current AGENTS.md independently guards installation."
+  claim_scope: advice-only
+  environment: "Fresh independent instruction-response acceptance of the repaired child in the Codex project host; explicit invocation and the read-only HEALTHY query ran, but no runtime or Studio behavior was executed."
+  result: "The repaired guidance passed its ownership, lifecycle/failure, verification-boundary, and negative-routing scenarios. This advice-only result does not promote or replace the preserved upstream resource proof."
   catalog_routing_status: verified
-  catalog_fingerprint: "sha256:aaf6fea8dcfe9fe4baffba705a8b58ed53db8e49223751eb6dcd8810f9962a42"
-  catalog_environment: "Codex catalog with generated children roblox-blink, roblox-janitor, roblox-lemonsignal, and roblox-scribe, plus roblox-resource-acquisition, structure-roblox-projects, and codebase-design as routing competitors."
-  catalog_result: "After the dependency-guidance repair, static catalog validation passed with the same routing fingerprint and no overlap cluster. A fresh isolated agent selected all four children and three competitor boundaries, selected neither for a string-formatting task, and passed explicit instruction-activation scenarios for all four children."
+  catalog_fingerprint: "sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62"
+  catalog_environment: "Exact routing set: five project children roblox-blink, roblox-fusion, roblox-janitor, roblox-lemonsignal, and roblox-scribe; four global competitors roblox-resource-acquisition, structure-roblox-projects, codebase-design, and animate."
+  catalog_result: "Static catalog validation passed for the exact nine-member set. Independent acceptance exercised all five child boundaries, all four competitor boundaries, explicit positive and negative routing, and a request that selects none of the five children."
+  checks:
+    - check_id: janitor-pre-repair-instruction-response
+      kind: instruction-response
+      execution_mode: independent-agent
+      status: historical
+      tested_at: "2026-09-18"
+      target_version_or_commit: "1.18.3"
+      inputs: []
+      result: "Historical: Tests A-I and K passed before lifecycle, Current-block check, and executable-fixture boundary guidance changed on 2026-09-19."
+      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+    - check_id: janitor-pre-repair-routing
+      kind: routing
+      execution_mode: independent-agent
+      status: historical
+      tested_at: "2026-09-18"
+      target_version_or_commit: "1.18.3"
+      inputs: []
+      result: "Historical: independent catalog routing and explicit activation preceded the 2026-09-19 child repair."
+      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+    - check_id: janitor-parent-contract-audit-20260919
+      kind: instruction-response
+      execution_mode: same-agent-audit
+      status: passed
+      tested_at: "2026-09-19"
+      target_version_or_commit: "1.18.3"
+      inputs:
+        - role: contract
+          path: SKILL.md
+          sha256: "sha256:67592ad729cfebe91faa56ebd47b70e582dd24537a9872471ddcd1e5e0de4f56"
+      result: "Same-agent audit confirmed owner-scoped initialization, cancellation of registered pending threads during final teardown, the read-only HEALTHY block query, and the absence of a current executable-integration claim."
+      artifact: ".agents/roblox/resources/evidence/sibling-skills-repair-2026-09-19.md"
+
+    - check_id: janitor-independent-advice-acceptance-20260919
+      kind: instruction-response
+      execution_mode: independent-agent
+      status: passed
+      tested_at: "2026-09-19"
+      target_version_or_commit: "1.18.3"
+      inputs:
+        - role: contract
+          path: SKILL.md
+          sha256: "sha256:67592ad729cfebe91faa56ebd47b70e582dd24537a9872471ddcd1e5e0de4f56"
+      result: "Independent advice-only acceptance explicitly invoked $roblox-janitor, observed a HEALTHY block query, created one session-lifetime owner, registered replaceable worker threads immediately, invalidated generations before final Destroy, and surfaced the unordered/throwing-cleaner boundary. No runtime behavior was claimed."
+      artifact: ".agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
+    - check_id: janitor-nine-member-routing-20260919
+      kind: routing
+      execution_mode: independent-agent
+      status: passed
+      tested_at: "2026-09-19"
+      target_version_or_commit: "1.18.3"
+      inputs:
+        - role: activation-metadata
+          path: ../roblox-blink/SKILL.md
+          sha256: "sha256:bab260c300c08d51f87b60eb6a2f9f4cbb583cb7c46bd75cc92af717272010a4"
+        - role: activation-metadata
+          path: ../roblox-fusion/SKILL.md
+          sha256: "sha256:ac2e26426cb45377865d8f00ec8d6ad5e762715f9daf3736fe2275ca86d7e161"
+        - role: activation-metadata
+          path: SKILL.md
+          sha256: "sha256:e1bffdfb3171a9fdda9ae66a929c19ce802b517965eef4c72c516978dd4cda0f"
+        - role: activation-metadata
+          path: ../roblox-lemonsignal/SKILL.md
+          sha256: "sha256:0aeda18dd83bb2d6cb2ecd42d4b0cac3e581c0fd913f36852c98c5c0389617fb"
+        - role: activation-metadata
+          path: ../roblox-scribe/SKILL.md
+          sha256: "sha256:255c876cd85c7d467aadbe349f9e23fae42610c1eaa6db8ecf1c282e54523f4c"
+        - role: activation-metadata
+          path: ../../../../../../.agents/skills/roblox-resource-acquisition/SKILL.md
+          sha256: "sha256:a99f859ce761b0d757fcf584edd8edeb1c9d30e3a0d08e9ac13bac36d293a4ea"
+        - role: activation-metadata
+          path: ../../../../../../.agents/skills/structure-roblox-projects/SKILL.md
+          sha256: "sha256:11cd4e0f548c1afb64a636f458862def7089b035c433197b8ce9fb484d9d1a0f"
+        - role: activation-metadata
+          path: ../../../../../../.agents/skills/codebase-design/SKILL.md
+          sha256: "sha256:0f36b32ac96b8b07b737537601104ad8e25ff8fd07d02517ea74377b412339d4"
+        - role: activation-metadata
+          path: ../../../../../../.agents/skills/animate/SKILL.md
+          sha256: "sha256:18a74f4a3ce54a443ade2a2f8d2e6732916e6a76cb6572fd745b23cb07ce5a10"
+      command: ""
+      result: "Independent routing selected $roblox-janitor as primary for the replaceable session worker and secondary for owned listeners or continuations, rejected it as transport, persistence, or rendering guidance, and selected none of the five Roblox children for plain table formatting."
+      artifact: ".agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md"
+      scope_fingerprint: "sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62"
 
 host_adoptions:
   - host: "Codex"
     scope: repo
     location: ".agents/skills/roblox-janitor"
     status: operational
-    checked_at: "2026-09-18"
-    result: "The existing installed child remains discoverable and enabled. Fresh isolated Codex instruction-response scenarios passed explicit roblox-janitor activation and implicit repair routing after the dependency-guidance repair; these checks did not execute Roblox runtime tests."
+    checked_at: "2026-09-19"
+    result: "Fresh independent acceptance explicitly invoked $roblox-janitor, confirmed the child was discoverable and enabled, ran its required HEALTHY query, and produced guidance within its declared ownership and evidence boundaries."
     evidence:
       installed: present
       registered: not-applicable

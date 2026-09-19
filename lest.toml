@@ -19,6 +19,15 @@ default = false
 file = ".verify/diegeticUi.rbxlx"
 rojo = "default.project.json"
 
+[suites.fusion-integration]
+include = ["tests/studio/FusionSkillIntegration.spec.luau"]
+backend = "studio"
+default = false
+
+[suites.fusion-integration.place]
+file = ".verify/diegeticUi.rbxlx"
+rojo = "default.project.json"
+
 [settings]
 backend = "native" # default for suites that don't declare one
 timeout_ms = 5000

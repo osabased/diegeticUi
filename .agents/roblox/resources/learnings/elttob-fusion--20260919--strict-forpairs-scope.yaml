@@ -1,0 +1,13 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: elttob-fusion
+canonical_url: https://github.com/dphfox/Fusion
+package_id: elttob/fusion
+observed: '2026-09-19'
+statement: Under strict Luau with Fusion 0.3.0, annotating only the ForPairs processor calculation scope as Fusion.Scope<typeof(Fusion)> resolves the escaping generic and lets the pair, numeric Computed, and numeric Tween infer. Downstream state annotations do not fix an unconstrained processor scope.
+evidence: .agents/roblox/resources/evidence/fusion-guidance-diagnosis-2026-09-19.md; narrow luau-lsp analysis of the repaired maintained fixture exited 0.
+version_context: Fusion 0.3.0
+reconsider_when: ''
+task_context: Repair project-local roblox-fusion generated guidance
+related_entry: ''

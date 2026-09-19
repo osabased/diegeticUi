@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install artifact checker runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Install pinned Roblox tools
         uses: paradoxum-games/setup-rokit@v3
         with:

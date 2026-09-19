@@ -1,0 +1,13 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: data-oriented-house-lemonsignal
+canonical_url: https://github.com/Data-Oriented-House/LemonSignal
+package_id: data-oriented-house/lemonsignal
+observed: "2026-09-19"
+statement: "The LemonSignal child omitted the current block query, executable-fixture boundary, and the fact that cleanup cannot cancel callbacks already spawned by Fire or resume a coroutine abandoned in Wait. The repair assigns that pending-work cancellation/invalidation to the feature owner."
+evidence: "The catalog validator reproduced three errors before the edit; validate_skill.py and the catalog validator passed afterward. The pinned 2.0.0 source schedules callbacks with task.spawn, and the prior child already documented that Destroy does not resume Wait callers."
+version_context: "2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2"
+reconsider_when: ""
+task_context: "Older project child reconciliation against the current parent contract."
+related_entry: ""

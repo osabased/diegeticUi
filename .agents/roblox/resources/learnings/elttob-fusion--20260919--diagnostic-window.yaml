@@ -1,0 +1,13 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: elttob-fusion
+canonical_url: https://github.com/dphfox/Fusion
+package_id: elttob/fusion
+observed: '2026-09-19'
+statement: A fixture-local LogService listener cannot prove warning-free Studio teardown. The repository runner now preserves stdout and stderr and applies a falsified outer guard from the first Lest protocol record through process exit, including output after the done marker; pinned Lest still suppresses ordinary Studio boot output before that first record.
+evidence: .agents/roblox/resources/evidence/fusion-teardown-diagnosis-2026-09-19.md; .agents/roblox/resources/evidence/studio-diagnostic-guard-2026-09-19.md; scripts/run-studio-tests.luau; scripts/studio-diagnostic-guard.luau; tests/unit/StudioDiagnosticGuard.regression.luau.
+version_context: Fusion 0.3.0; Lest 0.6.0
+reconsider_when: ''
+task_context: Repair and falsify the project Studio diagnostic evidence boundary
+related_entry: ''

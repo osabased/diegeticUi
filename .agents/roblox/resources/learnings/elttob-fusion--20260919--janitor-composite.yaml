@@ -1,0 +1,13 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: elttob-fusion
+canonical_url: https://github.com/dphfox/Fusion
+package_id: elttob/fusion
+observed: '2026-09-19'
+statement: Separate Janitor 1.18.3 entries cannot guarantee producer-before-Fusion teardown or best-effort cleanup because entry order is unspecified and a throwing cleaner aborts iteration. The proven Fusion mount seam uses one protected feature-local composite registered before fallible acquisition, with labelled error accumulation outside Janitor iteration; actual Studio tests cover early and partial acquisition failure, a throwing producer disposer, repeated destroy, and post-disposal producer isolation.
+evidence: .agents/roblox/resources/evidence/fusion-guidance-diagnosis-2026-09-19.md; .agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md; src/client/Loadout/PresetPickerDemo/Mount.luau; tests/studio/LoadoutPresetPickerDemo.spec.luau.
+version_context: Fusion 0.3.0; Janitor 1.18.3
+reconsider_when: ''
+task_context: Repair and production qualification of project-local roblox-fusion guidance
+related_entry: ''

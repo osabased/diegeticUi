@@ -9,7 +9,17 @@ local DiagnosticCapture = require("./DiagnosticCapture")
 
 type Scope = Fusion.Scope<typeof(Fusion)>
 
-local function assertCleanResult(result: DiagnosticCapture.Result, allowedPatterns: { string }?)
+local INVALID_PROPERTY_DIAGNOSTIC: DiagnosticCapture.ExpectedDiagnostic = {
+	message = "[Fusion] The class type 'TextLabel' has no assignable property 'InvalidSmokeTestProperty'. \n"
+		.. "    ID: cannotAssignProperty\n"
+		.. "    Learn more: https://elttob.uk/Fusion/0.3/api-reference/general/errors/#cannotassignproperty",
+	messageType = Enum.MessageType.MessageError,
+}
+
+local function assertCleanResult(
+	result: DiagnosticCapture.Result,
+	expectedDiagnostics: { DiagnosticCapture.ExpectedDiagnostic }?
+)
 	local problems: { string } = {}
 	if result.bodyError ~= nil then
 		table.insert(problems, "Test body failed:\n" .. result.bodyError)
@@ -17,7 +27,7 @@ local function assertCleanResult(result: DiagnosticCapture.Result, allowedPatter
 	if result.cleanupError ~= nil then
 		table.insert(problems, "Cleanup failed:\n" .. result.cleanupError)
 	end
-	for _, diagnostic in DiagnosticCapture.unexpected(result.diagnostics, allowedPatterns) do
+	for _, diagnostic in DiagnosticCapture.unexpected(result.diagnostics, expectedDiagnostics) do
 		table.insert(problems, diagnostic)
 	end
 	assert(#problems == 0, table.concat(problems, "\n\n"))
@@ -98,9 +108,9 @@ describe("Fusion infrastructure", function()
 				if scope ~= nil then
 					Fusion.doCleanup(scope)
 				end
-			end)
+			end, { INVALID_PROPERTY_DIAGNOSTIC })
 
-			assertCleanResult(result, { "cannotAssignProperty" })
+			assertCleanResult(result, { INVALID_PROPERTY_DIAGNOSTIC })
 			assert(
 				DiagnosticCapture.contains(result.diagnostics, "cannotAssignProperty"),
 				"Fusion error was not captured"

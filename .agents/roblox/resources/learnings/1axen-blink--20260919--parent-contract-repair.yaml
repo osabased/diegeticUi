@@ -1,0 +1,13 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: 1axen-blink
+canonical_url: https://github.com/1Axen/blink
+package_id: 1Axen/blink@1.0.0-pre.8
+observed: "2026-09-19"
+statement: "The Blink child lacked the current block-query field, an explicit executable-fixture boundary, and ownership guidance for work already started by feature listeners. The repair added those contracts while leaving Blink's realm-global heartbeat and remotes under package lifetime."
+evidence: "The catalog validator reproduced three errors before the edit; validate_skill.py and the catalog validator passed afterward. The installed generated modules show On returns a disconnect callback while the Heartbeat connection is module-global."
+version_context: "1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+reconsider_when: ""
+task_context: "Older project child reconciliation against the current parent contract."
+related_entry: ""

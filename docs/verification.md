@@ -8,7 +8,7 @@ The required local and CI gate remains:
 lute run scripts/verify.luau
 ```
 
-With no arguments, the verifier checks prepared dependencies, checks Blink generation while restoring its randomized output, creates the Rojo sourcemap, checks formatting, lints and analyzes Luau, runs unit tests, and builds a disposable place. This is the only invocation that can print `[verify] PASS`. Verification never installs packages or rewrites package typings, so it can run while Rojo serves the project.
+Python 3.10 or newer must be available as `python`; CI uses Python 3.12. With no arguments, the verifier checks prepared dependencies, checks Blink generation while restoring its randomized output, creates the Rojo sourcemap, checks formatting, lints and analyzes Luau, runs Luau and Python regression tests, builds the default disposable place, and verifies the development and release profiles. This is the only invocation that can print `[verify] PASS`. Verification never installs packages or rewrites package typings, so it can run while Rojo serves the project.
 
 ## Dependency preparation and updates
 
@@ -35,6 +35,8 @@ The unit stage also runs `lute run tests/unit/Dependencies.regression.luau` to c
 
 It also checks README's relative file links with `lute run tests/unit/Documentation.regression.luau`, including any linked UI example entry points. This detects deleted or moved linked examples; it does not validate prose, remote URLs, or Markdown anchors.
 
+Python's standard-library `unittest` runner executes `tests/artifacts/test_*.py` during the unit stage. These regressions exercise the profile artifact checker without changing project source.
+
 ## Focused runs
 
 For a narrower loop, select one or more stages:
@@ -57,6 +59,10 @@ Selections are deduplicated and execute once in canonical order. The verifier ad
 | `studio` | Prepared dependency check, disposable place build |
 
 The Studio stage is deliberately absent from the canonical gate. It requires a local Roblox Studio installation and runs Lest in edit-mode `RunScript`, while CI remains platform-neutral.
+
+## Build profiles
+
+The build stage first creates the disposable default place at `.verify/diegeticUi.rbxlx`, then runs `python tests/artifacts/verify_preset_picker_profiles.py`. The checker retains its generated development and release place files and sourcemaps beneath `.verify/preset-picker-profiles/`. It proves that the development profile contains the complete preset picker preview and authored stories, while `release.project.json` excludes demos, stories, and their dedicated helpers but retains the Loadout runtime and normal service roots.
 
 ## Reports and failures
 
@@ -83,9 +89,11 @@ Run the engine-backed construction tests through the verifier:
 lute run scripts/verify.luau --stage studio
 ```
 
-The verifier builds `.verify/diegeticUi.rbxlx`, launches the non-default `studio` Lest suite, and removes only that exact place file afterward. Lest retains `.lest/studio-run.luau` and `.lest/studio-output.log` when Studio startup or a test fails.
+The verifier builds `.verify/diegeticUi.rbxlx`, then invokes `scripts/run-studio-tests.luau` to launch the non-default `studio` Lest suite and apply the outer diagnostic guard. It removes only that exact place file afterward. Guard failures retain the complete process streams and attributed problems beneath `.verify/studio-diagnostics/`; Lest also retains `.lest/studio-run.luau` and `.lest/studio-output.log` when Studio startup or a test fails.
 
-The suite constructs a small scoped Fusion hierarchy, checks a reactive text update, and verifies cleanup without unexpected diagnostics. It is independent of application features. A deliberate invalid-property fixture must produce `cannotAssignProperty` and fail the clean-result assertion; this proves the suite detects Fusion errors that can still return a partially constructed Instance. Injected body and cleanup failures must preserve both original messages, and an assertion failure must still destroy the test holder.
+The guard accepts a local expected diagnostic only when its complete `Enum.MessageType`, complete text, and multiplicity match the test's declaration. It reconciles every structured warning or error with its raw Studio output, rejects unmatched raw output, and checks stderr while allowing only Lest's exact Studio-launch progress line. Its observable boundary begins with the first Lest protocol record and continues through Studio process exit, including output decoded after Lest's done marker. The pinned backend suppresses ordinary Studio boot output before that first protocol record, so this suite does not claim coverage of that earlier interval. Run Studio tests through the verifier; direct `lest run studio` bypasses the outer guard.
+
+The suite checks scoped Fusion construction, reactive updates, and cleanup, plus the preset picker's real Fusion/Charm/Janitor composition, remount, failed acquisition, throwing cleanup, and repeated destruction. A deliberate invalid-property fixture must produce the exact expected `cannotAssignProperty` diagnostic and fail the clean-result assertion; this proves the suite detects Fusion errors that can still return a partially constructed Instance. Injected body and cleanup failures must preserve both original messages, and an assertion failure must still destroy the test holder.
 
 Because Studio Lest runs in edit mode, it cannot verify client startup or real pointer interaction. UI/input changes still require the following playtest.
 

@@ -13,3 +13,4 @@ sourcemap.json
 # Generated verification/test artifacts
 /.lest/
 /.verify/
+__pycache__/

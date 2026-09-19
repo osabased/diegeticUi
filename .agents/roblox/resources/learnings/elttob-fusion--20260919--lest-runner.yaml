@@ -1,0 +1,17 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: elttob-fusion
+canonical_url: https://github.com/dphfox/Fusion
+package_id: elttob/fusion
+observed: '2026-09-19'
+statement: The skill-local Lest config found zero specs because its directory became the suite root and the hidden
+  skill tree was not a working discovery boundary. The repository-root Studio suite imports the maintained fixture
+  through a visible runner and must execute through scripts/run-studio-tests.luau so the outer diagnostic guard owns
+  process output; scripts/verify.luau --stage studio is the canonical staged entrypoint.
+evidence: .agents/roblox/resources/evidence/fusion-2026-09-19.md; .agents/roblox/resources/evidence/studio-diagnostic-guard-2026-09-19.md;
+  lute run scripts/run-studio-tests.luau passed all 13 Studio tests under the diagnostic guard.
+version_context: Fusion 0.3.0; Lest 0.6.0
+reconsider_when: ''
+task_context: Create project-local Fusion skill
+related_entry: ''

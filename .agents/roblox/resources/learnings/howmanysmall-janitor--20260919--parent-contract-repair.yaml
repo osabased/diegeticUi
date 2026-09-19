@@ -1,0 +1,13 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: howmanysmall-janitor
+canonical_url: https://github.com/howmanysmall/Janitor
+package_id: howmanysmall/janitor
+observed: "2026-09-19"
+statement: "The Janitor child did not state the owner-lifetime activation contract, registered-thread cancellation, current block query, or its executable-fixture boundary. The repair now distinguishes Janitor-owned entries from nonexistent package background work."
+evidence: "The catalog validator reproduced four errors before the edit; validate_skill.py and the catalog validator passed afterward. The pinned 1.18.3 implementation calls task.cancel for registered threads and performs final cleanup in Destroy."
+version_context: "1.18.3"
+reconsider_when: ""
+task_context: "Older project child reconciliation against the current parent contract."
+related_entry: ""

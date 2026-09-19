@@ -84,6 +84,7 @@ Register resources immediately after creation so failures later in setup do not 
 - Policy: conditional — the Wally declaration and lock resolution identify healthy ordinary use while generated package integrity can drift.
 - Installed-state check: Confirm `wally.toml` declares `Janitor = "howmanysmall/janitor@1.18.3"` and `wally.lock` resolves `howmanysmall/janitor` at `1.18.3`.
 - Expected identity/state: Resource slug `howmanysmall-janitor`, canonical source `https://github.com/howmanysmall/Janitor`, Wally package `howmanysmall/janitor`, and reviewed state `1.18.3`.
+- Current-block check: Before affected use, run `python "$env:USERPROFILE/.agents/skills/roblox-resource-acquisition/scripts/check_resource_status.py" --pair .agents/skills/roblox-janitor .agents/roblox/resources/records/howmanysmall-janitor.yaml`. Proceed only on `HEALTHY`; route `BLOCKED` or `UNKNOWN` to full parent-state reconciliation.
 - Integrity gate: Run `lute run scripts/verify.luau` before completing the task; pass only when it prints `[verify] PASS` and exits with code `0`.
 - Escalation triggers: Escalate for a missing or mismatched declaration/lock; adoption, upgrade, or an authorized repair; verifier failure or drift; a hard defect; or an already-known block.
 - Parent-state check: After an escalation trigger, resolve the project root, read the matching schema-version 3 record at `.agents/roblox/resources/records/howmanysmall-janitor.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`, and match resource slug plus canonical identity before inspecting package provenance or internals.
@@ -92,10 +93,10 @@ Register resources immediately after creation so failures later in setup do not 
 
 ## Lifecycle and cleanup
 
-- Initialization: Call `Janitor.new()` once when the owning feature, session, or component is created, then add each resource as ownership is acquired.
+- Initialization: Create the owner-scoped Janitor with `Janitor.new()` when the feature, session, or component lifetime starts; this activates the cleanup owner. Add each resource as ownership is acquired.
 - Functions and threads: Register each immediately as `janitor:Add(resource, true, "Worker")`; `true` calls a function or cancels a thread during cleanup. Reuse the stable index when a new worker must replace the old one.
 - Reuse: Call `Cleanup()` to release current entries while keeping the Janitor usable; use stable indices when resources can be replaced individually.
-- Cleanup/destruction: Call `Destroy()` for final teardown because it cleans entries and removes the Janitor metatable, making later method calls invalid. `LinkToInstance(instance)` calls `Cleanup()` when that Instance is destroyed.
+- Cleanup/destruction: Janitor owns no package background task or wait. Call `Destroy()` for final teardown: it cancels every registered pending thread, invokes callable cleanup entries, disconnects/destroys the other activated resources, and removes the Janitor metatable. `LinkToInstance(instance)` calls `Cleanup()` when that Instance is destroyed; keep a separate final `Destroy()` path for the owner itself.
 
 ## API used by this skill
 
@@ -131,6 +132,8 @@ The calls did not share a stable index. Add both old and new resources under the
 Janitor introduces no special remote, HTTP, credential, persistence, or dynamic-code boundary; it only invokes locally registered cleanup behavior. Treat third-party version changes as a supply-chain decision and keep the exact Wally pin. Preserve normal Roblox server authority: validate client remote inputs on the server, and never let cleanup ownership authorize gameplay actions or trusted state changes.
 
 ## Verify after installation
+
+Executable fixture: not-applicable — this repair establishes advice-only instruction and routing guidance; the prior disposable Studio script was not retained as a maintained fixture, so it is historical resource proof rather than current generated-child executable evidence.
 
 Run: With dependencies current under [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates), execute this code in a disposable Roblox Studio server Script mapped with `ReplicatedStorage.Packages`; ordinary proof reruns do not require reinstalling packages:
 

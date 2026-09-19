@@ -22,7 +22,7 @@ All project-authored Luau uses `--!strict`. Keep types precise, prefer `unknown`
 - Each direct-child ModuleScript under `Server` or `Client` is an SSA lifecycle root. Put implementation modules beneath the root that owns them.
 - New project-authored client/server protocols use Blink-generated networking. Libraries that own their transport, such as Scribe, keep that boundary; LemonSignal is only for in-process events.
 
-Install the pinned toolchain with `rokit install`. Before any package installation, including direct `wally install`, stop the Rojo server serving this checkout. For initial setup, stale preparation, or intentional dependency updates, follow [`docs/verification.md#dependency-preparation-and-updates`](docs/verification.md#dependency-preparation-and-updates); it distinguishes restoring the locked graph from updating and reviewing the lockfile. Resume a previously running Rojo server only after preparation succeeds. CI prepares dependencies before verification.
+Install Python 3.10 or newer as `python`, then install the pinned toolchain with `rokit install`; CI uses Python 3.12. Before any package installation, including direct `wally install`, stop the Rojo server serving this checkout. For initial setup, stale preparation, or intentional dependency updates, follow [`docs/verification.md#dependency-preparation-and-updates`](docs/verification.md#dependency-preparation-and-updates); it distinguishes restoring the locked graph from updating and reviewing the lockfile. Resume a previously running Rojo server only after preparation succeeds. CI prepares dependencies before verification.
 
 The single required local and CI gate is:
 
@@ -30,11 +30,11 @@ The single required local and CI gate is:
 lute run scripts/verify.luau
 ```
 
-Use `stylua src tests scripts` to apply formatting and `lest run unit` for the fastest test-only loop. The verifier checks prepared dependencies without modifying `Packages/`, generates the real Rojo sourcemap, checks formatting and lint, analyzes strict Luau with pinned Roblox API definitions, runs unit tests, and performs a disposable place build. Missing or stale preparation fails with the preparation command.
+Use `stylua src tests scripts` to apply formatting and `lest run unit` for the fastest test-only loop. The verifier checks prepared dependencies without modifying `Packages/`, generates the real Rojo sourcemap, checks formatting and lint, analyzes strict Luau with pinned Roblox API definitions, runs Luau and Python regression tests, builds the default disposable place, and verifies the development and release profiles. Missing or stale preparation fails with the preparation command.
 
 `Packages/`, `sourcemap.json`, `.lest/`, and `.verify/` are generated; never hand-edit them. `tooling/roblox/globalTypes.d.luau` and `roblox.yml` are vendored generated inputs for luau-lsp and Selene respectively; follow `tooling/roblox/README.md` to refresh them rather than editing them.
 
-Fast native tests belong under `tests/unit/**/*.spec.luau`. If a test truly depends on the Roblox DataModel, add a separate non-default Lest Studio suite instead of weakening native isolation. Runtime changes involving replication, remotes, lifecycle order, UI/input/camera, physics, or other engine behavior also require a Roblox Studio MCP playtest after the static gate. Inspect the Studio console, stop only play sessions started by this task, preserve an existing user session, and report any visual or interactive behavior that could not be verified automatically. Follow [`docs/verification.md`](docs/verification.md) for focused-stage reporting and the Studio playtest sequence.
+Fast native tests belong under `tests/unit/**/*.spec.luau`. If a test truly depends on the Roblox DataModel, add a separate non-default Lest Studio suite instead of weakening native isolation. Run that suite through `lute run scripts/verify.luau --stage studio`; direct `lest run studio` bypasses the outer diagnostic guard. Runtime changes involving replication, remotes, lifecycle order, UI/input/camera, physics, or other engine behavior also require a Roblox Studio MCP playtest after the static gate. Inspect the Studio console, stop only play sessions started by this task, preserve an existing user session, and report any visual or interactive behavior that could not be verified automatically. Follow [`docs/verification.md`](docs/verification.md) for focused-stage reporting and the Studio playtest sequence.
 
 Before implementation, derive verification from the intended behavior, including relevant failure and cancellation cases. Change test expectations only when the intended contract changes or the expectation is demonstrably wrong; preserve useful failure diagnostics. Follow [behavior verification](docs/verification.md#behavior-verification) for coverage and evidence requirements.
 
@@ -51,6 +51,6 @@ Use the project-standard resources below when their listed roles apply. If a res
 - **Blink** — Project-standard typed, generated client/server networking and remote protocol definitions.
 - **Scribe** — Project-standard persistent, typed, automatically replicated player data and server-authoritative data workflows.
 - **Charm** — Project-standard domain and shared application state.
-- **Fusion 0.3** — Project-standard UI rendering, UI-local presentation state, springs, and tweens.
+- **Fusion 0.3** — Project-standard UI rendering, UI-local presentation state, springs, and tweens. Use `$roblox-fusion` for implementation guidance.
 - **UI Labs** — Project-standard isolated visual development and component stories.
 <!-- roblox-resource-acquisition:onboarding:end -->

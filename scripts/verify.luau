@@ -365,6 +365,13 @@ local function runStep(step: StepName): StepResult
 			"tests/studio",
 		}, "Luau analysis failed")
 	elseif step == "unit" then
+		local artifacts = runCommand(
+			{ "python", "-m", "unittest", "discover", "-s", "tests/artifacts", "-p", "test_*.py" },
+			"artifact checker regression failed"
+		)
+		if not artifacts.ok then
+			return artifacts
+		end
 		local documentation = runCommand(
 			{ "lute", "run", "tests/unit/Documentation.regression.luau" },
 			"documentation link regression failed"
@@ -386,16 +393,30 @@ local function runStep(step: StepName): StepResult
 		if not diagnostics.ok then
 			return diagnostics
 		end
+		local studioDiagnostics = runCommand(
+			{ "lute", "run", "tests/unit/StudioDiagnosticGuard.regression.luau" },
+			"Studio diagnostic guard regression failed"
+		)
+		if not studioDiagnostics.ok then
+			return studioDiagnostics
+		end
 		return runCommand({ "lest", "run", "unit", "--forbid-only" }, "unit tests failed")
 	elseif step == "build" then
 		fs.createDirectory(BUILD_DIRECTORY, { makeParents = true })
-		return runCommand({ "rojo", "build", PROJECT_FILE, "--output", BUILD_OUTPUT }, "Rojo place build failed")
+		local place = runCommand({ "rojo", "build", PROJECT_FILE, "--output", BUILD_OUTPUT }, "Rojo place build failed")
+		if not place.ok then
+			return place
+		end
+		return runCommand(
+			{ "python", "tests/artifacts/verify_preset_picker_profiles.py" },
+			"development/release artifact contract failed"
+		)
 	elseif step == "studio" then
 		local buildMissing = requireFile(BUILD_OUTPUT, "the disposable Studio test place is missing")
 		if buildMissing ~= nil then
 			return buildMissing
 		end
-		return runCommand({ "lest", "run", "studio", "--forbid-only" }, "Studio construction tests failed")
+		return runCommand({ "lute", "run", "scripts/run-studio-tests.luau" }, "Studio construction tests failed")
 	end
 
 	return failed("unsupported verification step: " .. tostring(step))

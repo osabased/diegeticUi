@@ -1,0 +1,13 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+slug: ericplane-scribe
+canonical_url: https://github.com/ericplane/Scribe
+package_id: ericplane/scribe
+observed: "2026-09-19"
+statement: "The Scribe child omitted the current block query, executable-fixture boundary, and ownership of feature-spawned readiness waits during teardown. The repair keeps those waits feature-owned and reserves idempotent Data.Stop for the bundle owner, with a server flush first when data must persist."
+evidence: "The catalog validator reproduced three errors before the edit; validate_skill.py and the catalog validator passed afterward. The pinned 2.3.0 source documents client/server Stop as idempotent, stops retry/background subsystems, and states that server Stop does not save."
+version_context: "2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795"
+reconsider_when: ""
+task_context: "Older project child reconciliation against the current parent contract."
+related_entry: ""

@@ -125,6 +125,7 @@ end
 - Policy: conditional — the Wally declaration and lock resolution identify healthy ordinary use while generated package integrity and source-sensitive guidance can drift.
 - Installed-state check: Confirm `wally.toml` declares `Scribe = "ericplane/scribe@2.3.0"` and `wally.lock` resolves `ericplane/scribe` at `2.3.0`.
 - Expected identity/state: Resource slug `ericplane-scribe`, canonical source `https://github.com/ericplane/Scribe`, Wally package `ericplane/scribe`, and reviewed state `2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795`.
+- Current-block check: Before affected use, run `python "$env:USERPROFILE/.agents/skills/roblox-resource-acquisition/scripts/check_resource_status.py" --pair .agents/skills/roblox-scribe .agents/roblox/resources/records/ericplane-scribe.yaml`. Proceed only on `HEALTHY`; route `BLOCKED` or `UNKNOWN` to full parent-state reconciliation.
 - Integrity gate: Run `lute run scripts/verify.luau` before completing the task; pass only when it prints `[verify] PASS` and exits with code `0`.
 - Escalation triggers: Escalate for a missing or mismatched declaration/lock; adoption, upgrade, or an authorized repair; verifier failure or drift; a hard defect; or an already-known block.
 - Parent-state check: After an escalation trigger, resolve the project root, read the matching schema-version 3 record at `.agents/roblox/resources/records/ericplane-scribe.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`, and match resource slug plus canonical identity before inspecting package provenance or internals.
@@ -137,7 +138,7 @@ end
 - Reuse: Keep one bundle alive for the application's data domain. Reuse accessors after readiness and replace UI observers by disconnecting the old callback before registering its successor.
 - Readiness: On the server, `WaitForData(player, timeout)` can return `nil, reason`; handle it. On the client, gate reads and observers with `IsReady()` or `WaitForData(timeout)` when startup ordering is uncertain.
 - Mutation: Keep writes on the server. Use `Transaction` for grouped non-yielding mutations; do asynchronous work before or after the transaction.
-- Cleanup/destruction: Observer calls return disconnect functions; give them to Janitor. `Data.Stop()` is for the project-level owner, tests, or storybooks and is idempotent. Ordinary features must not stop a shared bundle they did not create.
+- Cleanup/destruction: Observer calls return disconnect functions; give them to the feature Janitor, and cancel/invalidate feature-owned spawned tasks waiting on readiness during teardown. The project-level bundle owner, tests, or storybooks may call idempotent `Data.Stop()` to stop package retry/background work and disconnect activated listeners; on the server, flush first when data must be saved because `Stop()` does not save. Ordinary features must not stop a shared bundle they did not create.
 
 ## API used by this skill
 
@@ -178,6 +179,8 @@ Transactions must not yield. Remove `task.wait`, DataStore, MarketplaceService, 
 Treat every client request as untrusted. Validate command names, arguments, ownership, rates, and game-state preconditions on the server; do not accept a client-reported balance, entitlement, receipt, or cooldown. Mark secrets and moderation state `ServerOnly`, and review every `Shared` field for privacy and bandwidth impact. Keep store names and test modes deliberate so development cannot overwrite production profiles. Preserve the exact package pin as part of the supply-chain boundary.
 
 ## Verify after installation
+
+Executable fixture: not-applicable — this repair establishes advice-only instruction and routing guidance; the prior disposable Studio server/client scripts were not retained as a maintained fixture, so they are historical resource proof rather than current generated-child executable evidence.
 
 Run: With dependencies current under [dependency preparation and updates](../../../docs/verification.md#dependency-preparation-and-updates), perform the disposable Roblox Studio mock-mode integration described below; ordinary proof reruns do not require reinstalling packages.
 

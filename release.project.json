@@ -1,0 +1,14 @@
+{
+  "name": "diegeticUi Release",
+  "globIgnorePaths": [
+    "**/*.story.luau",
+    "**/*.storybook.luau",
+    "**/Loadout/StoryFactory.luau",
+    "**/PresetPickerDemoBootstrap.luau",
+    "**/PresetPickerDemo",
+    "**/PresetPickerDemo/**"
+  ],
+  "tree": {
+    "$path": "default.project.json"
+  }
+}

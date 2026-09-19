@@ -1,72 +1,399 @@
 schema_version: 3
-
-resource: "Fusion"
-slug: "elttob-fusion"
-discovery_origin: "other"
-
+resource: Fusion
+slug: elttob-fusion
+discovery_origin: other
 project_use:
   status: adopted
-  role: "Reactive UI rendering, local presentation state, and UI animation"
-  scope: "src/client/UI"
-  authority: "roblox-resource-acquisition"
-
+  role: Reactive UI rendering, local presentation state, and UI animation
+  scope: src/client/
+  authority: roblox-resource-acquisition
 trust:
   level: trusted
   basis: explicit-user
-  reason: "The user explicitly required Fusion 0.3 for this UI-development setup."
-
-canonical_url: "https://github.com/dphfox/Fusion"
-package_id: "elttob/fusion"
-
+  reason: The user explicitly required Fusion 0.3 for this UI-development setup.
+canonical_url: https://github.com/dphfox/Fusion
+package_id: elttob/fusion
 verification:
-  status: unavailable
-  validated_at: "2026-09-17"
-  version_or_commit: "0.3.0"
-
+  status: unverified
+  validated_at: '2026-09-19'
+  version_or_commit: 0.3.0
 reconciliation:
   status: matched
-  checked_at: "2026-09-17"
-  installed_identity: "elttob/fusion"
-  installed_version_or_commit: "0.3.0"
-  detection_method: "wally.toml, generated wally.lock, installed package manifest, package redirect, strict analysis, and disposable Rojo build"
+  checked_at: '2026-09-19'
+  installed_identity: elttob/fusion
+  installed_version_or_commit: 0.3.0
+  detection_method: Pinned wally.toml and wally.lock, prepared package identity and canonical verifier
   parent_state_sources:
-    - "wally.toml and generated wally.lock (elttob/fusion@0.3.0)"
-    - "installed Packages/_Index/elttob_fusion@0.3.0/fusion/wally.toml and Packages/Fusion.lua redirect"
-    - "Fusion 0.3 scope, component, and Spring documentation"
-  result: "Wally resolved and installed elttob/fusion@0.3.0. The scoped StatusCard component type-checks under strict Luau and is included in a successful disposable place build."
-
-capability: "Builds reactive Roblox interfaces with scoped state, computed values, instances, and spring/tween animation."
-devforum_url: ""
-selection_reason: "Fixed dependency and version supplied by the user for the requested UI-development foundation."
+  - wally.toml and generated wally.lock (elttob/fusion@0.3.0)
+  - installed Packages/_Index/elttob_fusion@0.3.0/fusion/wally.toml and Packages/Fusion.lua redirect
+  - Fusion 0.3 scope, component, and Spring documentation
+  result: Fusion 0.3.0 matches declaration, lock, redirect, and installed package. Current executable evidence now covers
+    the maintained core fixture, the actual preset-picker composition, normal desktop startup/input, and guarded Studio diagnostics;
+    explicit skill activation remains untested.
+capability: Builds reactive Roblox interfaces with scoped state, computed values, instances, and spring/tween animation.
+devforum_url: ''
+selection_reason: Fixed dependency and version supplied by the user for the requested UI-development foundation.
 alternatives_considered: []
-
 resource_proof:
-  executed: false
+  executed: true
   passed: false
-  target_version_or_commit: ""
-  environment: "Static project verification only; Roblox Studio runtime was not available."
-  result: "The exact package resolved, its 0.3 APIs type-checked in the component and story, and the project built successfully."
+  target_version_or_commit: 0.3.0
+  environment: Pinned Fusion 0.3.0 and Janitor 1.18.3 in guarded Lest 0.6.0 Studio edit-mode tests, plus a byte-matched normal
+    client startup replay in the attached Windows Studio instance.
+  result: The maintained core fixture passed construction, reactivity, events, strict ForPairs plus numeric Tween construction,
+    and direct-scope cleanup. The actual preset-picker suite passed protected Janitor/Fusion acquisition and cleanup, early
+    and partial failures, a throwing producer disposer, repeated destruction, and post-disposal producer isolation. A byte-current
+    normal-startup replay passed desktop click/text/filter/selection behavior. Live warning and Fusion-error red proofs failed
+    the outer guard while the guarded 13-test suite passed with no unmatched output from the first Lest protocol record through
+    process exit. Overall proof remains incomplete (passed=false), not a library failure.
   unavailable_claims:
-    - "StatusCard mount, hover transition, and spring behavior in Roblox Studio"
-    - "Scope cleanup during live UI unmount and story reload"
-
-generated_skill: ""
+  - Rendered Spring/Tween timing and visual quality were not exercised.
+  - UI Labs reload and story interaction were not exercised.
+  - Touch and gamepad input were not exercised.
+  - Ordinary Studio boot output before the first Lest protocol record is suppressed by the pinned backend and was not observed
+    by the guard.
+generated_skill: roblox-fusion
 skill_validation:
-  structural_passed: false
+  structural_passed: true
   independent_behavioral_executed: false
   independent_behavioral_passed: false
-  environment: ""
-  result: ""
-  catalog_routing_status: not-applicable
-  catalog_fingerprint: ""
-  catalog_environment: ""
-  catalog_result: ""
-
-host_adoptions: []
-
+  claim_scope: executable-integration
+  environment: Current command evidence from the guarded 13-test Studio suite plus a byte-matched attached-Studio desktop
+    playtest. No fresh independent instruction-response acceptance or explicit skill activation was performed after
+    the proof wording changed; the earlier non-Studio canonical report is historical after profile-assertion gaps were found.
+  result: Current executable evidence proves the core fixture, the actual protected Charm/Janitor/Fusion composition, desktop
+    pointer/text startup behavior, and the outer diagnostic interval from first protocol record through process exit. It does
+    not prove rendered motion, UI Labs, touch, gamepad, or pre-protocol Studio boot diagnostics.
+  catalog_routing_status: verified
+  catalog_fingerprint: sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62
+  catalog_environment: 'Exact routing set: five project children roblox-blink, roblox-fusion, roblox-janitor, roblox-lemonsignal,
+    and roblox-scribe; four global competitors roblox-resource-acquisition, structure-roblox-projects, codebase-design, and
+    animate.'
+  catalog_result: Static catalog validation passes for the exact nine-member set with no overlap cluster. Independent routing
+    acceptance treats Fusion as conditional on rendered Fusion view/scope work and rejects it for plain table formatting.
+  checks:
+  - check_id: fusion-studio-integration
+    kind: executable-integration
+    execution_mode: independent-agent
+    status: historical
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs: &id001
+    - role: fixture
+      path: fixtures/FusionIntegrationFixture.luau
+      sha256: sha256:2bc7d08ae8a3a5eaf01cf435075d313fbdc6d9c3c86d303780c191a2c7e2fab0
+    - role: fixture
+      path: ../../../tests/studio/FusionSkillIntegration.spec.luau
+      sha256: sha256:05ecd1d350aa13456b0ef0f969be7b7b9604df40da4f529552f8f075858f6a9f
+    - role: configuration
+      path: ../../../lest.toml
+      sha256: sha256:207604bef95c52a236315645bb219a41516f80f87822853923e8c63daf68b6cc
+    - role: configuration
+      path: ../../../wally.lock
+      sha256: sha256:201cdf1080dc5d35f853b9269eaae07bc5206ec02d2491d626dcf78305112cf5
+    - role: configuration
+      path: ../../../default.project.json
+      sha256: sha256:08e8d34ba436bc08f47ffa94d7b1030201df2f24e7595faff23d8316aff4faa4
+    - role: shared-dependency
+      path: ../../../Packages/Fusion.lua
+      sha256: sha256:ab81c3b686797030f78a3f380a2f34803753ea573575a96af76b10e457dc8ee2
+    - role: contract
+      path: SKILL.md
+      sha256: sha256:c4d2b4b931046cf8346e989e4767bbb60c04510dbdd775b3dd8892c0e1e6dc7b
+      section: Common path
+    - role: contract
+      path: SKILL.md
+      sha256: sha256:a477d2a1a5d6295b8d6665ae9223e2f342ba18e5876657d54a7813f5fc2e4d09
+      section: Lifecycle and cleanup
+    - role: contract
+      path: SKILL.md
+      sha256: sha256:2d6fddfe65a53b16f0d0a95cd2b49c45da7bf804192da7096cb8c5da9f0c84d7
+      section: Verify after installation
+    command: rojo build default.project.json --output .verify/diegeticUi.rbxlx; lest run fusion-integration --config lest.toml
+      --forbid-only
+    result: 'Historical: a fresh Sol High agent ran the documented command and the prior fixture passed one suite and one
+      test. The fixture, Lifecycle and cleanup contract, and Verify after installation contract changed during the 2026-09-19
+      repair, so this run is not current proof.'
+    artifact: .agents/roblox/resources/evidence/fusion-2026-09-19.md
+  - check_id: fusion-failure-cleanup
+    kind: lifecycle-failure-cleanup
+    execution_mode: independent-agent
+    status: historical
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs: *id001
+    command: rojo build default.project.json --output .verify/diegeticUi.rbxlx; lest run fusion-integration --config lest.toml
+      --forbid-only
+    result: 'Historical: the prior fixture preserved its injected construction failure, cleaned failed and normal scopes,
+      and returned the parent child count to baseline. The fixture and lifecycle contract changed during the 2026-09-19 repair,
+      so this result is not current cleanup proof.'
+    artifact: .agents/roblox/resources/evidence/fusion-2026-09-19.md
+  - check_id: fusion-repaired-fixture-20260919
+    kind: executable-integration
+    execution_mode: command
+    status: historical
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs: &id002
+    - role: fixture
+      path: fixtures/FusionIntegrationFixture.luau
+      sha256: sha256:8879ff614b4e216fe237148fd4f1217d35e394475a6560a811cef49e4321bc54
+    - role: fixture
+      path: ../../../tests/studio/FusionSkillIntegration.spec.luau
+      sha256: sha256:05ecd1d350aa13456b0ef0f969be7b7b9604df40da4f529552f8f075858f6a9f
+    - role: configuration
+      path: ../../../lest.toml
+      sha256: sha256:207604bef95c52a236315645bb219a41516f80f87822853923e8c63daf68b6cc
+    - role: configuration
+      path: ../../../wally.lock
+      sha256: sha256:201cdf1080dc5d35f853b9269eaae07bc5206ec02d2491d626dcf78305112cf5
+    - role: configuration
+      path: ../../../default.project.json
+      sha256: sha256:08e8d34ba436bc08f47ffa94d7b1030201df2f24e7595faff23d8316aff4faa4
+    - role: shared-dependency
+      path: ../../../Packages/Fusion.lua
+      sha256: sha256:ab81c3b686797030f78a3f380a2f34803753ea573575a96af76b10e457dc8ee2
+    - role: contract
+      path: SKILL.md
+      sha256: sha256:a003ca7a1570a439fe719eaa7496ae8d316e860a2dcedd04c3213fa837682c4e
+      section: API used by this skill
+    - role: contract
+      path: SKILL.md
+      sha256: sha256:330a20b956e99580b541c568f36fda368f6fea9be889a208a3c87c7e0459dcea
+      section: Verify after installation
+    command: lest run fusion-integration --config lest.toml --forbid-only
+    result: 'Historical after current proof wording and routing-set reconciliation: One suite and one test passed (fixture
+      2.37s; total 14.15s) against the unchanged prepared place. The maintained fixture proved its named construction, reactivity,
+      event, strict ForPairs plus numeric Tween construction, final cleanup, and connected diagnostic-window assertions. It
+      did not execute rendered Tween motion or real input and cannot observe diagnostics after its listener disconnects.'
+    artifact: .agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md
+  - check_id: fusion-repaired-direct-scope-cleanup-20260919
+    kind: lifecycle-failure-cleanup
+    execution_mode: command
+    status: historical
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs: *id002
+    command: lest run fusion-integration --config lest.toml --forbid-only
+    result: 'Historical after current proof wording and routing-set reconciliation: The same focused run preserved the injected
+      construction error, cleaned its failed Fusion scope back to the exact pre-failure parent-child baseline, removed the
+      failure root, and returned the normal scope to the fixture-entry baseline. This is direct Fusion scope cleanup proof
+      only; it does not exercise the documented Fusion-to-Janitor composite or its ordered best-effort cleanup contract.'
+    artifact: .agents/roblox/resources/evidence/fusion-guidance-repair-2026-09-19.md
+  - check_id: fusion-routing
+    kind: routing
+    execution_mode: independent-agent
+    status: historical
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs:
+    - role: activation-metadata
+      path: SKILL.md
+      sha256: sha256:ac2e26426cb45377865d8f00ec8d6ad5e762715f9daf3736fe2275ca86d7e161
+    - role: activation-metadata
+      path: ../roblox-blink/SKILL.md
+      sha256: sha256:bab260c300c08d51f87b60eb6a2f9f4cbb583cb7c46bd75cc92af717272010a4
+    - role: activation-metadata
+      path: ../roblox-janitor/SKILL.md
+      sha256: sha256:e1bffdfb3171a9fdda9ae66a929c19ce802b517965eef4c72c516978dd4cda0f
+    - role: activation-metadata
+      path: ../roblox-lemonsignal/SKILL.md
+      sha256: sha256:0aeda18dd83bb2d6cb2ecd42d4b0cac3e581c0fd913f36852c98c5c0389617fb
+    - role: activation-metadata
+      path: ../roblox-scribe/SKILL.md
+      sha256: sha256:255c876cd85c7d467aadbe349f9e23fae42610c1eaa6db8ecf1c282e54523f4c
+    - role: activation-metadata
+      path: ../../../../../../.agents/skills/roblox-resource-acquisition/SKILL.md
+      sha256: sha256:a99f859ce761b0d757fcf584edd8edeb1c9d30e3a0d08e9ac13bac36d293a4ea
+    - role: activation-metadata
+      path: ../../../../../../.agents/skills/structure-roblox-projects/SKILL.md
+      sha256: sha256:11cd4e0f548c1afb64a636f458862def7089b035c433197b8ce9fb484d9d1a0f
+    - role: activation-metadata
+      path: ../../../../../../.agents/skills/animate/SKILL.md
+      sha256: sha256:18a74f4a3ce54a443ade2a2f8d2e6732916e6a76cb6572fd745b23cb07ce5a10
+    command: ''
+    result: 'Historical: this earlier eight-boundary catalog preceded the exact nine-member routing scope and the sibling
+      repairs. Its reported sibling errors no longer describe current catalog state.'
+    artifact: .agents/roblox/resources/evidence/fusion-2026-09-19.md
+    scope_fingerprint: sha256:faa3fbe107414566bf3eb0960d48373786b21f57ef4e151c3e9edbda89fcf16c
+  - check_id: fusion-production-studio-suite-20260919
+    kind: executable-integration
+    execution_mode: command
+    status: passed
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs: &id003
+    - role: fixture
+      path: fixtures/FusionIntegrationFixture.luau
+      sha256: sha256:8879ff614b4e216fe237148fd4f1217d35e394475a6560a811cef49e4321bc54
+    - role: fixture
+      path: ../../../tests/studio/FusionSkillIntegration.spec.luau
+      sha256: sha256:05ecd1d350aa13456b0ef0f969be7b7b9604df40da4f529552f8f075858f6a9f
+    - role: fixture
+      path: ../../../tests/studio/LoadoutPresetPickerDemo.spec.luau
+      sha256: sha256:244e15c443f752180ccbec6868d142fc46e903c8b8a86c42ef2b346453c40a27
+    - role: api
+      path: ../../../src/client/Loadout/PresetPickerDemo/Mount.luau
+      sha256: sha256:73849119e5d6e6c5268d6e872874f3c1b9d5e165d78133c268773cb6a2951102
+    - role: configuration
+      path: ../../../scripts/run-studio-tests.luau
+      sha256: sha256:348ba813f73c56d62dcf3e544aeb3bbc6ec0761825c71193d908d259caf15b69
+    - role: configuration
+      path: ../../../scripts/studio-diagnostic-guard.luau
+      sha256: sha256:43fc10649749e989d86ee16e43b6e0a13be7825b59c2759ee76c66ecaedfb183
+    - role: configuration
+      path: ../../../lest.toml
+      sha256: sha256:207604bef95c52a236315645bb219a41516f80f87822853923e8c63daf68b6cc
+    - role: shared-dependency
+      path: ../../../wally.lock
+      sha256: sha256:201cdf1080dc5d35f853b9269eaae07bc5206ec02d2491d626dcf78305112cf5
+    - role: contract
+      path: SKILL.md
+      section: Lifecycle and cleanup
+      sha256: sha256:0df4b0164d223ab518c8240fdcd0fd4043508e247d535f3479d597b806055523
+    - role: contract
+      path: SKILL.md
+      section: Verify after installation
+      sha256: sha256:7785fe19a7a34fe71e9121c384675a3deaf238971fb865e9bf9ba8ec259a2775
+    command: lute run scripts/run-studio-tests.luau
+    result: The guarded Studio command passed all 13 tests. The maintained core fixture proved its named construction, reactivity,
+      event, strict ForPairs/numeric Tween construction, direct cleanup, and local diagnostic assertions; the actual preset-picker
+      tests proved mount, reactive updates, and remount against the pinned packages.
+    artifact: .agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
+  - check_id: fusion-production-lifecycle-20260919
+    kind: lifecycle-failure-cleanup
+    execution_mode: command
+    status: passed
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs: *id003
+    command: lute run scripts/run-studio-tests.luau
+    result: The actual composition passed early domain acquisition failure, partial view construction failure, producer-before-Fusion
+      teardown when the producer disposer throws, repeated destroy, later remount, and a producer write after disposal without
+      a stale Fusion update. The core fixture separately restored its exact failure and final parent baselines.
+    artifact: .agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
+  - check_id: fusion-byte-current-desktop-playtest-20260919
+    kind: executable-integration
+    execution_mode: studio-playtest
+    status: passed
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs:
+    - role: fixture
+      path: ../../../src/client/PresetPickerDemoBootstrap.luau
+      sha256: sha256:848522abd5f88e0ee409087502cadcb2ea5b2e22f16a04d8c7b6efc83b0c7749
+    - role: api
+      path: ../../../src/client/Loadout/PresetPickerDemo/Mount.luau
+      sha256: sha256:73849119e5d6e6c5268d6e872874f3c1b9d5e165d78133c268773cb6a2951102
+    - role: api
+      path: ../../../src/client/Loadout/PresetPickerDemo/Domain.luau
+      sha256: sha256:aaf4c3d418dfaaeaa5ae0d05207e3386065a3bf4702e4852a7ed2cf84c8256c2
+    - role: api
+      path: ../../../src/client/Loadout/PresetPickerDemo/View.luau
+      sha256: sha256:70adefbc1fca9962aaec1e8494b77dc6eaf24cc4f54de50b42b8eb4871e1f3e5
+    - role: configuration
+      path: ../../../development.project.json
+      sha256: sha256:163353ad9b36e92f02bb0533419be4a8b49a63fdb1a746c61260cd2ef8a5b46c
+    - role: contract
+      path: SKILL.md
+      section: Limitations
+      sha256: sha256:73212806b6d083c9c7bcef59d1e9ccd5c617a936d417cbc08f1e17f46db5e024
+    command: Attached Roblox Studio normal Play via ClientMain/ModuleLoader; pointer click Search, type drone, pointer click
+      recon; stop the task-owned play session
+    result: Immediately pre-play, Studio and dirty-filesystem bytes matched for all four runtime demo scripts. Normal startup
+      mounted the development preview; real desktop pointer and keyboard input filtered to one result and selected Ghost Recon,
+      with empty console output before and after interaction. Touch and gamepad were not exercised.
+    artifact: .agents/roblox/resources/evidence/setup-production-evaluation-2026-09-19.md
+  - check_id: fusion-studio-diagnostic-guard-20260919
+    kind: executable-integration
+    execution_mode: command
+    status: passed
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs:
+    - role: fixture
+      path: ../../../tests/unit/StudioDiagnosticGuard.regression.luau
+      sha256: sha256:976e3684eb69180a550ecd9b56b84daa15939743450b751b02730aed1a954775
+    - role: fixture
+      path: ../../../tests/studio/DiagnosticCapture.luau
+      sha256: sha256:7f9ce84b871cf29be0d5badfdd40404106527c0a614f05a0bfae03979cb245c8
+    - role: configuration
+      path: ../../../scripts/run-studio-tests.luau
+      sha256: sha256:348ba813f73c56d62dcf3e544aeb3bbc6ec0761825c71193d908d259caf15b69
+    - role: configuration
+      path: ../../../scripts/studio-diagnostic-guard.luau
+      sha256: sha256:43fc10649749e989d86ee16e43b6e0a13be7825b59c2759ee76c66ecaedfb183
+    - role: contract
+      path: SKILL.md
+      section: Limitations
+      sha256: sha256:73212806b6d083c9c7bcef59d1e9ccd5c617a936d417cbc08f1e17f46db5e024
+    command: lute run tests/unit/StudioDiagnosticGuard.regression.luau; lute run scripts/run-studio-tests.luau
+    result: Live warning and Fusion MessageError proof cases returned false-green from Lest but nonzero from the outer guard;
+      after their temporary specs were removed, the unit regression and guarded 13-test suite passed. The guard covers first
+      protocol record through Studio process exit, including post-done output; ordinary Studio boot output before the first
+      record remains outside the pinned backend boundary.
+    artifact: .agents/roblox/resources/evidence/studio-diagnostic-guard-2026-09-19.md
+  - check_id: fusion-nine-member-routing-20260919
+    kind: routing
+    execution_mode: independent-agent
+    status: passed
+    tested_at: '2026-09-19'
+    target_version_or_commit: 0.3.0
+    inputs:
+    - role: activation-metadata
+      path: SKILL.md
+      sha256: sha256:ac2e26426cb45377865d8f00ec8d6ad5e762715f9daf3736fe2275ca86d7e161
+    - role: activation-metadata
+      path: ../roblox-blink/SKILL.md
+      sha256: sha256:bab260c300c08d51f87b60eb6a2f9f4cbb583cb7c46bd75cc92af717272010a4
+    - role: activation-metadata
+      path: ../roblox-janitor/SKILL.md
+      sha256: sha256:e1bffdfb3171a9fdda9ae66a929c19ce802b517965eef4c72c516978dd4cda0f
+    - role: activation-metadata
+      path: ../roblox-lemonsignal/SKILL.md
+      sha256: sha256:0aeda18dd83bb2d6cb2ecd42d4b0cac3e581c0fd913f36852c98c5c0389617fb
+    - role: activation-metadata
+      path: ../roblox-scribe/SKILL.md
+      sha256: sha256:255c876cd85c7d467aadbe349f9e23fae42610c1eaa6db8ecf1c282e54523f4c
+    - role: activation-metadata
+      path: ../../../../../../.agents/skills/roblox-resource-acquisition/SKILL.md
+      sha256: sha256:a99f859ce761b0d757fcf584edd8edeb1c9d30e3a0d08e9ac13bac36d293a4ea
+    - role: activation-metadata
+      path: ../../../../../../.agents/skills/structure-roblox-projects/SKILL.md
+      sha256: sha256:11cd4e0f548c1afb64a636f458862def7089b035c433197b8ce9fb484d9d1a0f
+    - role: activation-metadata
+      path: ../../../../../../.agents/skills/codebase-design/SKILL.md
+      sha256: sha256:0f36b32ac96b8b07b737537601104ad8e25ff8fd07d02517ea74377b412339d4
+    - role: activation-metadata
+      path: ../../../../../../.agents/skills/animate/SKILL.md
+      sha256: sha256:18a74f4a3ce54a443ade2a2f8d2e6732916e6a76cb6572fd745b23cb07ce5a10
+    command: ''
+    result: Independent routing across the exact nine-member set kept Fusion conditional on rendered Fusion view/scope changes,
+      assigned persistent data to Scribe and lifetime ownership to Janitor, rejected the four global competitors outside their
+      triggers, and selected none of the five children for plain table formatting.
+    artifact: .agents/roblox/resources/evidence/sibling-skills-independent-acceptance-2026-09-19.md
+    scope_fingerprint: sha256:ca852fe6a12614b3c7553daac8f37e4c1af8ecb6698d4084ef593f262f6f1c62
+host_adoptions:
+- host: Codex
+  scope: repo
+  location: .agents/skills/roblox-fusion
+  status: installed
+  checked_at: '2026-09-19'
+  result: Installed in the repository skill path and discoverable/enabled. Current command and Studio evidence proves the
+    recorded executable lanes, but no post-reconciliation explicit skill-activation test was run.
+  evidence:
+    installed: present
+    registered: not-applicable
+    discoverable: 'yes'
+    enabled: 'yes'
+    explicit_activation: not-run
 limitations:
-  - "Pinned to Fusion 0.3.0; code must use the 0.3 scoped API rather than examples written for older Fusion releases."
-  - "Interactive behavior still requires a Roblox Studio playtest."
-blocked_use_or_version: ""
-rejection_reason: ""
-reconsider_when: ""
+- Pinned Fusion 0.3.0 scoped API; no upgrade authorized.
+- Rendered Spring/Tween timing and visual quality remain unverified.
+- UI Labs reload and story interaction remain unverified.
+- The desktop replay did not exercise touch or gamepad input.
+- The Studio guard covers first Lest protocol record through process exit, but the pinned backend suppresses ordinary boot
+  output before that boundary.
+blocked_use_or_version: ''
+rejection_reason: ''
+reconsider_when: ''

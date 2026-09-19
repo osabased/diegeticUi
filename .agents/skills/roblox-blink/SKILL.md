@@ -81,6 +81,7 @@ Regenerate with `lute run scripts/generate-blink.luau`, inspect the generated AP
 - Policy: conditional — the Rokit pin and generated version headers identify healthy ordinary use while executable and codegen integrity can drift.
 - Installed-state check: Confirm `rokit.toml` pins `blink = "1Axen/blink@1.0.0-pre.8"` and the generated Blink module headers name `1.0.0-pre.8`.
 - Expected identity/state: Resource slug `1axen-blink`, canonical source `https://github.com/1Axen/blink`, package identity `1Axen/blink@1.0.0-pre.8`, and reviewed state `1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f`.
+- Current-block check: Before affected use, run `python "$env:USERPROFILE/.agents/skills/roblox-resource-acquisition/scripts/check_resource_status.py" --pair .agents/skills/roblox-blink .agents/roblox/resources/records/1axen-blink.yaml`. Proceed only on `HEALTHY`; route `BLOCKED` or `UNKNOWN` to full parent-state reconciliation.
 - Integrity gate: Run `lute run scripts/verify.luau` before completing the task; pass only when it prints `[verify] PASS` and exits with code `0`.
 - Escalation triggers: Escalate for a missing or mismatched pin/header; adoption, upgrade, or an authorized repair; verifier failure or drift; a hard defect; or an already-known block.
 - Parent-state check: After an escalation trigger, resolve the project root, read the matching schema-version 3 record at `.agents/roblox/resources/records/1axen-blink.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`, and match resource slug plus canonical identity before inspecting package provenance or internals.
@@ -91,7 +92,7 @@ Regenerate with `lute run scripts/generate-blink.luau`, inspect the generated AP
 
 - Initialization: Require the generated server module before any client module can depend on its remotes; acquire listeners in the owning SSA feature's `Init` or `Start` phase.
 - Reuse: One generated module owns the realm-wide protocol queues and remote bindings. Reuse that module instead of requiring copied generated output or creating parallel Roblox remotes.
-- Cleanup/destruction: Every `On` registration returns a zero-argument disconnect function. Register it with the feature's Janitor immediately. Blink's module-level heartbeat and remote connections live for the realm; feature cleanup should release feature listeners, not destroy Blink's shared remotes.
+- Cleanup/destruction: Every `On` registration returns a zero-argument disconnect function; register and call it through the feature's Janitor. Disconnect first so teardown cannot start new feature work, then cancel or invalidate every pending task/thread that the listener itself spawned. Blink exposes no feature-level handle for work already started by a callback; its module-level heartbeat and remote connections live for the realm, so feature cleanup releases feature listeners and owned work without destroying Blink's shared remotes.
 - Replacement: Regenerate all three outputs together after a schema change and deploy compatible client/server code atomically.
 
 ## API used by this skill
@@ -140,6 +141,8 @@ The 1.0.0-pre.8 generator emits newer Luau syntax, trailing whitespace, and its 
 Treat every client-originating Blink event and function as hostile input even when decoding succeeds. Enforce server-side authorization, object ownership, state transitions, bounds, rate limits, and replay-sensitive rules. Keep secrets and authoritative state off the client. Hashed remote names, compact buffers, and native/optimized generated code are not security boundaries. Review release source and assets before changing the exact prerelease pin.
 
 ## Verify after installation
+
+Executable fixture: not-applicable — this repair establishes advice-only instruction and routing guidance; the prior disposable Studio scripts were not retained as a maintained fixture, so they are historical resource proof rather than current generated-child executable evidence.
 
 Run: Execute `rokit install`, `blink --version`, `lute run scripts/generate-blink.luau` after an intentional schema change, and `lute run scripts/verify.luau`.
 

@@ -61,6 +61,7 @@ HealthChanged:Destroy()
 - Policy: conditional — the Wally declaration and lock resolution identify healthy ordinary use while generated package integrity can drift.
 - Installed-state check: Confirm `wally.toml` declares `LemonSignal = "data-oriented-house/lemonsignal@2.0.0"` and `wally.lock` resolves `data-oriented-house/lemonsignal` at `2.0.0`.
 - Expected identity/state: Resource slug `data-oriented-house-lemonsignal`, canonical source `https://github.com/Data-Oriented-House/LemonSignal`, Wally package `data-oriented-house/lemonsignal`, and reviewed state `2.0.0; tag v2.0.0; commit 540ce9dc5fdce5cb275a7c69c66669706d9c9bd2`.
+- Current-block check: Before affected use, run `python "$env:USERPROFILE/.agents/skills/roblox-resource-acquisition/scripts/check_resource_status.py" --pair .agents/skills/roblox-lemonsignal .agents/roblox/resources/records/data-oriented-house-lemonsignal.yaml`. Proceed only on `HEALTHY`; route `BLOCKED` or `UNKNOWN` to full parent-state reconciliation.
 - Integrity gate: Run `lute run scripts/verify.luau` before completing the task; pass only when it prints `[verify] PASS` and exits with code `0`.
 - Escalation triggers: Escalate for a missing or mismatched declaration/lock; adoption, upgrade, or an authorized repair; verifier failure or drift; a hard defect; or an already-known block.
 - Parent-state check: After an escalation trigger, resolve the project root, read the matching schema-version 3 record at `.agents/roblox/resources/records/data-oriented-house-lemonsignal.yaml` and resource-bound learnings under `.agents/roblox/resources/learnings/`, and match resource slug plus canonical identity before inspecting package provenance or internals.
@@ -79,7 +80,7 @@ A signal owns a linked set of connections. `Connect` inserts a listener and retu
 
 - Initialization: Create a signal with `LemonSignal.new()` at the lifetime boundary that owns the event.
 - Reuse: Connections may disconnect and reconnect. `DisconnectAll()` releases current listeners while leaving their connection objects reconnectable.
-- Cleanup/destruction: Call `Destroy()` to disconnect listeners and the backing connection created by `wrap`, then discard the signal reference. `Destroy()` intentionally leaves the signal object reusable; do not treat it as a terminal invalidation guard.
+- Cleanup/destruction: Call `Destroy()` to disconnect listeners and the backing connection created by `wrap`, then discard or explicitly invalidate the signal reference. `Destroy()` does not cancel callbacks already spawned by `Fire`, and disconnecting the hidden listener created by `Wait()` does not resume or cancel its pending coroutine; the owner must cancel/invalidate its own spawned tasks and use an external cancellation path instead of abandoning a `Wait`. `Destroy()` intentionally leaves the signal object reusable, so it is not a terminal invalidation guard.
 - Janitor integration: Register a LemonSignal connection as `janitor:Add(connection, "Disconnect")`. Janitor otherwise treats the table as a generic object and looks for `Destroy`, which a connection does not expose. A whole signal may be registered with the explicit `"Destroy"` method.
 
 ## API used by this skill
@@ -148,6 +149,8 @@ This is the documented 2.0.0 behavior. Discard the owner reference or add lifecy
 LemonSignal introduces no remote, HTTP, credential, persistence, or dynamic-code boundary; it dispatches values inside one runtime. Values are passed to callbacks without validation or copying, so validate untrusted remote input at the server boundary before firing a local signal and avoid treating a client-side signal as authority. Keep the exact Wally pin and review source changes before upgrading.
 
 ## Verify after installation
+
+Executable fixture: not-applicable — this repair establishes advice-only instruction and routing guidance; the prior disposable Studio script was not retained as a maintained fixture, so it is historical resource proof rather than current generated-child executable evidence.
 
 Run: In a disposable Roblox Studio server play session mapped with `ReplicatedStorage.Packages`, execute this from a temporary server Script or SSA feature and remove it afterward:
 

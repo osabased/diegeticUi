@@ -4,7 +4,7 @@ A Roblox project using Rojo and canonical Single Script Architecture (SSA).
 
 ## Getting started
 
-Install the pinned CLI toolchain, prepare dependencies with Rojo stopped, and run the canonical verification gate:
+Install Python 3.10 or newer as `python`, install the pinned CLI toolchain, prepare dependencies with Rojo stopped, and run the canonical verification gate:
 
 ```bash
 rokit install
@@ -12,7 +12,7 @@ lute run scripts/prepare-dependencies.luau
 lute run scripts/verify.luau
 ```
 
-CI uses the same preparation and verification commands. Preparation installs the locked Wally graph and generates package types. Follow [dependency preparation and updates](docs/verification.md#dependency-preparation-and-updates) for stale preparation or intentional dependency changes, including stopping Rojo and reviewing lockfile updates. Routine verification checks prepared dependencies without modifying `Packages/`, generates the actual Rojo sourcemap, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs unit tests, and proves that the place builds.
+CI provides Python 3.12 and uses the same preparation and verification commands. Preparation installs the locked Wally graph and generates package types. Follow [dependency preparation and updates](docs/verification.md#dependency-preparation-and-updates) for stale preparation or intentional dependency changes, including stopping Rojo and reviewing lockfile updates. Routine verification checks prepared dependencies without modifying `Packages/`, generates the actual Rojo sourcemap, checks formatting, lints and typechecks strict Luau with Roblox API definitions, runs Luau and Python regression tests, builds the default place, and verifies the development and release profiles.
 
 Use the same verifier for focused evidence without claiming the full gate:
 
@@ -26,7 +26,7 @@ lute run scripts/verify.luau --stage studio
 
 Repeated `--stage` flags are deduplicated and run in canonical order with their required preparation. Every started run writes an ignored JSON report under `.verify/reports/`; only the no-argument command can print `[verify] PASS`. See [`docs/verification.md`](docs/verification.md) for stage dependencies, report semantics, Studio setup, and the required UI interaction playtest.
 
-Verifier builds are disposable. Create the persistent development place before opening it in Roblox Studio:
+The default verifier place is disposable; profile-check artifacts remain under `.verify/preset-picker-profiles/`. Create the development place before opening it in Roblox Studio:
 
 ```bash
 rojo build default.project.json --output diegeticUi.rbxlx
@@ -37,6 +37,8 @@ Then start the Rojo server for live development:
 ```bash
 rojo serve
 ```
+
+The default and development profiles mount the interactive preset picker preview through normal client startup. Follow the [preset picker development workflow](docs/preset-picker-development.md) for the explicit `development.project.json` profile. Build `release.project.json` for release; it retains the Loadout runtime while excluding the preview bootstrap, demos, authored stories, and their dedicated helpers.
 
 For more help, check out [the Rojo documentation](https://rojo.space/docs).
 
@@ -58,7 +60,7 @@ Charm owns domain and shared application state. Fusion 0.3 owns UI rendering and
 
 Install the [UI Labs Studio plugin](https://create.roblox.com/store/asset/14293316215/UI-Labs) and connect Studio to `rojo serve`. Wally installs the UI Labs utility package; the Studio plugin is installed separately.
 
-Place component stories beneath the feature that owns them, alongside a UI Labs storybook. This starter currently has no application UI example. Use the [behavior verification and Studio playtest workflow](docs/verification.md#behavior-verification) to distinguish rendered-state checks from real input validation.
+Place component stories beneath the feature that owns them, alongside a UI Labs storybook. The [preset picker development workflow](docs/preset-picker-development.md) describes the development-only interactive example and its release exclusion. Use the [behavior verification and Studio playtest workflow](docs/verification.md#behavior-verification) to distinguish rendered-state checks from real input validation.
 
 ## Project structure
 
