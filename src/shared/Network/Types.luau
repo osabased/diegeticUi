@@ -38,12 +38,123 @@ local function allocate(bytes: number)
 	out_cursor = in_use
 end
 
-local queues = {}
+local queues = {[82] = {['size'] = 0,['row'] = 0,['columns'] = {({} :: {any}),({} :: {any}),({} :: {any}),},},[79] = {['size'] = 0,['row'] = 0,['columns'] = {({} :: {any}),({} :: {any}),({} :: {any}),({} :: {any}),},},}
 local invocations = {}
 local templates = {}
 local invocations_bitset = 4294967295
 local connections = {}
 local types = {}
+function types.TY_read_0x0000021205c012a0(): (string) 
+	-- bb1 {
+	local r0 = buffer.readu32(in_buffer, advance(4))
+	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
+	-- bb1 }
+	return r1
+end
+function types.TY_write_0x0000021205c012a0(p1: string): () 
+	-- bb1 {
+	local r0 = #p1
+	local r1 = out_cursor
+	allocate(4)
+	buffer.writeu32(out_buffer, r1, r0)
+	local r2 = out_cursor
+	allocate(r0)
+	buffer.writestring(out_buffer, r2, p1, r0)
+	-- bb1 }
+end
+function types.TY_read_0x0000021205c01210(): (string) 
+	-- bb1 {
+	local r0 = buffer.readu32(in_buffer, advance(4))
+	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
+	-- bb1 }
+	return r1
+end
+function types.TY_write_0x0000021205c01210(p1: string): () 
+	-- bb1 {
+	local r0 = #p1
+	local r1 = out_cursor
+	allocate(4)
+	buffer.writeu32(out_buffer, r1, r0)
+	local r2 = out_cursor
+	allocate(r0)
+	buffer.writestring(out_buffer, r2, p1, r0)
+	-- bb1 }
+end
+function types.TY_read_0x0000021205c01150(): (string) 
+	-- bb1 {
+	local r0 = buffer.readu32(in_buffer, advance(4))
+	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
+	-- bb1 }
+	return r1
+end
+function types.TY_write_0x0000021205c01150(p1: string): () 
+	-- bb1 {
+	local r0 = #p1
+	local r1 = out_cursor
+	allocate(4)
+	buffer.writeu32(out_buffer, r1, r0)
+	local r2 = out_cursor
+	allocate(r0)
+	buffer.writestring(out_buffer, r2, p1, r0)
+	-- bb1 }
+end
+function types.TY_read_0x0000021205c010c0(): (boolean) 
+	-- bb1 {
+	local r0 = if buffer.readu8(in_buffer, advance(1)) == 1 then true else false
+	-- bb1 }
+	return r0
+end
+function types.TY_write_0x0000021205c010c0(p1: boolean): () 
+	-- bb1 {
+	-- bb1 }
+	if typeof(p1) ~= 'boolean' then
+		-- bb2 {
+		error(string.format('Expected a boolean, got %s instead', typeof(p1)))
+		-- bb2 }
+		-- goto (bb3)
+	end
+	-- bb3 {
+	local r0 = out_cursor
+	allocate(1)
+	buffer.writeu8(out_buffer, r0, if p1 == true then 1 else 0)
+	-- bb3 }
+end
+function types.TY_read_0x0000021205c01030(): (string) 
+	-- bb1 {
+	local r0 = buffer.readu32(in_buffer, advance(4))
+	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
+	-- bb1 }
+	return r1
+end
+function types.TY_write_0x0000021205c01030(p1: string): () 
+	-- bb1 {
+	local r0 = #p1
+	local r1 = out_cursor
+	allocate(4)
+	buffer.writeu32(out_buffer, r1, r0)
+	local r2 = out_cursor
+	allocate(r0)
+	buffer.writestring(out_buffer, r2, p1, r0)
+	-- bb1 }
+end
+function types.TY_read_0x0000021205c00fa0(): (string) 
+	-- bb1 {
+	local r0 = buffer.readu32(in_buffer, advance(4))
+	local r1 = buffer.readstring(in_buffer, advance(r0), r0)
+	-- bb1 }
+	return r1
+end
+function types.TY_write_0x0000021205c00fa0(p1: string): () 
+	-- bb1 {
+	local r0 = #p1
+	local r1 = out_cursor
+	allocate(4)
+	buffer.writeu32(out_buffer, r1, r0)
+	local r2 = out_cursor
+	allocate(r0)
+	buffer.writestring(out_buffer, r2, p1, r0)
+	-- bb1 }
+end
 
 return {
 	exports = {
