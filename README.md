@@ -2,6 +2,8 @@
 
 A Roblox project using Rojo and canonical Single Script Architecture (SSA).
 
+See the [project documentation index](docs/README.md) for the active documentation set and maintenance policy.
+
 ## Getting started
 
 Install Python 3.10 or newer as `python`, install the pinned CLI toolchain, prepare dependencies with Rojo stopped, and run the canonical verification gate:

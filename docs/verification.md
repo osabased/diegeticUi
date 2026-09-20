@@ -33,7 +33,7 @@ A single local SHA-256 stamp in `.verify/dependencies.sha256` covers `rokit.toml
 
 The unit stage also runs `lute run tests/unit/Dependencies.regression.luau` to check preparation freshness with disposable filesystem fixtures.
 
-It also checks README's relative file links with `lute run tests/unit/Documentation.regression.luau`, including any linked UI example entry points. This detects deleted or moved linked examples; it does not validate prose, remote URLs, or Markdown anchors.
+It also runs `lute run tests/unit/Documentation.regression.luau`. The regression checks local links in active project and agent documentation, requires managed documents to appear exactly once in their audience's index, rejects duplicate index targets, and confirms that `README.md` and `AGENTS.md` route to the indexes. It detects deleted, moved, orphaned, or undiscoverable documents; it does not validate prose, remote URLs, or Markdown anchors.
 
 Python's standard-library `unittest` runner executes `tests/artifacts/test_*.py` during the unit stage. These regressions exercise the profile artifact checker without changing project source.
 
