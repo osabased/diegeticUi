@@ -17,9 +17,15 @@ CHECKER_PATH = REPO_ROOT / "scripts" / "check_rojo_artifact.py"
 
 RUNTIME_REQUIRED_PATHS = (
     "ReplicatedStorage/ClientMain",
+    "ReplicatedStorage/Client/Inventory",
+    "ReplicatedStorage/Shared/Inventory/Definitions",
+    "ReplicatedStorage/Shared/Inventory/PlayerData",
+    "ReplicatedStorage/Shared/Inventory/PlayerDataSchema",
+    "ReplicatedStorage/Shared/Inventory/Types",
     "ReplicatedStorage/Shared/Network/Client",
     "ReplicatedStorage/Shared/Network/Server",
     "ReplicatedStorage/Shared/Network/Types",
+    "ServerScriptService/Server/Inventory",
     "ServerScriptService/ServerMain",
 )
 

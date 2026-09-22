@@ -1,0 +1,3 @@
+# Keep durable ownership in player profiles
+
+Player inventories persist through the shared Scribe bundle, while loot containers are shared only within one server session. V1 permits transfers from a loot container into a player inventory but not the reverse: placing a durable player item into an ephemeral container could destroy it on shutdown. Inventory operations remain synchronous interfaces with explicit results; future LemonSignals may announce committed changes, Blink may carry container protocols, and lifetime-scoped Janitors will own disposable resources only when those resources exist.

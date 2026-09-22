@@ -141,6 +141,29 @@ class ProjectProfileContractTests(unittest.TestCase):
         )
         self.assert_missing_in_both_artifacts(failures, lost_runtime)
 
+    def test_release_rejects_inventory_loss_when_entrypoints_remain(self) -> None:
+        lost_inventory = (
+            "ReplicatedStorage/Client/Inventory",
+            "ReplicatedStorage/Shared/Inventory/Definitions",
+            "ReplicatedStorage/Shared/Inventory/PlayerData",
+            "ReplicatedStorage/Shared/Inventory/PlayerDataSchema",
+            "ReplicatedStorage/Shared/Inventory/Types",
+            "ServerScriptService/Server/Inventory",
+        )
+        paths = set(VERIFIER.RUNTIME_REQUIRED_PATHS)
+        for path in lost_inventory:
+            paths.remove(path)
+        self.assertIn("ReplicatedStorage/ClientMain", paths)
+        self.assertIn("ServerScriptService/ServerMain", paths)
+
+        failures = VERIFIER.profile_failures(
+            CHECKER,
+            self.artifacts(paths),
+            required_paths=VERIFIER.RUNTIME_REQUIRED_PATHS,
+            forbidden_fragments=VERIFIER.RELEASE_FORBIDDEN_FRAGMENTS,
+        )
+        self.assert_missing_in_both_artifacts(failures, lost_inventory)
+
 
 if __name__ == "__main__":
     unittest.main()

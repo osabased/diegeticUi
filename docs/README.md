@@ -2,6 +2,8 @@
 
 ## Active documentation
 
+- [Inventory domain language](../CONTEXT.md) — canonical vocabulary for inventory ownership, placement, and movement.
+- [Inventory state ownership](adr/0001-inventory-state-ownership.md) — persistence and integration-seam decision record.
 - [Verification](verification.md) — dependency preparation, verification stages and reports, behavior evidence, and Studio workflows.
 - [Roblox tooling](../tooling/roblox/README.md) — provenance and refresh procedures for vendored Roblox analysis inputs.
 
@@ -14,4 +16,3 @@ The project and agent indexes define the active documentation set. Keep changing
 Remove known-stale documentation and its incoming links from the working tree; Git is the archive. Reconstruct a replacement from current authoritative sources rather than incrementally patching untrusted prose. Add the replacement to an index only after its claims have been checked.
 
 The documentation regression validates local links and index coverage mechanically. It cannot prove that prose is semantically current, so minimize duplicated facts and encode enforceable claims in tests or configuration.
-

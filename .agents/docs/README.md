@@ -8,5 +8,6 @@ Read only the guidance whose trigger matches the task:
 - [Roblox tooling guide](../../tooling/roblox/README.md) — refreshing the vendored Roblox definitions used by analysis and linting.
 - [Project documentation](../../docs/README.md) — finding active human-facing project documentation or maintaining the documentation set.
 
-The agent and project indexes define the active project guidance. Skill packages under `.agents/skills/` route independently through their `SKILL.md` files.
+Continuity documents start from the project-neutral [visions template](../templates/visions.md) and [execution template](../templates/execution.md).
 
+The agent and project indexes define the active project guidance. Skill packages under `.agents/skills/` route independently through their `SKILL.md` files.

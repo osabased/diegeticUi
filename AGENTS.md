@@ -16,6 +16,8 @@ Development: Before changing source, dependencies, generated artifacts, verifica
 
 Documentation: Use the [agent documentation index](.agents/docs/README.md) for task-specific guidance and the [project documentation index](docs/README.md) for active project documentation and its maintenance policy.
 
+Continuity: When asked to create or refresh long-running project handoff documents, use the [visions template](.agents/templates/visions.md) for durable outcome targets and the [execution template](.agents/templates/execution.md) for current work and entry points.
+
 <!-- roblox-resource-acquisition:onboarding:start -->
 ## Roblox resources
 
