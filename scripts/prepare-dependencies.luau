@@ -10,12 +10,15 @@ local ok, failure = pcall(function()
 	local lock = fs.readFileToString("wally.lock")
 	print("[prepare] Rojo must be stopped while installing dependencies and generating package types.")
 	local installed = process.run({ "wally", "install" }, { stdio = "inherit" })
-	if fs.readFileToString("wally.lock") ~= lock then
+	if not Dependencies.sameLockContent(lock, fs.readFileToString("wally.lock")) then
 		fs.writeStringToFile("wally.lock", lock)
 		error(
 			"Wally changed wally.lock; the original was restored. Reconcile dependency declarations and the lockfile before preparing again."
 		)
 	end
+	-- Wally normalizes line endings on Windows; keep the checked-out bytes so
+	-- the prepared-input fingerprint still describes the committed lockfile.
+	fs.writeStringToFile("wally.lock", lock)
 	assert(installed.ok, "Wally installation failed (exit " .. tostring(installed.exitcode) .. ")")
 	for _, command in
 		{

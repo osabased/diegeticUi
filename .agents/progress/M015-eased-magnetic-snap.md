@@ -1,0 +1,5 @@
+# M015 — Eased magnetic snap
+
+- Completed: 2026-09-23
+- Result: The user requested easing for the magnetic preview. A single Fusion position tween now settles the held tile into each grid anchor in 120 ms with Quart Out easing. The tween retargets on cell changes; outside-grid pointer tracking and reduced-motion mode use an immediate position. Placement remains tied to the snapped cell, and the prototype remains local and disposable.
+- Verification: The canonical verifier passed 32 native tests and the guarded Studio suite passed 38 tests. In connected Studio play, a transient position trace observed intermediate frame positions across consecutive cell changes, a quick release placed the Rifle at the intended grid anchor, and an outside-grid Bandage drag followed the pointer immediately. The live console showed no new project or Fusion errors. The active Studio preference had reduced motion off; switching that preference during play was not exercised. The task-owned play session was stopped.

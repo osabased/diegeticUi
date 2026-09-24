@@ -1,0 +1,5 @@
+# M016 — Eased held-item rotation
+
+- Completed: 2026-09-23
+- Result: Pressing R turns the held tile around its center with a 120 ms Quart Out Fusion tween while its placement preview immediately uses the rotated footprint. Consecutive presses continue the quarter turns and retarget the active tween. Reduced-motion mode selects an immediate turn. This remains a local, disposable interaction prototype.
+- Verification: The canonical verifier passed 32 native tests and the guarded Studio suite passed 38 tests after the source edit. In connected Studio play, a transient Rotation trace observed intermediate angles before settling at 90 degrees, the visual 3 by 2 footprint aligned with the grid, two quick R presses reached 270 degrees, and release immediately after another R placed the Rifle with the expected unrotated footprint. The live console showed no new project or Fusion errors. The active Studio preference had reduced motion off; switching that preference during play was not exercised. The task-owned play session was stopped.

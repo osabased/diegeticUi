@@ -3,3 +3,31 @@ option types_output = "./Types"
 option client_output = "./Client"
 option server_output = "./Server"
 option casing = "PascalCase"
+
+type ContainerItem = struct {
+	Id: string(1..64),
+	DefinitionId: string(1..64),
+	Column: u8,
+	Row: u8,
+	Rotated: boolean
+}
+
+function RepositionInventory = {
+	data: (expected_revision: f64, item_id: string(..64), column: f64, row: f64, rotated: boolean),
+	return: (accepted: boolean, revision: f64?, reason: string?)
+}
+
+function RotateInventory = {
+	data: (expected_revision: f64, item_id: string(..64)),
+	return: (accepted: boolean, revision: f64?, reason: string?)
+}
+
+function InspectWorldContainer = {
+	data: (container_id: string(..64)),
+	return: (accepted: boolean, revision: f64?, items: ContainerItem[0..256]?, reason: string?)
+}
+
+function ClaimWorldContainerItem = {
+	data: (container_id: string(..64), item_id: string(..64), player_revision: f64, container_revision: f64),
+	return: (accepted: boolean, player_revision: f64?, container_revision: f64?, reason: string?)
+}

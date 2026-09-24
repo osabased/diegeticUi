@@ -2,7 +2,7 @@
 
 ## Canonical gate
 
-The required local and CI gate remains:
+The canonical implementation and CI gate is:
 
 ```sh
 lute run scripts/verify.luau
@@ -33,7 +33,7 @@ A single local SHA-256 stamp in `.verify/dependencies.sha256` covers `rokit.toml
 
 The unit stage also runs `lute run tests/unit/Dependencies.regression.luau` to check preparation freshness with disposable filesystem fixtures.
 
-It also runs `lute run tests/unit/Documentation.regression.luau`. The regression checks local links in active project and agent documentation, requires managed documents to appear exactly once in their audience's index, rejects duplicate index targets, and confirms that `README.md` and `AGENTS.md` route to the indexes. It detects deleted, moved, orphaned, or undiscoverable documents; it does not validate prose, remote URLs, or Markdown anchors.
+It also runs `lute run tests/unit/Documentation.regression.luau`. The regression checks local links in active project and agent documentation, requires managed documents to appear exactly once in their audience's index, rejects duplicate index targets, and confirms that `README.md` and `AGENTS.md` route to the indexes. It checks that active continuity files and separate blank templates are discoverable, completed milestone IDs are contiguous, outcome decisions have dates and bases, completed outcomes remain in visions while retired outcomes do not, and any outcome IDs named by execution exist in visions. A fully unfilled execution scaffold remains valid after a completed move; once populated, execution accepts only `active` or `blocked`. Blocked work requires a structured condition, hotspot entries require an entry-point explanation, and `Later` and `Last Checkpoint` are forbidden. Optional execution details such as hotspots and verification need not be populated before they are known. The regression does not validate prose semantics, evidence truth, remote URLs, or Markdown anchors. For a documentation-only handoff, run this regression directly and reuse unaffected passing gate evidence; changes to verification code require the canonical gate.
 
 Python's standard-library `unittest` runner executes `tests/artifacts/test_*.py` during the unit stage. These regressions exercise the profile artifact checker without changing project source.
 

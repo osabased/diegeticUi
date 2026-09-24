@@ -16,6 +16,10 @@ _Avoid_: Backpack
 A server-session inventory shared by players in that server.
 _Avoid_: Chest, stash
 
+**World Container**:
+A world object through which players can access one Loot Container while that object exists.
+_Avoid_: Container ID as authority
+
 **Item Definition**:
 The immutable description shared by every instance of an item type, including its footprint and rotation capability.
 _Avoid_: Item type, item template

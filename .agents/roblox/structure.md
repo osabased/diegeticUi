@@ -2,7 +2,7 @@
 
 ## Freshness
 
-Treat a persisted convention as stale only when following it produces a verified mismatch and focused inspection, using the applicable source-of-truth representation, establishes a different coherent implemented convention at the same scope. A local exception, unresolved mapping, or ambiguous/pre-existing change is not enough. During authorized implementation, repair only the smallest unsupported persisted decision and preserve still-supported guidance; otherwise leave the profile unchanged and report the mismatch.
+Use this profile as a baseline for structural choices, not as authority over new evidence or current product direction. Verify factual claims about the implemented structure against the applicable filesystem and Rojo mapping before relying on them. A verified mismatch or a new requirement may justify revisiting a convention; a replacement need not already be implemented before a design choice can change. Ambiguous or pre-existing edits alone do not establish a new convention. During authorized work, update only the affected guidance and preserve still-supported runtime and safety constraints.
 
 ## Source of truth
 

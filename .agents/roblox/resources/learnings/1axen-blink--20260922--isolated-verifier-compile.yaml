@@ -1,0 +1,15 @@
+schema_version: 1
+kind: repair-outcome
+scope: resource
+
+slug: "1axen-blink"
+canonical_url: "https://github.com/1Axen/blink"
+package_id: "1Axen/blink@1.0.0-pre.8"
+
+observed: "2026-09-22"
+statement: "The project's Blink smoke check compiled over tracked generated modules and then restored them because prerelease 1.0.0-pre.8 randomizes identifiers. A Windows file-open failure during restore left the generated files out of sync with their stamp; compiling a disposable schema copy makes the check nonmutating."
+evidence: "The full verifier failed in run 20260923T022414089Z-000 while opening Types.luau, then reported stamp drift. After isolating compilation in scripts/verify.luau and regenerating once, the full verifier and 18-test Studio suite passed."
+version_context: "1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+reconsider_when: ""
+task_context: "M005 inventory request protocol verification"
+related_entry: ""

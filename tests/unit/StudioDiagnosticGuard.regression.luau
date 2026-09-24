@@ -115,6 +115,37 @@ local unmatchedCaptureAnalysis = analyze({
 assert(#unmatchedCaptureAnalysis.problems == 1, "unmatched raw output disappeared inside a capture window")
 assert(unmatchedCaptureAnalysis.problems[1].kind == "unexpected_output", "unmatched capture output was misclassified")
 
+local storeNotice = "[ProfileStore]: Roblox API services unavailable - data will not be saved"
+local expectedOutputAnalysis = analyze({
+	event("test_start", "expected output case"),
+	Guard.CAPTURE_START,
+	storeNotice,
+	Guard.EXPECTED_OUTPUT .. hex(storeNotice),
+	Guard.CAPTURE_END,
+	event("test_pass", "expected output case"),
+})
+assert(#expectedOutputAnalysis.problems == 0, "exact expected raw output was rejected")
+local missingOutputAnalysis = analyze({
+	event("test_start", "missing output case"),
+	Guard.CAPTURE_START,
+	Guard.EXPECTED_OUTPUT .. hex(storeNotice),
+	Guard.CAPTURE_END,
+	event("test_pass", "missing output case"),
+})
+assert(#missingOutputAnalysis.problems == 1, "missing expected raw output was accepted")
+assert(missingOutputAnalysis.problems[1].kind == "protocol", "missing raw output lost its failure")
+local extraOutputAnalysis = analyze({
+	event("test_start", "extra output case"),
+	Guard.CAPTURE_START,
+	storeNotice,
+	"unrelated warning",
+	Guard.EXPECTED_OUTPUT .. hex(storeNotice),
+	Guard.CAPTURE_END,
+	event("test_pass", "extra output case"),
+})
+assert(#extraOutputAnalysis.problems == 1, "unrelated output was hidden by the raw expectation")
+assert(extraOutputAnalysis.problems[1].message == "unrelated warning", "unrelated output text was lost")
+
 local embeddedMarkerAnalysis = analyze({
 	event("test_start", "embedded marker case"),
 	"prefix " .. Guard.CAPTURE_START .. " suffix",

@@ -1,0 +1,5 @@
+# M008 — Session-container ownership and commit model
+
+- Completed: 2026-09-23
+- Result: [ADR 0002](../../docs/adr/0002-session-container-transfer-commit.md) permits only session-container-to-player claims in v1 and specifies the container reservation, two revision checks, Scribe transaction then container replacement, rollback and indeterminate-result handling, and crash boundary. The next seam is `Inventory.TakeFromContainer`; no container or request protocol was implemented in this discovery move.
+- Verification: Two connected Studio server probes with isolated mock bundles covered success, stale rejection, forced player-transaction rollback, competing claims, and observer reentry. Task-owned play sessions and bundles were stopped. Source review established Scribe's callback and save boundaries. Mock probes do not establish live DataStore persistence, crash recovery, or a production container implementation. The guarded Studio diagnostic check remains in place; its unrelated intermittent callback warning still needs callback-owner evidence.

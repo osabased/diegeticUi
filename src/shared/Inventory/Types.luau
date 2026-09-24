@@ -1,53 +1,21 @@
 --!strict
 
+local Grid = require(script.Parent.Grid)
+
 export type InventoryId = string
-export type ItemDefinitionId = string
-export type ItemInstanceId = string
+export type ItemDefinitionId = Grid.ItemDefinitionId
+export type ItemInstanceId = Grid.ItemInstanceId
 export type Revision = number
 
-export type GridSize = {
-	Columns: number,
-	Rows: number,
-}
-
-export type GridPosition = {
-	Column: number,
-	Row: number,
-}
-
-export type ItemDefinition = {
-	Id: ItemDefinitionId,
-	DisplayName: string,
-	Width: number,
-	Height: number,
-	Rotatable: boolean,
-	Icon: string?,
-}
-
-export type ItemDefinitionMap = { [ItemDefinitionId]: ItemDefinition }
-
-export type ItemInstance = {
-	Id: ItemInstanceId,
-	DefinitionId: ItemDefinitionId,
-}
-
-export type ItemPlacement = {
-	Column: number,
-	Row: number,
-	Rotated: boolean,
-}
-
-export type PlacedItem = {
-	DefinitionId: ItemDefinitionId,
-	Column: number,
-	Row: number,
-	Rotated: boolean,
-}
-
-export type InventorySnapshot = {
-	Revision: Revision,
-	Items: { [ItemInstanceId]: PlacedItem },
-}
+export type GridSize = Grid.GridSize
+export type GridPosition = Grid.GridPosition
+export type ItemDefinition = Grid.ItemDefinition
+export type ItemDefinitionMap = Grid.ItemDefinitionMap
+export type ItemInstance = Grid.ItemInstance
+export type ItemPlacement = Grid.ItemPlacement
+export type PlacedItem = Grid.PlacedItem
+export type InventorySnapshot = Grid.InventorySnapshot
+export type InventoryState = Grid.InventoryState
 
 export type RepositionOperation = {
 	Kind: "Reposition",
@@ -64,6 +32,13 @@ export type TransferOperation = {
 	Destination: ItemPlacement,
 }
 
-export type InventoryOperation = RepositionOperation | TransferOperation
+export type QuickTransferOperation = {
+	Kind: "QuickTransfer",
+	SourceInventoryId: InventoryId,
+	DestinationInventoryId: InventoryId,
+	ItemId: ItemInstanceId,
+}
+
+export type InventoryOperation = RepositionOperation | TransferOperation | QuickTransferOperation
 
 return nil

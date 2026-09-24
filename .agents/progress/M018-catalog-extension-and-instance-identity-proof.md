@@ -1,0 +1,5 @@
+# M018 — Catalog extension and instance identity proof
+
+- Completed: 2026-09-23
+- Result: A test-only definition passed grid placement, rotation, first-fit transfer, and validation without grid-rule changes; two generated instances of one catalog definition stayed distinct through separate server claims. Server readiness and client snapshot validation reject an unknown stored definition as `SpatialInvalid`. Scribe stores definition IDs and item IDs as strings, so catalog removal or footprint changes need an explicit migration or recovery policy. This proves the extension seams separately; V6 remains unresolved until a newly added production definition is exercised through the whole runtime path.
+- Verification: The canonical verifier passed 33 native tests and build profiles; the guarded Studio suite passed 36 tests after the final test edits. An earlier Studio run passed all assertions but failed the diagnostic guard on the previously observed intermittent callback-destruction warning; its output is retained at `.verify/studio-diagnostics/1790197818-000.log`. No runtime source or production catalog item changed, so no connected playtest was required.

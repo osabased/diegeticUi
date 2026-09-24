@@ -9,6 +9,7 @@ StudioDiagnosticGuard.CAPTURE_START = "@@DIEGETIC_UI_DIAGNOSTIC_CAPTURE_START@@"
 StudioDiagnosticGuard.CAPTURE_END = "@@DIEGETIC_UI_DIAGNOSTIC_CAPTURE_END@@"
 StudioDiagnosticGuard.DIAGNOSTIC = "@@DIEGETIC_UI_DIAGNOSTIC@@"
 StudioDiagnosticGuard.MISSING_EXPECTED = "@@DIEGETIC_UI_MISSING_EXPECTED_DIAGNOSTIC@@"
+StudioDiagnosticGuard.EXPECTED_OUTPUT = "@@DIEGETIC_UI_EXPECTED_OUTPUT@@"
 
 export type ProblemKind =
 	"unexpected_output"
@@ -209,7 +210,8 @@ local function reconcileCapture(
 	problems: { Problem },
 	context: string,
 	rawLines: { string },
-	diagnostics: { StructuredDiagnostic }
+	diagnostics: { StructuredDiagnostic },
+	expectedOutput: { string }
 )
 	local consumedRawLines: { [number]: boolean } = {}
 	for _, diagnostic in diagnostics do
@@ -219,6 +221,13 @@ local function reconcileCapture(
 				context,
 				"structured diagnostic had no exact raw output match: " .. diagnostic.message
 			)
+		end
+	end
+	for _, message in expectedOutput do
+		if
+			not consumeExactMessage(rawLines, consumedRawLines, { message = message, messageType = "MessageOutput" })
+		then
+			addProtocolProblem(problems, context, "expected raw output had no exact match: " .. message)
 		end
 	end
 	for index, rawLine in rawLines do
@@ -234,6 +243,7 @@ function StudioDiagnosticGuard.analyze(stdout: string): Analysis
 	local captureContext = "Studio suite before the first test"
 	local captureRawLines: { string } = {}
 	local captureDiagnostics: { StructuredDiagnostic } = {}
+	local captureExpectedOutput: { string } = {}
 	local activeContext: string? = nil
 	local lastContext = "Studio suite before the first test"
 
@@ -255,6 +265,7 @@ function StudioDiagnosticGuard.analyze(stdout: string): Analysis
 				captureContext = activeContext or lastContext
 				captureRawLines = {}
 				captureDiagnostics = {}
+				captureExpectedOutput = {}
 			end
 			continue
 		end
@@ -268,7 +279,13 @@ function StudioDiagnosticGuard.analyze(stdout: string): Analysis
 			else
 				captureDepth -= 1
 				if captureDepth == 0 then
-					reconcileCapture(problems, captureContext, captureRawLines, captureDiagnostics)
+					reconcileCapture(
+						problems,
+						captureContext,
+						captureRawLines,
+						captureDiagnostics,
+						captureExpectedOutput
+					)
 				end
 			end
 			continue
@@ -298,6 +315,17 @@ function StudioDiagnosticGuard.analyze(stdout: string): Analysis
 				addProtocolProblem(problems, context, "malformed or out-of-window missing-expectation marker: " .. line)
 			else
 				addProblem(problems, "missing_expected_diagnostic", context, message)
+			end
+			continue
+		end
+
+		local expectedOutputPayload = exactMarkerPayload(line, StudioDiagnosticGuard.EXPECTED_OUTPUT)
+		if expectedOutputPayload ~= nil then
+			local message = decodeHex(expectedOutputPayload)
+			if captureDepth == 0 or message == nil then
+				addProtocolProblem(problems, context, "malformed or out-of-window expected-output marker: " .. line)
+			else
+				table.insert(captureExpectedOutput, message)
 			end
 			continue
 		end
