@@ -1,0 +1,5 @@
+# M021 — Inventory leave save mock round trip
+
+- Completed: 2026-09-24
+- Result: A guarded Studio test accepted a production rotation at revision 7→8 in Scribe 2.3.0's isolated mock store, invoked the ordinary `OnPlayerRemoving` path without `Flush`, waited for the session to end, and reopened the same player key. Production readiness accepted the restored snapshot with the exact revision, item identities, definitions, positions, and rotations. Scribe's `EndSession` schedules its final save asynchronously; the later session load observed the saved state in this mock scenario.
+- Verification: The changed test passed alone under the Studio diagnostic guard. It also passed among all 38 Studio assertions, but that full run failed the guard because the previously observed intermittent `Script that implemented this callback has been destroyed while calling callback` warning appeared after the final test. The canonical static gate passed 33 native tests, documentation checks, formatting, lint, analysis, Rojo build, and both artifact profiles. Live DataStore durability, autosave, and shutdown behavior remain unverified; V7 remains open.

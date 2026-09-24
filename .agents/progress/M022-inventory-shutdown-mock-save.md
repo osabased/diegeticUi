@@ -1,0 +1,5 @@
+# M022 — Inventory shutdown mock save
+
+- Completed: 2026-09-24
+- Result: A separate guarded Studio suite used Scribe 2.3.0's pinned server seam to accept a production inventory rotation at revision 7→8, then invoked the same `Persistence.Shutdown` drain that `BindToClose` uses. After the drain returned and the session ended, the isolated mock store held the exact accepted revision, item identities, definitions, positions, and rotations. The suite runs in its own Studio process because shutdown sets ProfileStore's process-global closing state. The intermittent late callback warning predates this move, remains unattributed, and was not observed in the passing M022 run; no source fix is justified by the existing evidence.
+- Verification: The guarded Studio stage passed the one shutdown assertion and all 38 ordinary assertions in separate processes. The canonical static gate passed 33 native tests, documentation checks, formatting, lint, analysis, Rojo build, and both artifact profiles. This is mock-store shutdown evidence, not live DataStore durability, autosave timing, or an engine-driven `BindToClose` playtest; V7 remains open.

@@ -7,26 +7,47 @@ local process = require("@lute/process")
 local Guard = require("./studio-diagnostic-guard")
 
 local EVIDENCE_DIRECTORY = ".verify/studio-diagnostics"
+local cliArguments: { string } = { ... }
+local rawArguments: { string } = {}
+for index = 2, #cliArguments do
+	table.insert(rawArguments, cliArguments[index])
+end
+local suite = "studio"
+if #rawArguments >= 2 and rawArguments[1] == "--suite" then
+	if
+		rawArguments[2] ~= "studio"
+		and rawArguments[2] ~= "studio-shutdown"
+		and rawArguments[2] ~= "studio-autosave"
+	then
+		print("unknown Studio suite: " .. rawArguments[2])
+		process.exit(2)
+	end
+	suite = rawArguments[2]
+	table.remove(rawArguments, 1)
+	table.remove(rawArguments, 1)
+end
+
 local arguments = {
 	"lest",
 	"run",
-	"studio",
+	suite,
 	"--config",
-	"lest.toml",
+	if suite == "studio-autosave" then "lest-autosave.toml" else "lest.toml",
 	"--forbid-only",
 	"--reporter",
 	"json",
 	"--no-color",
 }
 
-local rawArguments: { string } = { ... }
-if #rawArguments > 1 then
-	if #rawArguments ~= 3 or rawArguments[2] ~= "--filter" or rawArguments[3] == "" then
-		print("usage: lute run scripts/run-studio-tests.luau [--filter <test-name-substring>]")
+if #rawArguments > 0 then
+	if #rawArguments ~= 2 or rawArguments[1] ~= "--filter" or rawArguments[2] == "" then
+		print(
+			"usage: lute run scripts/run-studio-tests.luau [--suite studio|studio-shutdown|studio-autosave] [--filter <test-name-substring>]"
+		)
 		process.exit(2)
 	end
 	table.insert(arguments, "--filter")
-	table.insert(arguments, rawArguments[3])
+	table.insert(arguments, rawArguments[2])
 end
 
 local function evidencePath(): string

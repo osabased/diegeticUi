@@ -334,7 +334,10 @@ local function runBlink(): StepResult
 end
 
 local function runLint(): StepResult
-	local robloxLint = runCommand({ "selene", "src", "tests/tooling", "tests/studio" }, "Roblox Luau lint failed")
+	local robloxLint = runCommand(
+		{ "selene", "src", "tests/tooling", "tests/studio", "tests/studio-shutdown", "tests/studio-autosave" },
+		"Roblox Luau lint failed"
+	)
 	if not robloxLint.ok then
 		return robloxLint
 	end
@@ -396,6 +399,8 @@ local function runStep(step: StepName): StepResult
 			"src",
 			"tests/tooling/RobloxDefinitions.luau",
 			"tests/studio",
+			"tests/studio-shutdown",
+			"tests/studio-autosave",
 		}, "Luau analysis failed")
 	elseif step == "unit" then
 		local artifacts = runCommand(
@@ -448,6 +453,20 @@ local function runStep(step: StepName): StepResult
 		local buildMissing = requireFile(BUILD_OUTPUT, "the disposable Studio test place is missing")
 		if buildMissing ~= nil then
 			return buildMissing
+		end
+		local shutdown = runCommand(
+			{ "lute", "run", "scripts/run-studio-tests.luau", "--suite", "studio-shutdown" },
+			"Studio shutdown tests failed"
+		)
+		if not shutdown.ok then
+			return shutdown
+		end
+		local autosave = runCommand(
+			{ "lute", "run", "scripts/run-studio-tests.luau", "--suite", "studio-autosave" },
+			"Studio autosave tests failed"
+		)
+		if not autosave.ok then
+			return autosave
 		end
 		return runCommand({ "lute", "run", "scripts/run-studio-tests.luau" }, "Studio construction tests failed")
 	end

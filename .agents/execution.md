@@ -8,37 +8,23 @@ For discovery, name the question and the evidence that would answer it. Before d
 
 ## Milestone
 
-M021
+<!-- M### for an active or blocked move; otherwise leave blank. -->
 
 ## Status
 
-active
+<!-- active | blocked; leave blank only while the entire scaffold is unfilled. -->
 
 ## Objective
 
-Determine whether Scribe's ordinary player-leave path saves an accepted inventory mutation and restores the same validated snapshot on a later session in the isolated mock store, without an explicit flush.
-
-## Outcome Context
-
-- `V7` — Durable player inventory through leaving and rejoining. [M020](progress/M020-inventory-mock-persistence-round-trip.md) proved a mock-store round trip only after an explicit flush; it did not establish leave-triggered saving or live DataStore durability.
+<!-- One observable result or answer sought by the current move. -->
 
 ## Questions
 
-- Does the pinned Scribe 2.3.0 player-removal path finish saving the accepted snapshot before a new session opens in mock mode?
-- Does production readiness recover the exact accepted revision, item identities, definitions, positions, and rotations without an explicit flush?
-- If the mock path cannot establish this behavior, which lifecycle boundary or observable result prevents a reliable conclusion?
+<!-- Keep only questions useful to the current move. Remove this section when no question remains. -->
 
 ## Hotspots
 
-- `tests/studio/InventoryPersistenceRoundTrip.spec.luau` — existing explicit-flush round trip and isolated Scribe server test seam.
-- `src/shared/Inventory/PlayerDataSchema.luau` — mock bundle construction and transport options.
-- `src/server/Inventory/Mutation.luau` — accepted mutation path.
-- `src/server/Inventory/Readiness.luau` — validated reload path.
-
-## Completion Checks
-
-- A guarded Studio test or probe exercises an accepted production mutation, normal player removal, and a later mock session without calling `Flush`; it compares the restored snapshot with the accepted snapshot or records the exact reason the behavior cannot be established.
-- Record the result and its limits in M021. Keep live DataStore durability, autosave timing, and shutdown behavior open unless separately observed.
+<!-- List current entry points as `path or symbol` — why or when to begin here. Leave empty if none are known yet. -->
 
 <!--
 When Status is blocked, append this section:

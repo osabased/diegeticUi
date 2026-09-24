@@ -19,6 +19,15 @@ default = false
 file = ".verify/diegeticUi.rbxlx"
 rojo = "default.project.json"
 
+[suites.studio-shutdown]
+include = ["tests/studio-shutdown/**/*.spec.luau"]
+backend = "studio"
+default = false
+
+[suites.studio-shutdown.place]
+file = ".verify/diegeticUi.rbxlx"
+rojo = "default.project.json"
+
 [suites.fusion-integration]
 include = ["tests/studio/FusionSkillIntegration.spec.luau"]
 backend = "studio"

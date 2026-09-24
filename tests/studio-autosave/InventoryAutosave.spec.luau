@@ -8,45 +8,49 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local PlayerDataSchema = require("../../src/shared/Inventory/PlayerDataSchema")
 local Mutation = require("../../src/server/Inventory/Mutation")
-local Readiness = require("../../src/server/Inventory/Readiness")
-local DiagnosticCapture = require("./DiagnosticCapture")
+local DiagnosticCapture = require("../studio/DiagnosticCapture")
 
 local scribeModule = ReplicatedStorage.Packages._Index["ericplane_scribe@2.3.0"].scribe
 local Template = require(scribeModule.Internal.Template)
 local Server = require(scribeModule.Server)
 
-local function sameSnapshot(expected: any, actual: any)
-	assert(actual.Revision == expected.Revision, "reopened revision differs from the accepted revision")
+local STORE_NAME = "DiegeticUi_InventoryAutosaveTest"
+local KEY_PREFIX = "TestPlayer_"
+local USER_ID = 987654323
+
+local function assertSameSnapshot(expected: any, actual: any)
+	assert(actual ~= nil, "saved profile has no inventory")
+	assert(actual.Revision == expected.Revision, "autosaved revision differs from accepted revision")
 	local count = 0
 	for itemId, item in expected.Items do
 		count += 1
-		local restored = actual.Items[itemId]
-		assert(restored ~= nil, `reopened inventory lost item {itemId}`)
-		assert(restored.DefinitionId == item.DefinitionId, `reopened definition differs for {itemId}`)
-		assert(restored.Column == item.Column and restored.Row == item.Row, `reopened placement differs for {itemId}`)
-		assert(restored.Rotated == item.Rotated, `reopened rotation differs for {itemId}`)
+		local saved = actual.Items[itemId]
+		assert(saved ~= nil, `autosave lost item {itemId}`)
+		assert(saved.DefinitionId == item.DefinitionId, `autosave changed definition for {itemId}`)
+		assert(saved.Column == item.Column and saved.Row == item.Row, `autosave changed placement for {itemId}`)
+		assert(saved.Rotated == item.Rotated, `autosave changed rotation for {itemId}`)
 	end
-	local restoredCount = 0
+	local savedCount = 0
 	for _ in actual.Items do
-		restoredCount += 1
+		savedCount += 1
 	end
-	assert(restoredCount == count, "reopened inventory gained an item")
+	assert(savedCount == count, "autosave changed item count")
 end
 
-describe("inventory mock persistence", function()
-	it("reloads an accepted production mutation after ordinary player leave", function()
+describe("inventory mock autosave", function()
+	it("saves an accepted mutation while the player session remains active", function()
 		local data: any = nil
 		local context: any = nil
 		local fakePlayer: any = nil
 		local player: Player? = nil
 		local expectedOutput = { "[ProfileStore]: Roblox API services unavailable - data will not be saved" }
 		local result = DiagnosticCapture.run(function()
-			-- Scribe's edit-mode bundle exposes the exact source template, but builds
-			-- only a client half. Its pinned server test seam drives a player lifecycle
-			-- without a running Studio server or live DataStore.
+			local ProfileStore = require(scribeModule.Internal.Store)
+			-- SaveInterval changes ProfileStore's process-global cadence. This test
+			-- runs in a separate Studio process from the ordinary and shutdown suites.
 			local schemaBundle = PlayerDataSchema.createBundle({
-				ProfileStoreIndex = "DiegeticUi_InventoryRoundTripTest",
-				ProfileKeyPrefix = "TestPlayer_",
+				ProfileStoreIndex = STORE_NAME,
+				ProfileKeyPrefix = KEY_PREFIX,
 				Mode = "Mock",
 				IsRunning = false,
 				Banner = false,
@@ -55,29 +59,30 @@ describe("inventory mock persistence", function()
 			schemaBundle.Client.Stop()
 
 			local transport = {
-				Name = "InventoryRoundTripTest",
+				Name = "InventoryAutosaveTest",
 				SendToClient = function() end,
 				SendToAllClients = function() end,
 				ListenServer = function() end,
 			}
 			data, context = Server.build({
-				ProfileStoreIndex = "DiegeticUi_InventoryRoundTripTest",
-				ProfileKeyPrefix = "TestPlayer_",
+				ProfileStoreIndex = STORE_NAME,
+				ProfileKeyPrefix = KEY_PREFIX,
 				Mode = "Mock",
+				SaveInterval = 15,
 				Transport = transport,
 				LogLevel = "Error",
 				Banner = false,
 			}, compiled)
 			fakePlayer = {
-				Name = "InventoryRoundTripTest",
-				UserId = 987654321,
+				Name = "InventoryAutosaveTest",
+				UserId = USER_ID,
 				Parent = Players,
 			}
 			local currentPlayer = (fakePlayer :: any) :: Player
 			player = currentPlayer
 			context.Persistence.OnPlayerAdded(currentPlayer)
 			local ready, reason = data.WaitForData(currentPlayer, 4)
-			assert(ready ~= nil, `first mock session failed: {tostring(reason)}`)
+			assert(ready ~= nil, `mock session failed: {tostring(reason)}`)
 			ready.Inventory.Set({
 				Revision = 7,
 				Items = {
@@ -90,21 +95,28 @@ describe("inventory mock persistence", function()
 			assert(accepted.Snapshot.Revision == 8, "accepted mutation did not advance the revision")
 			assert(accepted.Snapshot.Items["rifle-1"].Rotated, "accepted mutation did not rotate the rifle")
 
-			fakePlayer.Parent = nil
-			context.Persistence.OnPlayerRemoving(currentPlayer)
-			local leaveDeadline = os.clock() + 4
-			while data.GetState(currentPlayer) ~= "SessionEnded" and os.clock() < leaveDeadline do
-				task.wait()
+			local mockStore = ProfileStore.Test().UserMockStore[STORE_NAME]
+			local loadedRecord = mockStore and mockStore[KEY_PREFIX .. USER_ID]
+			assert(loadedRecord ~= nil, "session load did not create a mock store record")
+			local loadVersion = loadedRecord.VersionId
+			local saved: any = nil
+			local deadline = os.clock() + 32
+			while os.clock() < deadline do
+				assert(data.GetState(currentPlayer) == "Ready", "session ended before autosave")
+				mockStore = ProfileStore.Test().UserMockStore[STORE_NAME]
+				saved = mockStore and mockStore[KEY_PREFIX .. USER_ID]
+				if saved ~= nil and saved.VersionId > loadVersion then
+					break
+				end
+				task.wait(0.1)
 			end
-			assert(data.GetState(currentPlayer) == "SessionEnded", "ordinary leave did not end the session")
-
-			fakePlayer.Parent = Players
-			context.Persistence.OnPlayerAdded(currentPlayer)
-			local reopened, reopenReason = data.WaitForData(currentPlayer, 10)
-			assert(reopened ~= nil, `reopened mock session failed: {tostring(reopenReason)}`)
-			local restored = Readiness.read(data, currentPlayer, 0)
-			assert(restored.Ok, "reopened snapshot failed production validation")
-			sameSnapshot(accepted.Snapshot, restored.Snapshot)
+			assert(
+				saved ~= nil and saved.VersionId > loadVersion,
+				"autosave did not write the mock store within 32 seconds"
+			)
+			assert(data.GetState(currentPlayer) == "Ready", "session ended before autosave completed")
+			assert(fakePlayer.Parent == Players, "player was removed before autosave completed")
+			assertSameSnapshot(accepted.Snapshot, saved.Data and saved.Data.Data and saved.Data.Data.Inventory)
 		end, function()
 			if fakePlayer ~= nil and context ~= nil and player ~= nil then
 				fakePlayer.Parent = nil

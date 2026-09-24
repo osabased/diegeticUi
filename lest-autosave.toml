@@ -1,0 +1,13 @@
+# Autosave needs real scheduler time. Keep its timeout isolated from fast suites.
+[suites.studio-autosave]
+include = ["tests/studio-autosave/**/*.spec.luau"]
+backend = "studio"
+default = false
+
+[suites.studio-autosave.place]
+file = ".verify/diegeticUi.rbxlx"
+rojo = "default.project.json"
+
+[settings]
+backend = "native"
+timeout_ms = 45000
