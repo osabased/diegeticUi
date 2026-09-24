@@ -1,0 +1,5 @@
+# M013 — Throwaway drag and rotate interaction prototype
+
+- Completed: 2026-09-23
+- Result: The crate view is explicitly a prototype. A mouse drag hides the source tile and carries a ghost; R rotates compatible items while held; the preview colors valid and invalid placements; releasing on the player grid simulates a transfer with the shared grid rules. Rejected drops leave draft inventories unchanged. Draft changes reset on close and never invoke the server claim request or write player data. This interaction remains research material, not a final UI decision.
+- Verification: In connected Studio play, a rotated Rifle moved from crate to player grid, an occupied Bandage drop showed rejection without moving it, a drop outside the player grid showed feedback, and reopening restored both authoritative snapshots. The live console showed no new project or Fusion errors. The final canonical and guarded Studio checks are recorded in the current verification reports. Input was verified with mouse and keyboard; touch and gamepad remain outside this prototype.

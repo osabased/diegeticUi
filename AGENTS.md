@@ -4,6 +4,8 @@
 Before making a structural placement, startup, source-of-truth, organization, or structurally owned dependency decision, read the [Roblox structure profile](.agents/roblox/structure.md) for the project's durable structural conventions.
 <!-- structure-roblox-projects:onboarding:end -->
 
+For this project, the [profile's Freshness rule](.agents/roblox/structure.md#freshness) takes precedence over a generic structural skill's profile template.
+
 ## Address issues at their source
 
 Don't be compliant towards issues. Needing a workaround is evidence of a defect. Investigate why the intended path fails, capture expected versus observed behavior, and pursue a durable correction. A workaround may unblock the task, but it does not resolve the underlying issue.
@@ -16,7 +18,7 @@ Development: Before changing source, dependencies, generated artifacts, verifica
 
 Documentation: Use the [agent documentation index](.agents/docs/README.md) for task-specific guidance and the [project documentation index](docs/README.md) for active project documentation and its maintenance policy.
 
-Continuity: When asked to create or refresh long-running project handoff documents, use the [visions template](.agents/templates/visions.md) for durable outcome targets and the [execution template](.agents/templates/execution.md) for current work and entry points.
+Continuity: For milestone work, start at [execution](.agents/execution.md) and load only relevant [visions](.agents/visions.md) outcomes and [progress](.agents/progress.md) evidence. Consult the [continuity workflow](.agents/docs/continuity.md) when selecting a move from an unfilled scaffold, revising direction, or handing off.
 
 <!-- roblox-resource-acquisition:onboarding:start -->
 ## Roblox resources

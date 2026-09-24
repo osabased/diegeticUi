@@ -6,6 +6,10 @@ local crypto = require("@lute/crypto")
 local Dependencies = {}
 local STAMP = "/.verify/dependencies.sha256"
 
+function Dependencies.sameLockContent(before: string, after: string): boolean
+	return string.gsub(before, "\r\n", "\n") == string.gsub(after, "\r\n", "\n")
+end
+
 local function digest(contents: string): string
 	return (
 		string.gsub(buffer.tostring(crypto.digest(crypto.hash.sha256, contents)), ".", function(byte)

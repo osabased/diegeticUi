@@ -1,0 +1,5 @@
+# M012 — Nearby crate inspection view
+
+- Completed: 2026-09-23
+- Result: The world crate offers an Inspect prompt. A minimal neutral view places the validated crate contents beside the Scribe-backed player inventory, shows loading and rejection feedback, and dismisses on Close, range loss, or part removal. Session cleanup and generation checks prevent a late response or subscription from restoring stale items. The view currently displays contents only; the item-claim interaction awaits user direction after a screenshot review.
+- Verification: The canonical verifier passed with 32 native tests; the guarded Studio suite passed 38 tests. In connected Studio play, E opened the view, mouse Close removed it, and moving out of range or removing the part dismissed it. A client probe passed repeated open/close, delayed-response, rejection, part-removal, and observer-cleanup cases. Studio's input bridge could not inject Escape because CoreGUI reserves it; touch and gamepad input remain unverified. Studio API access was disabled, so this does not establish live DataStore durability.

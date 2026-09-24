@@ -1,0 +1,15 @@
+schema_version: 1
+kind: integration-gotcha
+scope: resource
+
+slug: "1axen-blink"
+canonical_url: "https://github.com/1Axen/blink"
+package_id: "1Axen/blink@1.0.0-pre.8"
+
+observed: "2026-09-23"
+statement: "Pinned Blink 1.0.0-pre.8 rejected a top-level `struct ContainerItem { ... }` declaration with parser Error 1001, but compiled `type ContainerItem = struct { ... }` and generated the expected bounded item-array function response. Current upstream type examples show top-level `struct`; use the form verified against this project's installed prerelease until the pin changes."
+evidence: "During M011, `lute run scripts/generate-blink.luau` failed twice on top-level `struct` (with and without `=`), then passed with a `type ... = struct` alias; the full canonical verifier and a connected client/server inspect passed afterward."
+version_context: "1.0.0-pre.8 / v1.0.0-pre.8 / 324caf3aec16c209d9d31e335e321783fb89256f"
+reconsider_when: "Blink pin or compiler parser changes"
+task_context: "M011 bounded world-container snapshot protocol"
+related_entry: ""

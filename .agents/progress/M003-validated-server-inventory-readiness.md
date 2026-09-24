@@ -1,0 +1,5 @@
+# M003 — Validated server inventory readiness
+
+- Completed: 2026-09-22
+- Result: The server inventory API returns a copied snapshot only after Scribe readiness, exact inventory shape checks, and Grid validation against the current 4 by 4 grid and Bandage/Rifle definition catalog. Loading, unavailable, malformed, and spatially invalid states return distinct failures without a snapshot. The catalog and grid size are the current validation authority; changing either for persisted items will require a migration or explicit recovery policy.
+- Verification: `lute run scripts/verify.luau` passed with 26 native tests, and `lute run scripts/verify.luau --stage studio` passed 11 Studio tests. Connected Studio server probes with disposable Scribe mock stores returned revision 0 for fresh data, revision 7 with a restored Rifle, `Malformed` without a snapshot for a bad revision, and `SpatialInvalid` without a snapshot for overlapping items. The live bundle returned `Unavailable` with Studio API access disabled. Each mock probe used a fresh task-owned play session, and all were stopped. Live DataStore durability remains unverified.

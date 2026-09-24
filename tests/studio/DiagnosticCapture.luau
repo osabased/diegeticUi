@@ -8,6 +8,7 @@ local CAPTURE_START = "@@DIEGETIC_UI_DIAGNOSTIC_CAPTURE_START@@"
 local CAPTURE_END = "@@DIEGETIC_UI_DIAGNOSTIC_CAPTURE_END@@"
 local DIAGNOSTIC = "@@DIEGETIC_UI_DIAGNOSTIC@@"
 local MISSING_EXPECTED = "@@DIEGETIC_UI_MISSING_EXPECTED_DIAGNOSTIC@@"
+local EXPECTED_OUTPUT = "@@DIEGETIC_UI_EXPECTED_OUTPUT@@"
 
 export type Diagnostic = {
 	message: string,
@@ -80,7 +81,12 @@ local function reconcile(
 	return unexpected, missing, matchedActual
 end
 
-function DiagnosticCapture.run(body: () -> (), cleanup: () -> (), expectedDiagnostics: { ExpectedDiagnostic }?): Result
+function DiagnosticCapture.run(
+	body: () -> (),
+	cleanup: () -> (),
+	expectedDiagnostics: { ExpectedDiagnostic }?,
+	expectedOutput: { string }?
+): Result
 	local diagnostics: { Diagnostic } = {}
 	local connection = LogService.MessageOut:Connect(function(message, messageType)
 		table.insert(diagnostics, {
@@ -128,6 +134,10 @@ function DiagnosticCapture.run(body: () -> (), cleanup: () -> (), expectedDiagno
 	end
 	for _, expectedDiagnostic in missing do
 		print(MISSING_EXPECTED .. expectedDiagnostic.messageType.Name .. "|" .. encodeHex(expectedDiagnostic.message))
+	end
+	local outputLines: { string } = if expectedOutput ~= nil then expectedOutput else {}
+	for _, message in outputLines do
+		print(EXPECTED_OUTPUT .. encodeHex(message))
 	end
 	print(CAPTURE_END)
 

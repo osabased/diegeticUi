@@ -1,0 +1,13 @@
+schema_version: 1
+kind: integration-gotcha
+scope: resource
+slug: ericplane-scribe
+canonical_url: https://github.com/ericplane/Scribe
+package_id: ericplane/scribe
+observed: "2026-09-23"
+statement: "A disposable Scribe bundle running beside the production bundle needs a distinct TransportChannel on both server and client. Unique profile store names do not isolate the RemoteEvents. The project schema factory now forwards that option. The Scribe child guidance should name it in its Studio fixture steps during a separately validated child repair."
+evidence: "A connected Studio mock probe with only a unique profile store received revision 8 followed by an unrelated revision 0 Init. The pinned 2.3.0 Transport.Resolve source names distinct TransportChannel for concurrent instances. Repeating the probe with a unique channel delivered revisions 7 and 8, then a revision 9 update after subscriber disconnect without another callback."
+version_context: "2.3.0; tag v2.3.0; commit e3309e9debdce2d3571406c48ded89f728404795"
+reconsider_when: "When changing Scribe transport behavior or its version."
+task_context: "M006 connected client snapshot replication probe."
+related_entry: ""

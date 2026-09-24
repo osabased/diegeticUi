@@ -1,0 +1,25 @@
+# Continuity Workflow
+
+Use the active [execution](../execution.md) as the entry point, [visions](../visions.md) for current product direction, and [progress.md](../progress.md) for current evidence and settled outcome decisions. Follow its milestone link or search `../progress/` when older evidence matters. The files under `templates/` are scaffolds, not active project state.
+
+## Start or resume
+
+1. Read execution. For `active` or `blocked`, load only the relevant vision outcomes and progress evidence; use **Outcome Context** when it helps locate them. An unfilled scaffold means no current move has been selected: use present evidence and repository state to select the smallest justified discovery or delivery move. Ask for product direction only when selection depends on a user-owned choice.
+2. Use the latest completed milestone link in progress to number a new move (`M001` follows an empty history), or check a populated move against it. Distinguish confirmed product requirements and observed facts from previous design choices. Revisit design choices when current evidence or direction warrants it; verify factual claims against current code, tests, and play behavior before depending on them.
+3. Begin at a named hotspot when it is still relevant; otherwise discover the entry point from current sources. Hotspots guide investigation, not implementation ownership. Revise execution when discovery changes its objective, checks, or assumptions; keep observed safety guarantees explicit.
+
+For a discovery move, state the question and evidence that would answer it. Before implementing behavior, make its observable result and relevant verification clear; leave other decisions open.
+
+## Record and hand off
+
+1. Check the move against its current objective and any applicable completion checks; run verification appropriate to the behavior changed. Revise the move if discovery invalidated a check rather than manufacturing a pass.
+2. Write the dated result and verification in a new milestone file under `../progress/`, then update the latest link in progress. Keep only current, decision-relevant observations and open questions on the progress page. Resolve an outcome there only when evidence establishes the whole observable capability, or user direction retires it; leave all others unresolved. See the [progress format](progress-format.md).
+3. Replace the finished execution with a fresh copy of the [execution template](../templates/execution.md) in [execution.md](../execution.md). If present evidence clearly supports the next bounded move, give it an objective and mark it `active`. If a known move cannot proceed because of a concrete condition, mark it `blocked` and state its cause, owner, and unblock condition. Otherwise leave the scaffold unfilled; the next agent can discover the next move with fresher evidence. Ordinary uncertainty is not a block.
+4. Run documentation regression after changing continuity documents. For implementation changes, run the canonical verifier after the final relevant inputs change and perform any required Studio checks. Reuse passing evidence for unaffected inputs; broaden checks when a new failure or integration concern warrants it. The handoff is complete when the finished work is recoverable from progress and its linked milestone record, and execution truthfully names the active move, its blocking condition, or that no move has been selected yet.
+
+## Revising direction
+
+- Visions is the durable map of confirmed product intent, not an implementation plan or a set of mandatory next tasks. Revise [visions](../visions.md) only when discovery or user priority warrants it; use the [visions template](../templates/visions.md) as a scaffold and carry forward outcomes still wanted, including completed ones. Do not add a candidate outcome merely to remember it; record a question only when it affects the current move. If an existing outcome's authority is unclear, do not silently remove or enforce it: resolve its status when that distinction matters. Record verified completion in progress without removing the outcome from visions. When direction retires an outcome, record the retirement in progress and remove it from visions in the same handoff; preserve its ID there and never reuse it. A new execution does not automatically require a new vision. Preserve confirmed integrity boundaries unless the user changes the product intent.
+- Keep observed results and verification recoverable in completed milestone records. Correct a false record explicitly; old design choices do not become mandatory just because they appear in history.
+- Record a consequential design decision in an ADR only when current work needs a durable boundary or rationale. Treat its assumptions as revisable when evidence changes.
+- Report current work from execution and relevant evidence from progress. A milestone result alone does not resolve an outcome; report outcomes without a completion decision as intended capabilities, not failures or implied completions.

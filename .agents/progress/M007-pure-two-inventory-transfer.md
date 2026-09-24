@@ -1,0 +1,5 @@
+# M007 — Pure two-inventory transfer
+
+- Completed: 2026-09-22
+- Result: The shared grid now computes explicit and row-major first-fit transfers between distinct identified snapshots, preserving item identity and orientation for quick moves. It returns both successor snapshots only on success; invalid states, absent or duplicate items, rejected placements, no fit, same-inventory moves, and revision overflow return stable failures without changing inputs. Grid mutations now reject revision overflow before producing a snapshot outside the accepted schema range.
+- Verification: The canonical verifier passed after the final source edit with 32 native tests, including focused transfer and revision-limit cases. The guarded Studio suite passed 23 tests on the final rerun, including the server mutation revision-limit assertion. Other full-suite runs failed the diagnostic guard on intermittent late callback-destruction messages after all assertions passed; isolated suite selections were clean. This move adds no engine behavior or server commit, so no playtest was required.

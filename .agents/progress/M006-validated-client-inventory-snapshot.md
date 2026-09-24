@@ -1,0 +1,5 @@
+# M006 — Validated client inventory snapshot
+
+- Completed: 2026-09-22
+- Result: The client inventory API now reports loading until Scribe's first snapshot, returns copied revisioned snapshots only after shared shape and spatial validation, and lets callers subscribe to initial and whole-snapshot updates with a disconnect function. The shared schema factory accepts a distinct transport channel for isolated concurrent mock bundles.
+- Verification: The canonical verifier passed. The Studio suite passed 23 tests, including loading, invalid data, recovery, update, and disconnect cases. A connected isolated mock-bundle probe observed loading, revision 7 with a Bandage, a whole-snapshot revision 8 update, copy isolation, and no callback after disconnect while revision 9 still replicated. The task-owned play session was stopped. An earlier Studio suite run reported two late callback-destruction diagnostics after all assertions passed; an immediate rerun was clean, and the warning source remains unproven. Live DataStore durability remains unverified.

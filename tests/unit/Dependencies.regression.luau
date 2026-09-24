@@ -3,6 +3,12 @@
 local fs = require("@std/fs")
 local Dependencies = require("../../scripts/dependencies")
 
+assert(
+	Dependencies.sameLockContent('registry = "test"\r\n', 'registry = "test"\n'),
+	"line endings alone changed the lock"
+)
+assert(not Dependencies.sameLockContent('version = "1"\r\n', 'version = "2"\n'), "lock content drift was hidden")
+
 local root = string.format(".verify/dependencies-test-%d-%d", os.time(), math.random(1, 1000000000))
 fs.createDirectory(root .. "/Packages/lib", { makeParents = true })
 local ok, failure = pcall(function()

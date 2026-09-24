@@ -31,7 +31,8 @@ RUNTIME_REQUIRED_PATHS = (
 
 DEVELOPMENT_REQUIRED_PATHS = RUNTIME_REQUIRED_PATHS
 
-RELEASE_FORBIDDEN_FRAGMENTS = (".story",)
+PROTOTYPE_FORBIDDEN_FRAGMENTS = ("/WorldInspection", "/WorldLoot")
+RELEASE_FORBIDDEN_FRAGMENTS = (*PROTOTYPE_FORBIDDEN_FRAGMENTS, ".story")
 
 
 def load_checker() -> ModuleType:
@@ -126,6 +127,7 @@ def main() -> int:
             sourcemap=development_map,
             place=development_place,
             required_paths=DEVELOPMENT_REQUIRED_PATHS,
+            forbidden_fragments=PROTOTYPE_FORBIDDEN_FRAGMENTS,
         )
 
         release_map, release_place = build_profile(rojo, "release.project.json", "release")

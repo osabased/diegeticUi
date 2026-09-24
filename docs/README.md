@@ -4,6 +4,8 @@
 
 - [Inventory domain language](../CONTEXT.md) — canonical vocabulary for inventory ownership, placement, and movement.
 - [Inventory state ownership](adr/0001-inventory-state-ownership.md) — persistence and integration-seam decision record.
+- [Session container transfer commit](adr/0002-session-container-transfer-commit.md) — permitted transfer direction and the two-owner commit boundary.
+- [World container access](adr/0003-world-container-access.md) — world binding, eligibility, removal, and scoped snapshot delivery.
 - [Verification](verification.md) — dependency preparation, verification stages and reports, behavior evidence, and Studio workflows.
 - [Roblox tooling](../tooling/roblox/README.md) — provenance and refresh procedures for vendored Roblox analysis inputs.
 

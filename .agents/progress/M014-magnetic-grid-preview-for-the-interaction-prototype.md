@@ -1,0 +1,5 @@
+# M014 — Magnetic grid preview for the interaction prototype
+
+- Completed: 2026-09-23
+- Result: The user chose cell snapping while an item is held over the player inventory. The held tile now uses the same clamped cell placement for its preview and release, stays within the grid at edges, and follows the pointer freely outside the grid. This remains a resettable, local-only research prototype; the choice does not establish a production UI contract.
+- Verification: The canonical verifier passed 32 native tests and the guarded Studio suite passed 38 tests. In connected Studio play, small pointer movement kept the Rifle at one cell anchor, moving across cells and toward an edge changed the anchor without clipping, R snapped the rotated footprint within the grid, and release placed it at the previewed cell. An occupied Bandage preview was red and its release did not transfer it; closing and reopening restored the original crate and player snapshots. The live console had no new project or Fusion errors. Mouse and keyboard were exercised; touch and gamepad were outside this prototype.

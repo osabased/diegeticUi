@@ -10,6 +10,8 @@ export type Options = {
 	ProfileStoreIndex: string,
 	ProfileKeyPrefix: string,
 	Mode: Mode?,
+	-- Concurrent bundles need distinct channels, even with different profile stores.
+	TransportChannel: string?,
 	IsRunning: boolean?,
 	Banner: boolean?,
 }
@@ -49,6 +51,7 @@ function PlayerDataSchema.createBundle(options: Options)
 		ProfileStoreIndex = options.ProfileStoreIndex,
 		ProfileKeyPrefix = options.ProfileKeyPrefix,
 		Mode = options.Mode,
+		TransportChannel = options.TransportChannel,
 		IsRunning = options.IsRunning,
 		Banner = options.Banner,
 	})

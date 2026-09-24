@@ -16,7 +16,7 @@ Install Python 3.10 or newer as `python`, then install the pinned toolchain with
 
 Before implementation, derive verification from the intended behavior, including relevant failure and cancellation cases. Change test expectations only when the intended contract changes or an expectation is demonstrably wrong; preserve useful failure diagnostics. Follow [behavior verification](../../docs/verification.md#behavior-verification) for coverage and evidence requirements.
 
-The single required local and CI gate is:
+The canonical implementation and CI gate is:
 
 ```sh
 lute run scripts/verify.luau
@@ -26,5 +26,4 @@ Use `stylua src tests scripts` to apply formatting and `lest run unit` for the f
 
 Runtime changes involving replication, remotes, lifecycle order, UI/input/camera, physics, or other engine behavior also require a Roblox Studio MCP playtest after the static gate. Follow the [Studio playtest sequence](../../docs/verification.md#studio-behavior-playtest), preserve any existing user session, and stop only play sessions started by the current task.
 
-Before completion, run the canonical verifier, inspect the final diff, and report any validation that the environment prevented.
-
+Before completing implementation changes, run the canonical verifier after the final relevant inputs change, inspect the final diff, and report any validation that the environment prevented. For a documentation-only handoff, run the focused documentation regression and reuse passing evidence for unaffected checks; broaden verification if a changed input or new concern makes that evidence stale.

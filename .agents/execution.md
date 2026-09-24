@@ -1,25 +1,37 @@
 # Execution
 
+<!--
+Copy this scaffold to ../execution.md when initializing the active move or replacing a finished one. The live file, not this template, is authoritative.
+For active or blocked work, use the next M### after the last completed milestone in ../progress.md. Status describes only whether work can proceed. After a finished move, leave this scaffold unfilled when selecting the next move would be speculative. Use blocked only for a concrete condition that prevents further in-scope work, with a clear owner and unblock condition.
+For discovery, name the question and the evidence that would answer it. Before delivery work, name its observable result and relevant verification. Use Outcome Context, Questions, Completion Checks, or Verification only where they clarify this move. Revise the live file as evidence changes the move. Hotspots are current investigation entry points, not file assignments.
+-->
+
+## Milestone
+
+<!-- M### for an active or blocked move; otherwise leave blank. -->
+
 ## Status
 
-active
+<!-- active | blocked; leave blank only while the entire scaffold is unfilled. -->
 
 ## Objective
 
-Deliver a pure deterministic grid-domain engine that can validate and apply placement, removal, repositioning, rotation, and first-fit operations without Roblox services or partial mutation.
+<!-- One observable result or answer sought by the current move. -->
 
-## Priority Outcomes
+## Questions
 
-- Variable item footprints resolve to exact occupied cells, including rotated dimensions.
-- Bounds and overlap validation return stable success or error results for identical inputs.
-- Failed operations preserve the complete prior inventory state; successful operations advance revision exactly once.
-- First-fit search is deterministic and follows one documented traversal order.
-- Focused tests cover edges, corners, collisions, rotation, rollback, revision behavior, and first-fit determinism.
+<!-- Keep only questions useful to the current move. Remove this section when no question remains. -->
 
 ## Hotspots
 
-- `src/shared/Inventory/Types.luau` — Defines the existing inventory, placement, snapshot, and operation contracts.
-- `src/shared/Inventory/Definitions.luau` — Supplies immutable footprints and rotation capabilities without coupling definitions to grid logic.
-- `CONTEXT.md` — Owns canonical inventory language and the distinction between repositioning and transfer.
-- `docs/adr/0001-inventory-state-ownership.md` — Records atomicity, ownership, persistence, and future integration seams.
-- `tests/unit/` — Hosts the fast deterministic behavior coverage that should drive the grid engine.
+<!-- List current entry points as `path or symbol` — why or when to begin here. Leave empty if none are known yet. -->
+
+<!--
+When Status is blocked, append this section:
+
+## Blocking Condition
+
+- Cause: [What prevents progress]
+- Owner: [Person, system, or decision that can remove the block]
+- Unblock when: [Observable condition that permits work to resume]
+-->
