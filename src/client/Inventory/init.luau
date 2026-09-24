@@ -31,7 +31,7 @@ end
 function Inventory.ReadSnapshot(): SnapshotResult
 	local currentData = clientData
 	if currentData == nil then
-		return { Ok = false, Reason = "Unavailable" }
+		return { Ok = false, Reason = "Unavailable" } :: SnapshotResult
 	end
 	return Snapshot.read(currentData)
 end
@@ -39,7 +39,7 @@ end
 function Inventory.Subscribe(callback: (SnapshotResult) -> ()): () -> ()
 	local currentData = clientData
 	if currentData == nil then
-		callback({ Ok = false, Reason = "Unavailable" })
+		callback({ Ok = false, Reason = "Unavailable" } :: SnapshotResult)
 		return function() end
 	end
 	return Snapshot.subscribe(currentData, callback)

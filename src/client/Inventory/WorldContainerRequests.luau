@@ -89,8 +89,8 @@ function Requests.claim(
 	if
 		not validRevision(response.PlayerRevision)
 		or not validRevision(response.ContainerRevision)
-		or response.PlayerRevision <= playerRevision
-		or response.ContainerRevision <= containerRevision
+		or (response.PlayerRevision :: number) <= playerRevision
+		or (response.ContainerRevision :: number) <= containerRevision
 	then
 		return { Ok = false, Reason = "Malformed" }
 	end

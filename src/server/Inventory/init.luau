@@ -37,7 +37,7 @@ end
 
 function Inventory.ReadSnapshot(player: Player, timeout: number?): Readiness.Result
 	if serverData == nil then
-		return { Ok = false, Reason = "Unavailable" }
+		return { Ok = false, Reason = "Unavailable" } :: Readiness.Result
 	end
 	return Readiness.read(serverData, player, timeout)
 end

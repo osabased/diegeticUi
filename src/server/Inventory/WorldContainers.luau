@@ -99,7 +99,7 @@ function WorldContainers.new()
 		local id = HttpService:GenerateGUID(false)
 		local created = store.create(id, seeds)
 		if not created.Ok then
-			return created
+			return { Ok = false, Reason = created.Reason }
 		end
 		local owner = Janitor.new()
 		local entry: Entry = {
@@ -141,7 +141,7 @@ function WorldContainers.new()
 		end
 		local read = store.read(entry.Id)
 		if not read.Ok then
-			return read
+			return { Ok = false, Reason = read.Reason }
 		end
 		return { Ok = true, Id = entry.Id, Snapshot = read.Snapshot }
 	end

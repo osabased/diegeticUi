@@ -2,9 +2,9 @@
 
 `globalTypes.d.luau` is a vendored generated input for standalone `luau-lsp analyze` runs.
 
-- Source: <https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/1.69.0/scripts/globalTypes.d.luau>
-- luau-lsp pin: `JohnnyMorganz/luau-lsp@1.69.0` in `rokit.toml`
-- SHA-256: `7DB9CD4FE55A4D26F3F7D5A39B6279A376F95A6C055C71D5591C26A1D525AAF2`
+- Source: <https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/1.70.0/scripts/globalTypes.d.luau>
+- luau-lsp pin: `JohnnyMorganz/luau-lsp@1.70.0` in `rokit.toml`
+- SHA-256: `2B0DF788DC3FD1B572E71EE7FE9E1C55CC23882AFBD5024AECDEC30D9BD7520F`
 
 Do not hand-edit this file. When the luau-lsp pin changes, download the definitions from the matching release tag, update the checksum and source URL here, then run `lute run scripts/verify.luau`.
 

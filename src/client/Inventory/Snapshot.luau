@@ -4,6 +4,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SnapshotValidation = require(ReplicatedStorage.Shared.Inventory.SnapshotValidation)
 
 export type Result = SnapshotValidation.Result | { Ok: false, Reason: "Loading" | "Unavailable" }
+type AvailabilityReason = "Loading" | "Unavailable"
 export type ClientData = {
 	IsReady: () -> boolean,
 	WaitForData: (number?) -> boolean,
@@ -15,17 +16,21 @@ export type ClientData = {
 
 local Snapshot = {}
 
+local function availabilityFailure(reason: AvailabilityReason): Result
+	return { Ok = false, Reason = reason }
+end
+
 function Snapshot.read(clientData: ClientData): Result
 	local readyOk, ready = pcall(clientData.IsReady)
 	if not readyOk then
-		return { Ok = false, Reason = "Unavailable" }
+		return availabilityFailure("Unavailable")
 	end
 	if not ready then
-		return { Ok = false, Reason = "Loading" }
+		return availabilityFailure("Loading")
 	end
 	local readOk, value = pcall(clientData.Inventory.Get)
 	if not readOk then
-		return { Ok = false, Reason = "Unavailable" }
+		return availabilityFailure("Unavailable")
 	end
 	return SnapshotValidation.validate(value)
 end
@@ -52,7 +57,7 @@ function Snapshot.subscribe(clientData: ClientData, callback: (Result) -> ()): (
 		if observeOk then
 			disconnectObserver = disconnect
 		else
-			callback({ Ok = false, Reason = "Unavailable" })
+			callback(availabilityFailure("Unavailable"))
 		end
 	end
 
@@ -66,7 +71,7 @@ function Snapshot.subscribe(clientData: ClientData, callback: (Result) -> ()): (
 					return
 				end
 				if not waitOk then
-					callback({ Ok = false, Reason = "Unavailable" })
+					callback(availabilityFailure("Unavailable"))
 					return
 				end
 				if ready then

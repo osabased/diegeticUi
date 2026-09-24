@@ -7,16 +7,16 @@ local describe, it = Lest.describe, Lest.it
 local PlayerDataSchema = require("../../src/shared/Inventory/PlayerDataSchema")
 local Readiness = require("../../src/server/Inventory/Readiness")
 
-local function loaded(snapshot)
+local function loaded(snapshot: unknown): Readiness.ServerData
 	return {
-		WaitForData = function()
+		WaitForData = function(_player: Player, _timeout: number?)
 			return {
 				Inventory = {
 					Get = function()
 						return snapshot
 					end,
 				},
-			}
+			}, nil
 		end,
 	}
 end

@@ -8,6 +8,7 @@ local Fusion = require(ReplicatedStorage.Packages.Fusion)
 type Scope = Fusion.Scope<typeof(Fusion)>
 
 export type Checks = {
+	[string]: boolean,
 	version: boolean,
 	initialBinding: boolean,
 	reactiveBinding: boolean,
@@ -28,6 +29,19 @@ export type Result = {
 }
 
 local Fixture = {}
+
+-- Specialize Fusion's UsedAs<T> callbacks for the new Luau solver.
+local function useNumber(use: Fusion.Use, value: Fusion.UsedAs<number>): number
+	return (use :: (Fusion.UsedAs<number>) -> number)(value)
+end
+
+local function useString(use: Fusion.Use, value: Fusion.UsedAs<string>): string
+	return (use :: (Fusion.UsedAs<string>) -> string)(value)
+end
+
+local peekNumber = Fusion.peek :: (Fusion.UsedAs<number>) -> number
+local tweenNumber =
+	Fusion.Tween :: (Fusion.Scope<unknown>, Fusion.UsedAs<number>, Fusion.UsedAs<TweenInfo>?) -> Fusion.Tween<number>
 
 local function traceError(problem: unknown): string
 	return debug.traceback(tostring(problem), 2)
@@ -86,7 +100,7 @@ function Fixture.run(parent: Instance): Result
 	local bodyOk = xpcall(function()
 		local count = scope:Value(1)
 		local doubled = scope:Computed(function(use)
-			return use(count) * 2
+			return useNumber(use, count) * 2
 		end)
 		local observerCalls = 0
 		scope:Observer(doubled):onChange(function()
@@ -102,7 +116,7 @@ function Fixture.run(parent: Instance): Result
 		local label = scope:New("TextLabel")({
 			Name = "FusionFixtureLabel",
 			Text = scope:Computed(function(use)
-				return `count:{use(count)} double:{use(doubled)}`
+				return `count:{useNumber(use, count)} double:{useNumber(use, doubled)}`
 			end),
 		}) :: TextLabel
 		scope:New("Frame")({
@@ -121,7 +135,7 @@ function Fixture.run(parent: Instance): Result
 			return label.Text == "count:2 double:4"
 		end, 1)
 		checks.observer = waitUntil(function()
-			return observerCalls >= 1 and Fusion.peek(doubled) == 4
+			return observerCalls >= 1 and peekNumber(doubled) == 4
 		end, 1)
 
 		local selectedId = scope:Value("alpha")
@@ -129,9 +143,9 @@ function Fixture.run(parent: Instance): Result
 			alpha = { label = "Alpha" },
 		}, function(_use, rowScope: Scope, presetId, preset)
 			local selectedGoal = rowScope:Computed(function(use)
-				return if use(selectedId) == presetId then 0 else 1
+				return if useString(use, selectedId) == presetId then 0 else 1
 			end)
-			local selectedMotion = rowScope:Tween(selectedGoal, TweenInfo.new(0.01))
+			local selectedMotion = tweenNumber(rowScope, selectedGoal, TweenInfo.new(0.01))
 			local row = rowScope:New("TextButton")({
 				Name = "FusionFixtureRow",
 				Text = preset.label,

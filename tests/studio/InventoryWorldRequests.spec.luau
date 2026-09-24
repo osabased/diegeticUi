@@ -59,7 +59,9 @@ describe("client world container requests", function()
 		end
 		local expired = Requests.inspect(network, "crate-1")
 		assert(not expired.Ok and expired.Reason == "ContainerMissing", "expiration rejection was lost")
-		network.InspectWorldContainer.Invoke = function()
+		network.InspectWorldContainer.Invoke = function(
+			_id: string
+		): (boolean, number?, { Requests.WireItem }?, string?)
 			error("transport failed")
 		end
 		local unavailable = Requests.inspect(network, "crate-1")

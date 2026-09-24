@@ -4,8 +4,8 @@ export type ItemDefinitionId = string
 export type ItemInstanceId = string
 
 export type GridSize = {
-	Columns: number,
-	Rows: number,
+	read Columns: number,
+	read Rows: number,
 }
 
 export type GridPosition = {
@@ -14,12 +14,12 @@ export type GridPosition = {
 }
 
 export type ItemDefinition = {
-	Id: ItemDefinitionId,
-	DisplayName: string,
-	Width: number,
-	Height: number,
-	Rotatable: boolean,
-	Icon: string?,
+	read Id: ItemDefinitionId,
+	read DisplayName: string,
+	read Width: number,
+	read Height: number,
+	read Rotatable: boolean,
+	read Icon: string?,
 }
 
 export type ItemDefinitionMap = { [ItemDefinitionId]: ItemDefinition }

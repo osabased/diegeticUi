@@ -65,7 +65,7 @@ local function dataFixture()
 				},
 			}
 		end,
-		Transaction = function(_player, callback)
+		Transaction = function(_player: Player, callback: () -> ())
 			callback()
 			if afterCommit ~= nil then
 				afterCommit()

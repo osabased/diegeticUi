@@ -382,6 +382,7 @@ local function runStep(step: StepName): StepResult
 		return runCommand({
 			"luau-lsp",
 			"analyze",
+			"--flag:LuauSolverV2=true",
 			"--platform",
 			"roblox",
 			"--definitions",

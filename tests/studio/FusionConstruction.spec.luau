@@ -45,9 +45,11 @@ local function withHolder(runCase: (Folder) -> ())
 	local holder = Instance.new("Folder")
 	local caseOk, caseError = xpcall(function()
 		runCase(holder)
+		return true
 	end, traceError)
 	local destroyOk, destroyError = xpcall(function()
 		holder:Destroy()
+		return true
 	end, traceError)
 
 	if not caseOk then
